@@ -1,0 +1,535 @@
+//////////////////////////////////////////////////////////////
+//// overall status management
+//////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
+//// Monk/Merc activity, controlled by DMWWMercStatus
+//// 0: neutral (baseline)
+//// 1: unused
+//// 2: goodbutblue
+//// 3: neutral, post alliance with Balthazar. In this state: mercs should escapearea (if in ar5500) or destroyself otherwise.
+//// 4: enemy
+//// 5: enemy, post Balthazar's death. In this state all should escapearea (if in ar5500) or destroyself otherwise.
+////
+//// If attacked in state 1, go to state 4
+//// If attacked in state 2, take no action (friendly fire et al)
+//// If attacked in state 3, go hostile but do not otherwise change variables
+////
+//// Go to state 2 if the village is under attack and Balthazar is alive [handled in dialog block for dw#monme]
+//// Go to state 3 if the attack on the village is over and Balthazar is alive [handled in dialog block for dw#vimel]
+//// Go to state 4 if Balthazar is alive, not onside, and if both Abazigal and Sendai are dead
+//// Go to state 5 if Balthazar is dead
+//////////////////////////////////////////////////////////////
+
+
+IF
+  !Global("DMWWMercStatus","GLOBAL",4)
+  !Global("BalthazarFights","GLOBAL",1)
+  !Dead("balth")
+  Dead("Abazigal")
+  Dead("Sendai")
+THEN
+    RESPONSE #100
+        SetGlobal("DMWWMercStatus","GLOBAL",4)
+        Continue()
+END
+
+IF
+  !Global("DMWWMercStatus","GLOBAL",5)
+  Dead("balth")
+THEN
+    RESPONSE #100
+        SetGlobal("DMWWMercStatus","GLOBAL",5)
+        Continue()
+END
+
+//////////////////////////////////////////////////////////////
+//// Enclave backgrounds/ambients, controlled by Enclave
+//// 0: normal
+//// 1: unused
+//// 2: battle underway
+////
+//// Controlled from DMWWMercStatus. Should be 2 if DMWWMercStatus is 2 or 4, 0 otherwise.
+//// Should also be set to 2 if the village is under attack (this is not quite caught by 2,
+//// because Balth may be long dead.)
+//////////////////////////////////////////////////////////////
+
+
+IF
+  !Global("Enclave","GLOBAL",2)
+  OR(3)
+       Global("DMWWMercStatus","GLOBAL",2)
+       Global("DMWWMercStatus","GLOBAL",4)
+       Global("DMWWVillageAttacked","GLOBAL",1)
+THEN
+    RESPONSE #100
+             SetGlobal("Enclave","GLOBAL",2)
+             Continue()
+END
+
+IF
+  Global("Enclave","GLOBAL",2)   
+  !Global("DMWWMercStatus","GLOBAL",2)
+  !Global("DMWWMercStatus","GLOBAL",4)
+  !Global("DMWWVillageAttacked","GLOBAL",1)
+THEN
+    RESPONSE #100
+             SetGlobal("Enclave","GLOBAL",0)
+             Continue()
+END
+
+
+/////////////////////////////////////////////////////////////////////////
+////  Access to the monastery interior after encountering Balthazar
+/////////////////////////////////////////////////////////////////////////
+
+IF
+	!Global("DMWWOpenedMonastery","GLOBAL",1)
+	OR(2)
+		Global("BalthazarFights","GLOBAL",1)
+		Dead("balth")
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWOpenedMonastery","GLOBAL",1)
+		OpenDoor("Door08")
+		Continue()
+END
+
+/////////////////////////////////////////////////////////////////////////
+////  Reinforce the gate if it's attacked (other than via a sneak-via-Saemon move)
+////  The timer is set in the monk/merc scripts
+/////////////////////////////////////////////////////////////////////////
+
+IF
+	!GlobalGT("SaemonDisguise","GLOBAL",1)
+	Global("DMWWReinforceGate","AR5500",1)
+	OR(3)
+		HPPercentLT("ammgrd01",50)
+		HPPercentLT("ammgrd04",50)
+		GlobalTimerExpired("DMWWAmkGate","AR5500")
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWReinforceGate","AR5500",2)
+		CreateCreature("cutammag",[787.1445],0)
+		CreateCreature("cutammag",[914.1401],0)
+		CreateCreature("cutamfig",[837.1454],0)
+		CreateCreature("cutamfig",[875.1448],0)
+END
+
+/////////////////////////////////////////////////////////////////////////
+////  Misc
+/////////////////////////////////////////////////////////////////////////
+
+IF
+	InMyArea(Player1)
+	OR(4)
+		Global("DMWWSmugglerStatus","GLOBAL",1)
+		Global("DMWWSmugglerStatus","GLOBAL",3)
+		Global("DMWWSmugglerStatus","GLOBAL",5)
+		Global("DMWWSmugglerStatus","GLOBAL",7)
+THEN
+	RESPONSE #100
+		IncrementGlobal("DMWWSmugglerStatus","GLOBAL",1)
+		Continue()
+END
+
+IF
+	Global("SaemonLeave","GLOBAL",0)
+	PartyHasItem("PLOT17A") // Monastery Gate Key
+THEN
+	RESPONSE #100
+		SetGlobal("SaemonLeave","GLOBAL",1)
+END
+
+
+IF
+   !Global("DMWWFaheedMapNote","GLOBAL",1)
+   OR(4)
+      Global("ZakeeFaheed","GLOBAL",1)
+      Global("SaemonFaheed","GLOBAL",1)
+      Global("DMWWCarrasFaheed","GLOBAL",1)
+      Global("DMWWRumorFaheed","GLOBAL",1)
+THEN
+    RESPONSE #100
+          SetGlobal("DMWWFaheedMapNote","GLOBAL",1)
+          AddMapNote([3444.126],@3140)
+END
+
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+//// Attack on the village by Abazigal or Sendai's forces
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+////    If the enclave is about to be attacked by Sendai, ensure it's dark
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+IF
+        Global("HadBhaal25Dream3","GLOBAL",1)
+        !Dead("sendai")
+	TimeGT(DAWN_START)
+	TimeLT(DUSK_START)
+	!Global("DMWWVillageAttacked","GLOBAL",2)
+THEN
+     RESPONSE #100
+              DayNight(MIDNIGHT)
+END
+
+
+//////////////////////////////////////////////////////////////
+//// Initialising the attack (if players arrive in the village in phase 3 to find it under attack, after
+//// killing Balth in phase 1)
+//////////////////////////////////////////////////////////////
+
+IF
+	OR(2)
+		Dead("sendai")
+		Dead("abazigal")
+	OR(2)
+		!Dead("sendai")
+		!Dead("abazigal")
+	Dead("balth")
+	!Global("DMWWSpawnAttackPeasants","GLOBAL",1)
+        Global("DMWWBalthDeadPhase1","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWSpawnAttackPeasants","GLOBAL",1)
+		CreateCreatureObjectOffScreen("dw#ampp1",Player1,0,0,0)
+		CreateCreatureObjectOffScreen("dw#ampp2",Player1,0,0,0)
+		CreateCreatureObjectOffScreen("dw#ampp3",Player1,0,0,0)
+END
+
+//////////////////////////////////////////////////////////////
+//// Initialising the attack (if players leave the monastery to find it under attack in phase 2)
+//////////////////////////////////////////////////////////////
+
+IF
+	OR(2)
+		Dead("sendai")
+		Dead("abazigal")
+	OR(2)
+		!Dead("sendai")
+		!Dead("abazigal")
+	!Global("DMWWSpawnAttackPeasants","GLOBAL",1)
+        !Global("DMWWBalthDeadPhase1","GLOBAL",1)
+THEN
+        RESPONSE #100
+		SetGlobal("DMWWSpawnAttackPeasants","GLOBAL",1)
+		CreateCreature("dw#ampp1",[941.1518],12)
+		CreateCreature("dw#ampp2",[885.1579],12)
+		CreateCreature("dw#ampp3",[816.1584],12)
+END
+
+//////////////////////////////////////////////////////////////
+///// Common to both
+//////////////////////////////////////////////////////////////
+
+IF
+	Global("DMWWAttackInitialise","GLOBAL",1)
+	Global("DMWWVillageAttacked","GLOBAL",0)
+	!GlobalTimerNotExpired("DMWWAttackTimer","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWVillageAttacked","GLOBAL",1)
+END
+
+//////////////////////////////////////////////////////////////
+//// The actual attackers. (Two types.)
+//////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
+//// Sendai
+//////////////////////////////////////////////////////////////
+
+
+IF
+	Global("DMWWVillageAttacked","GLOBAL",1)
+	!GlobalGT("DW#Attacker1Cap","GLOBAL",30)
+	GlobalLT("EXTRACOUNT6","MYAREA",5)
+	!Dead("sendai")
+	ActionListEmpty()
+	InActiveArea(Myself)
+THEN
+	RESPONSE #150
+		CreateCreatureObjectOffScreen("dw#vider",Player1,0,0,0) 
+		IncrementGlobal("DW#Attacker1Cap","GLOBAL",1)
+		IncrementGlobal("EXTRACOUNT6","MYAREA",1)
+	RESPONSE #100
+		CreateCreatureObjectOffScreen("dw#vidr1",Player1,0,0,0) 
+		IncrementGlobal("DW#Attacker1Cap","GLOBAL",1)
+		IncrementGlobal("EXTRACOUNT6","MYAREA",1)
+	RESPONSE #100
+		CreateCreatureObjectOffScreen("dw#vidr3",Player1,0,0,0) 
+		IncrementGlobal("DW#Attacker1Cap","GLOBAL",1)
+		IncrementGlobal("EXTRACOUNT6","MYAREA",1)
+END
+
+IF
+  Global("DMWWVillageAttacked","GLOBAL",1)
+  !Dead("sendai")  
+  !GlobalGT("DW#Attacker2Cap","GLOBAL",12)
+  GlobalLT("EXTRACOUNT7","MYAREA",2)
+  ActionListEmpty()
+  InActiveArea(Myself)
+THEN
+  RESPONSE #100
+    CreateCreatureObjectOffScreen("dw#vidr2",Player1,0,0,0)  // ~Drow~
+    IncrementGlobal("DW#Attacker2Cap","GLOBAL",1)
+    IncrementGlobal("EXTRACOUNT7","MYAREA",1)
+  RESPONSE #100
+    CreateCreatureObjectOffScreen("dw#vidr4",Player1,0,0,0)  // ~Drow Priestess~
+    IncrementGlobal("DW#Attacker2Cap","GLOBAL",1)
+    IncrementGlobal("EXTRACOUNT7","MYAREA",1)
+  RESPONSE #100
+    CreateCreatureObjectOffScreen("dw#viill",Player1,0,0,0)  // ~Mind Flayer~
+    IncrementGlobal("DW#Attacker2Cap","GLOBAL",1)
+    IncrementGlobal("EXTRACOUNT7","MYAREA",1)
+  RESPONSE #100
+    CreateCreatureObjectOffScreen("dw#vibeh",Player1,0,0,0)  // ~Beholder~
+    IncrementGlobal("DW#Attacker2Cap","GLOBAL",1)
+    IncrementGlobal("EXTRACOUNT7","MYAREA",1)
+END
+
+
+//////////////////////////////////////////////////////////////
+//// Abazigal
+//////////////////////////////////////////////////////////////
+
+
+IF
+	Global("DMWWVillageAttacked","GLOBAL",1)
+	!GlobalGT("DW#Attacker1Cap","GLOBAL",25)
+	GlobalLT("EXTRACOUNT6","MYAREA",5)
+	!Dead("abazigal")
+	ActionListEmpty()
+	InActiveArea(Myself)
+THEN
+	RESPONSE #100
+		CreateCreatureObjectOffScreen("dw#vikuo",Player1,0,0,0) 
+		IncrementGlobal("DW#Attacker1Cap","GLOBAL",1)
+		IncrementGlobal("EXTRACOUNT6","MYAREA",1)
+	RESPONSE #100
+		CreateCreatureObjectOffScreen("dw#viliz",Player1,0,0,0) 
+		IncrementGlobal("DW#Attacker1Cap","GLOBAL",1)
+		IncrementGlobal("EXTRACOUNT6","MYAREA",1)
+	RESPONSE #100
+		CreateCreatureObjectOffScreen("dw#visal",Player1,0,0,0) 
+		IncrementGlobal("DW#Attacker1Cap","GLOBAL",1)
+		IncrementGlobal("EXTRACOUNT6","MYAREA",1)
+	RESPONSE #100
+		CreateCreatureObjectOffScreen("dw#viele",Player1,0,0,0) 
+		IncrementGlobal("DW#Attacker1Cap","GLOBAL",1)
+		IncrementGlobal("EXTRACOUNT6","MYAREA",1)
+END
+
+IF
+	Global("DMWWVillageAttacked","GLOBAL",1)
+	!Dead("abazigal") // 
+	!GlobalGT("DW#Attacker2Cap","GLOBAL",16)
+	GlobalLT("EXTRACOUNT7","MYAREA",2)
+	ActionListEmpty()
+	InActiveArea(Myself)
+THEN
+	RESPONSE #100
+		CreateCreatureObjectOffScreen("dw#vibon",Player1,0,0,0) 
+		IncrementGlobal("DW#Attacker2Cap","GLOBAL",1)
+		IncrementGlobal("EXTRACOUNT7","MYAREA",1)
+	RESPONSE #100
+		CreateCreatureObjectOffScreen("dw#visek",Player1,0,0,0) 
+		IncrementGlobal("DW#Attacker2Cap","GLOBAL",1)
+		IncrementGlobal("EXTRACOUNT7","MYAREA",1)
+	RESPONSE #100
+		CreateCreatureObjectOffScreen("dw#viegl",Player1,0,0,0) 
+		IncrementGlobal("DW#Attacker2Cap","GLOBAL",1)
+		IncrementGlobal("EXTRACOUNT7","MYAREA",1)
+	RESPONSE #100
+		CreateCreatureObjectOffScreen("dw#vigol",Player1,0,0,0) 
+		IncrementGlobal("DW#Attacker2Cap","GLOBAL",1)
+		IncrementGlobal("EXTRACOUNT7","MYAREA",1)
+END
+
+//////////////////////////////////////////////////////////////
+/////////////// reinforcements! (if the mercs are onside)
+//////////////////////////////////////////////////////////////
+
+IF
+	Global("DMWWVillageAttacked","GLOBAL",1)
+	!Global("DW#ReinforceInitialise","GLOBAL",1)
+	Global("DMWWMercStatus","GLOBAL",2)
+THEN
+	RESPONSE #100
+		SetGlobal("DW#ReinforceInitialise","GLOBAL",1)
+		SetGlobalTimer("DW#VillageReinforce","GLOBAL",6)
+		SetGlobal("DW#ReinforceNumber","AR5500",0)
+END
+
+IF
+	Global("DMWWVillageAttacked","GLOBAL",1)
+	!GlobalTimerNotExpired("DW#VillageReinforce","GLOBAL")
+        Global("DW#ReinforceInitialise","GLOBAL",1)
+	Global("DMWWMercStatus","GLOBAL",2)
+	!GlobalGT("DW#ReinforceNumber","AR5500",3)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("DW#VillageReinforce","GLOBAL",12)
+		IncrementGlobal("DW#ReinforceNumber","AR5500",1)
+		CreateCreatureObjectOffScreen("ammerc07",Player1,0,0,0)
+		CreateCreatureObjectOffScreen("ammerc07",Player1,0,0,0)
+		CreateCreatureObjectOffScreen("ammerc08",Player1,0,0,0)
+		CreateCreatureObjectOffScreen("ammerc08",Player1,0,0,0)
+	RESPONSE #100
+		SetGlobalTimer("DW#VillageReinforce","GLOBAL",12)
+		IncrementGlobal("DW#ReinforceNumber","AR5500",1)
+		CreateCreatureObjectOffScreen("ammerc07",Player1,0,0,0)
+		CreateCreatureObjectOffScreen("ammerc08",Player1,0,0,0)
+		CreateCreatureObjectOffScreen("ammgrd02",Player1,0,0,0)
+END
+
+//////////////////////////////////////////////////////////////
+/// End the attack
+//////////////////////////////////////////////////////////////
+
+
+IF
+	Global("DMWWVillageAttacked","GLOBAL",1)
+	!Dead("balth") // Balthazar
+	!Dead("sendai")
+	GlobalGT("DW#Attacker1Cap","GLOBAL",30)
+	GlobalGT("DW#Attacker2Cap","GLOBAL",12)
+	CombatCounter(0)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWVillageAttacked","GLOBAL",2)
+		CreateCreatureObjectOffScreen("dw#vime1",Player1,0,0,0) 
+		CreateCreatureObjectOffScreen("ammerc08",Player1,0,0,0) 
+		CreateCreatureObjectOffScreen("ammerc08",Player1,0,0,0) 
+END
+
+IF
+	Global("DMWWVillageAttacked","GLOBAL",1)
+	!Dead("balth") // Balthazar
+	!Dead("abazigal")
+	GlobalGT("DW#Attacker1Cap","GLOBAL",25)
+	GlobalGT("DW#Attacker2Cap","GLOBAL",16)
+	CombatCounter(0)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWVillageAttacked","GLOBAL",2)
+		CreateCreatureObjectOffScreen("dw#vime1",Player1,0,0,0) 
+		CreateCreatureObjectOffScreen("ammerc08",Player1,0,0,0) 
+		CreateCreatureObjectOffScreen("ammerc08",Player1,0,0,0) 
+END
+
+IF
+	Global("DMWWVillageAttacked","GLOBAL",1)
+	Dead("balth") // Balthazar
+	!Dead("abazigal")
+	GlobalGT("DW#Attacker1Cap","GLOBAL",25)
+	GlobalGT("DW#Attacker2Cap","GLOBAL",16)
+	CombatCounter(0)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWVillageAttacked","GLOBAL",2)
+END
+
+IF
+	Global("DMWWVillageAttacked","GLOBAL",1)
+	Dead("balth") // Balthazar
+	!Dead("sendai")
+	GlobalGT("DW#Attacker1Cap","GLOBAL",30)
+	GlobalGT("DW#Attacker2Cap","GLOBAL",12)
+	CombatCounter(0)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWVillageAttacked","GLOBAL",2)
+		SetGlobal("Enclave","GLOBAL",0)
+END
+
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+/// Ambients if Balth is dead
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+
+
+IF
+  !Global("Enclave","Global",2)
+  Dead("balth")
+  TimeGT(DAWN_START)
+  TimeLT(DUSK_START)
+  GlobalLT("EXTRACOUNT","MYAREA",7)
+  ActionListEmpty()
+  InActiveArea(Myself)
+THEN
+  RESPONSE #100
+    CreateCreature("AMBOY01",[2820.730],6)  // ~Boy~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMBOY01",[2721.1404],6)  // ~Boy~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMBOY01",[2618.2484],6)  // ~Boy~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMFEM01",[2820.730],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMFEM01",[2721.1404],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMFEM01",[3218.1438],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMFEM02",[2820.730],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMFEM02",[2721.1404],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMFEM02",[3218.1438],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMFEM02",[2618.2484],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMGIRL01",[2820.730],6)  // ~Girl~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMGIRL01",[2721.1404],6)  // ~Girl~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMGIRL01",[3218.1438],6)  // ~Girl~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMMAN01",[2820.730],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMMAN01",[2721.1404],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMMAN01",[2618.2484],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMMAN02",[2820.730],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMMAN02",[3218.1438],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMMAN02",[2618.2484],6)  // ~Commoner~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMSMUG02",[2820.730],6)  // ~Smuggler~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMSMUG02",[2820.730],6)  // ~Smuggler~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+  RESPONSE #100
+    CreateCreature("AMSMUG02",[2721.1404],6)  // ~Smuggler~
+    IncrementGlobal("EXTRACOUNT","MYAREA",1)
+END
+
+
+

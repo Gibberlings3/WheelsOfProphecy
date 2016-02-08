@@ -1,0 +1,26 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		Wait(1)
+		FadeToColor([20.0],0)
+		Wait(2)
+		ActionOverride("balth",DestroySelf())
+		ActionOverride("balelit1",DestroySelf())
+		ActionOverride("balelit2",DestroySelf())
+		ActionOverride("balelit3",DestroySelf())
+		ActionOverride("balelit4",DestroySelf())
+		LeaveAreaLUA("AR5500","",[1008.1648],7)
+		ActionOverride(Player2,LeaveAreaLUA("AR5500","",[981.1689],7))
+		ActionOverride(Player3,LeaveAreaLUA("AR5500","",[1055.1665],7))
+		ActionOverride(Player4,LeaveAreaLUA("AR5500","",[959.1740],7))
+		ActionOverride(Player5,LeaveAreaLUA("AR5500","",[1100.1688],7))
+		ActionOverride(Player6,LeaveAreaLUA("AR5500","",[1027.1713],7))
+		Wait(1)
+		FadeFromColor([20.0],0)
+		MoveViewObject(Player1,INSTANT)
+		Wait(2)
+		EndCutSceneMode()
+END
+

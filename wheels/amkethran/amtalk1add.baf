@@ -1,0 +1,63 @@
+IF
+	!GlobalTimerNotExpired("amtalk1","LOCALS")
+	!Global("notalk","LOCALS",1)
+	Dead("balth")
+	OnScreen(Myself)
+THEN
+	RESPONSE #60
+		SetGlobalTimer("amtalk1","LOCALS",30)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3110)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3111)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3112)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3113)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3114)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3115)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3116)
+END
+
+IF
+	!GlobalTimerNotExpired("amtalk1","LOCALS")
+	!Global("notalk","LOCALS",1)
+	Global("BalthazarFights","GLOBAL",1)
+	OnScreen(Myself)
+THEN
+	RESPONSE #60
+		SetGlobalTimer("amtalk1","LOCALS",30)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3117)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3111)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3118)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3119)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3120)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3121)
+	RESPONSE #15
+		SetGlobalTimer("amtalk1","LOCALS",30)
+		DisplayStringHead(Myself,@3122)
+END
+
+

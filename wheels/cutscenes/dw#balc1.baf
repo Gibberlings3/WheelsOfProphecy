@@ -1,0 +1,59 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		CreateCreature("cutspy",[776.558],0) // No such index
+		CreateCreature("BALTH",[760.515],14) // Balthazar
+		CreateCreature("BALELIT1",[666.599],9) // Monk
+		CreateCreature("BALELIT2",[754.616],8) // Monk
+		CreateCreature("BALELIT3",[827.588],7) // Monk
+		CreateCreature("BALELIT4",[875.532],6) // Monk
+		MoveViewPoint([760.515],INSTANT)
+		Explore()
+		Wait(2)
+		ActionOverride("balelit1",DisplayStringHead(Myself,@3010))
+		Wait(3)
+		SmallWait(7)
+		ActionOverride("balth",DisplayStringHead(Myself,@3011))
+		Wait(2)
+		SmallWait(10)
+		ActionOverride("balelit1",DisplayStringHead(Myself,@3012))
+		Wait(3)
+		SmallWait(5)
+		ActionOverride("balelit2",DisplayStringHead(Myself,@3013))
+		Wait(2)
+		SmallWait(7)
+		ActionOverride("balth",DisplayStringHead(Myself,@3014))
+		Wait(3)
+		SmallWait(7)
+		ActionOverride("balth",DisplayStringHead(Myself,@3015))
+		Wait(2)
+		SmallWait(7)
+		ActionOverride("balelit4",DisplayStringHead(Myself,@3016))
+		Wait(3)
+		SmallWait(7)
+		ActionOverride("balelit3",DisplayStringHead(Myself,@3017))
+		Wait(3)
+		SmallWait(7)
+		ActionOverride("balth",DisplayStringHead(Myself,@3018))
+		Wait(2)
+		ActionOverride(Player2,MoveToPoint([804.707]))
+		ActionOverride(Player3,MoveToPoint([867.685]))
+		ActionOverride(Player4,MoveToPoint([847.735]))
+		ActionOverride(Player5,MoveToPoint([791.751]))
+		ActionOverride(Player6,MoveToPoint([917.717]))
+		MoveToPoint([829.652])
+		ActionOverride(Player2,Face(6))
+		ActionOverride(Player3,Face(6))
+		ActionOverride(Player4,Face(6))
+		ActionOverride(Player5,Face(6))
+		ActionOverride(Player6,Face(6))
+		Face(6)
+		Wait(2)
+		ActionOverride("cutspy",DestroySelf())
+		ActionOverride("balth",StartDialogueNoSet(Player1))
+		EndCutSceneMode()
+END
+
+

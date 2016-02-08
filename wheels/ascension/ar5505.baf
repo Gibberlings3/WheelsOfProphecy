@@ -1,0 +1,20 @@
+IF
+  Global("DetectableSpells","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("DetectableSpells","GLOBAL",1)
+    ApplySpellRES("SPDETECT",Player1)  // SPDETECT
+END
+
+IF
+  !Exists("balth")  // ~Balthazar~
+  Global("BalthazarFights","GLOBAL",1)
+  Global("HadBhaal25Dream5","GLOBAL",0)
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    SetGlobal("HadBhaal25Dream5","GLOBAL",1)
+    StartCutSceneMode()
+    StartCutScene("cut243a")
+END
+

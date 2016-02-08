@@ -1,0 +1,11 @@
+IF
+	OR(2)
+		Global("Enclave","GLOBAL",2)
+		Dead("balth") // Balthazar
+	!Name("ambar01",Myself) // Zakee Rafeha
+	!Name("amwenc01",Myself) // Leila
+	!Name("amsmith",Myself) // Kerrick the Smith
+THEN
+	RESPONSE #100
+		DestroySelf()
+END

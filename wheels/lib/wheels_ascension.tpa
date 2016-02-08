@@ -1,0 +1,52 @@
+DEFINE_ACTION_FUNCTION wheels_ascension BEGIN
+
+   OUTER_SPRINT local_loc ascension
+   
+   // straight install
+   LAF install STR_VAR file="finbalth.bcs cut233ba.baf cut233ca.baf cut233da.baf cut233ga.baf
+                             nbalthal.bmp balth2.cre ppguy01.d balth12.spl"
+   END
+
+   // these dialogues need to be compiled together
+   
+   COMPILE "%scsroot%/%local_loc%/balth.d" "%scsroot%/%local_loc%/balth2.d" "%scsroot%/%local_loc%/finsol01.d" "%scsroot%/%local_loc%/finmeladd.d"
+
+   //script extension (we rebuild the throneroom area dialog from scratch, so no need to do it here)
+   
+
+   LAF extend_area_script STR_VAR area=ar6200 top=ar6200top END
+   LAF extend STR_VAR script=itpplane top=itpplane END
+   LAF extend STR_VAR script=itfpool1 top=pooladd1 END
+   LAF extend STR_VAR script=itfpool2 top=pooladd2 END
+   LAF extend STR_VAR script=itfpool3 top=pooladd3 END
+   LAF edit_script STR_VAR script=finmel01 editstring="patch=>delete_trigger_if(EnteredArea)" END
+   LAF extend STR_VAR script=finmel01 top=finmeladd END
+
+   // installs with patching
+   
+   LAF edit_creature STR_VAR creature=balth editstring="script_default=>balthft2" END
+   OUTER_FOR (i=1;i<=4;i+=1) BEGIN
+        LAF clone_creature STR_VAR creature="balelite=>balelit%i%" editstring="dv=>balelit%i%" END
+   END
+
+   LAF install_effect STR_VAR effect=balth01a editstring="resource=>balth01a" END
+
+   MAKE_PATCH
+      balth02=>72908
+      balth03=>72915
+      balth04=>72916
+      balth05=>71989
+      balth08=>73941
+      balth10=>73943
+   END
+   ACTION_PHP_EACH patch_data AS spell=>number BEGIN
+      LAF install_spell STR_VAR spell editstring="name1_string=>%number%" END
+   END
+   LAF install_spell STR_VAR spell=balth11 editstring="say_name=>2000" END
+
+   // Epilogues
+
+   COPY ~%scsroot%/%local_loc%/balthand.2da~ ~override~ REPLACE 82760 @2001
+   COPY ~%scsroot%/%local_loc%/balthfnd.2da~ ~override~ REPLACE 82734 @2002
+
+END

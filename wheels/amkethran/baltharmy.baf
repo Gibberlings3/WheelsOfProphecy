@@ -1,0 +1,164 @@
+/////////////////////////////////////////
+///// Status changes
+/////////////////////////////////////////
+
+//// if attacked when status=0, set status=4
+
+IF
+    Global("DMWWMercStatus","GLOBAL",0)
+    OR(6)
+      AttackedBy([GOODCUTOFF.0.0.0.0.SUMMONED],DEFAULT)
+      AttackedBy([PC],DEFAULT)
+      AttackedBy([FAMILIAR],DEFAULT)
+      AttackedBy([ALLY],DEFAULT)
+      AttackedBy([CONTROLLED],DEFAULT)
+      AttackedBy([CHARMED],DEFAULT)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWMercStatus","GLOBAL",4)
+END
+
+/// If an enemy and status=0, set status=4
+
+IF
+    Global("DMWWMercStatus","GLOBAL",0)
+    Allegiance(Myself,ENEMY)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWMercStatus","GLOBAL",4)
+END
+
+
+/////////////////////////////////////////////////////
+///// Allegiance changes controlled by status
+/////////////////////////////////////////////////////
+
+IF
+        !Allegiance(Myself,GOODBUTBLUE)
+        Global("DMWWMercStatus","GLOBAL",2)
+THEN
+	RESPONSE #100
+              ChangeEnemyAlly(Myself,GOODBUTBLUE)
+              Continue()
+END
+
+IF
+        !Allegiance(Myself,NEUTRAL)
+        Global("DMWWMercStatus","GLOBAL",3)
+        !Global("restoreneutral","LOCALS",1)
+THEN
+	RESPONSE #100
+              ChangeEnemyAlly(Myself,NEUTRAL)
+              SetGlobal("restoreneutral","LOCALS",1)
+              Continue()
+END
+
+IF
+        !Allegiance(Myself,ENEMY)
+        Global("DMWWMercStatus","GLOBAL",4)
+THEN
+	RESPONSE #100
+              Enemy()
+              Continue()
+END
+
+/////////////////////////////////////////////////////
+///// Actions controlled by status
+/////////////////////////////////////////////////////
+
+IF 
+    Global("DMWWMercStatus","GLOBAL",3)
+    OR(6)
+      AttackedBy([GOODCUTOFF.0.0.0.0.SUMMONED],DEFAULT)
+      AttackedBy([PC],DEFAULT)
+      AttackedBy([FAMILIAR],DEFAULT)
+      AttackedBy([ALLY],DEFAULT)
+      AttackedBy([CONTROLLED],DEFAULT)
+      AttackedBy([CHARMED],DEFAULT)
+      !Allegiance(Myself,ENEMY)
+THEN
+	RESPONSE #100
+		Enemy()
+END
+
+
+IF
+	Global("DMWWMercStatus","GLOBAL",3)
+	!Class(Myself,MONK)
+	AreaCheck("AR5500")
+THEN
+	RESPONSE #100
+		EscapeArea()
+END
+
+IF
+	Global("DMWWMercStatus","GLOBAL",5)
+	!AreaCheck("AR5500")
+THEN
+	RESPONSE #100
+		DestroySelf()
+END
+
+IF
+	Global("DMWWMercStatus","GLOBAL",5)
+	AreaCheck("AR5500")
+THEN
+	RESPONSE #100
+		EscapeArea()
+END
+
+
+IF
+       Global("DMWWMercStatus","GLOBAL",2)
+       !Global("heroshout","LOCALS",1)
+THEN
+       RESPONSE #50
+                SetGlobal("heroshout","LOCALS",1)
+                DisplayStringHead(Myself,@3150)
+       RESPONSE #50
+                SetGlobal("heroshout","LOCALS",1)
+                DisplayStringHead(Myself,@3151)
+       RESPONSE #50
+                SetGlobal("heroshout","LOCALS",1)
+                DisplayStringHead(Myself,@3152)
+       RESPONSE #50
+                SetGlobal("heroshout","LOCALS",1)
+                DisplayStringHead(Myself,@3153)
+END
+
+IF
+	Global("DMWWMercStatus","GLOBAL",2)
+	See([ENEMY])
+THEN
+	RESPONSE #100
+		Attack([ENEMY])
+END
+
+IF
+	Global("DMWWMercStatus","GLOBAL",4)
+	!See(NearestEnemyOf(Myself))
+	OR(2)
+		HPPercentLT("ammgrd01",50)
+		HPPercentLT("ammgrd04",50)
+THEN
+	RESPONSE #100
+		MoveToPoint([1012.1600])
+END
+
+/////////////////////////////////////////////////////
+///// Set the timer that reinforces the gate
+/////////////////////////////////////////////////////
+
+IF
+	Global("DMWWMercStatus","GLOBAL",4)
+	Global("DMWWReinforceGate","AR5500",0)
+	AreaCheck("AR5500")
+	See(NearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWReinforceGate","AR5500",1)
+		SetGlobalTimer("DMWWAmkGate","AR5500",15)
+		Continue()
+END
+	
+

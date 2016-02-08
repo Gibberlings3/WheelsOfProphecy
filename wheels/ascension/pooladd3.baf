@@ -1,0 +1,14 @@
+IF
+	WalkedToTrigger([ANYONE])
+	!GlobalTimerNotExpired("Pool3Timer","AR6200")
+	Global("Pool3Active","AR6200",0)
+	Dead("finsol04") // Fallen Solar
+	Global("BalthazarFights","GLOBAL",1)
+	!Dead("balth2")
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		StartCutSceneMode()
+		SetGlobalTimer("Pool3Timer","AR6200",10)
+		StartCutScene("cut233da")
+END

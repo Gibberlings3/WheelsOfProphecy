@@ -1,0 +1,12 @@
+IF
+	See(Player1)
+THEN
+	RESPONSE #100
+		MoveToObject(Player1)
+		DisplayStringHead(Myself,@3090)
+		Wait(1)
+		DisplayStringHead(Myself,@3091)
+		SetGlobal("DMWWMercStatus","GLOBAL",3)
+		Wait(1)
+		EscapeArea()
+END

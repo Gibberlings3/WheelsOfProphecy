@@ -1,0 +1,31 @@
+IF
+	Dead("SenKen01") // Thelynn'ss
+	WalkedToTrigger([ANYONE])
+	Global("SendaiCutScene1","GLOBAL",0)
+	Dead("abazigal")
+	Dead("balth")
+	!Dead("dw#melis")
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		DisplayStringHead(Player1,72839) // Elsewhere...
+		SetGlobal("SendaiCutScene1","GLOBAL",1)
+		StartCutSceneMode()
+		StartCutScene("dw#senc1")
+END
+
+IF
+	Dead("SenKen01") // Thelynn'ss
+	WalkedToTrigger([ANYONE])
+	Global("SendaiCutScene1","GLOBAL",0)
+	OR(2)
+		Dead("balth")
+		Global("BalthazarFights","GLOBAL",1)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		DisplayStringHead(Player1,72839) // Elsewhere...
+		SetGlobal("SendaiCutScene1","GLOBAL",1)
+		StartCutSceneMode()
+		StartCutScene("dw#senc5")
+END

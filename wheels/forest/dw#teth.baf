@@ -1,0 +1,72 @@
+
+IF
+	OnCreation()
+	Global("DMWWGroveDay","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWGroveDay","GLOBAL",1)
+		DayNight(DAWN_END)
+		StartRainNow()
+		Explore()
+		AmbientActivate("AMB_Head1L",FALSE)
+		AmbientActivate("AMB_Head1R",FALSE)
+		AmbientActivate("AMB_Head2L",FALSE)
+		AmbientActivate("AMB_Head2R",FALSE)
+		AmbientActivate("AMB_Head3L",FALSE)
+		AmbientActivate("AMB_Head3R",FALSE)
+		AmbientActivate("AMB_Head4L",FALSE)
+		AmbientActivate("AMB_Head4R",FALSE)
+		AmbientActivate("AMB_Head5L",FALSE)
+		AmbientActivate("AMB_Head5R",FALSE)
+		CreateCreature("dw#grsol",[1773.716],0)
+		CreateCreature("dw#grbal",[1664.753],0)
+		CreateCreature("dw#grbal",[1895.749],0)
+		CreateCreature("dw#grmar",[1631.707],0)
+		CreateCreature("dw#grmar",[1856.685],0)
+		CreateCreature("dw#grgla",[1509.807],0)
+		CreateCreature("dw#grgla",[1919.819],0)
+		CreateCreature("demosum4",[1538.723],0)
+//		CreateCreature("demosum4",[1845.710],0)
+		FadeFromColor([20.0],0)
+END
+
+IF
+	OR(2)
+		OnCreation()
+		PartyRested()
+THEN
+	RESPONSE #100
+		StartRainNow()
+END
+
+IF
+	Global("AMReturnOfElminster","GLOBAL",0)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		StartCutSceneMode()
+		CreateCreatureObjectEffect("AMELM01","SPFLESHS",Player1)
+		SetGlobal("AMReturnOfElminster","GLOBAL",1)
+		Wait(2)
+		EndCutSceneMode()
+END
+
+IF
+	Dead("dw#grsol")
+	Global("DMWWGrove","GLOBAL",0)
+	CombatCounter(0)
+THEN 
+	RESPONSE #100
+		SetGlobal("DMWWGrove","GLOBAL",1)
+END
+
+IF
+	Global("HadBhaal25Dream5","GLOBAL",1)
+	!Global("DMWWBalthInGrove","GLOBAL",1)
+	!Dead("balth")
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWBalthInGrove","GLOBAL",1)
+		CreateCreatureObjectDoor("balth",Player1,0,0,0)
+END
+

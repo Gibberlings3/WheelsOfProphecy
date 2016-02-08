@@ -1,0 +1,13 @@
+IF
+	AreaCheck("ar5504")
+	OR(3)
+		Global("DMWWSmugglerStatus","GLOBAL",5)
+		Global("DMWWSmugglerStatus","GLOBAL",7)
+	        InMyArea("amsaemon")
+
+THEN
+	RESPONSE #100
+		DestroySelf()
+END
+
+

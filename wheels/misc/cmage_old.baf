@@ -1,0 +1,8 @@
+
+IF
+	See(NearestEnemyOf(Myself))
+	HaveSpell(WIZARD_TIME_STOP)
+THEN
+	RESPONSE #100
+		Spell(Myself,WIZARD_TIME_STOP)
+END

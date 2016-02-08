@@ -1,0 +1,118 @@
+VARIABLES relevant to village attack
+
+Enclave
+
+Enclave=1 is irrelevant and unused
+Enclave=2 indicates that the enclave (monks and mercenaries) are hostile. 
+It is set by:
+- the death of Abazigal or Sendai at the end of phase 2 
+- DMWWMercStatus=4
+It is never unset
+
+DMWWVillageAttacked
+
+DMWWVillageAttacked=1 if the village is currently under attack by the forces of Abazigal/Sendai
+DMWWVillageAttacked=2 if the attack is over
+
+Set to 1:
+- by the panicked peasants created on entering the village at the end of Phase 2 (but before dream 3) if either Abazigal or Sendai is alive
+- by the monk who talks to Balthazar after you get him on side at the end of Phase 2
+
+DMWWMercStatus
+
+0: default
+1: not used nor set
+2: Village under attack, Balthazar not dead
+3: Mercenaries are leaving village following successful defeat of Abaz/Sendai's army
+4: Mercenaries are hostile
+
+Set to 4:
+- if any mercenary is attacked
+- if any mercenary has allegiance Enemy
+- if Sendai is dead, Abazigal is dead, Balth is alive, and Balth has not joined (i.e., entering the village after defeating S/Ab in the standard order)
+
+Set to 3:
+- by the conversation with the merc leader after the end of the battle
+
+Set to 2:
+- if the village is attacked and Balthazar is not dead (i.e., on side)
+
+AmMercEnemy
+
+0: default
+1: Mercs have been attacked
+
+Used to keep track of whether mercs have been attacked. Only used by ammerc.bcs
+
+AmMonkEnemy: ditto for monks (used in ammgrd and ar5500)
+
+
+
+SCRIPT
+
+If smuggler status is odd, advance it by 1
+
+If DMWWMercStatus is 4, set Enclave to 2
+
+ONCE: If Abaz is dead, Send is *not* dead, and Balth is either dead or joined (i.e., if we've just finished phase 2 and Sendai is alive) darken the village
+
+ONCE: If we've just finished phase 2, and one of Abaz and Sendai is alive, create dw#ampp[1-3], and set an 8-second timer DMWWAttackTimer, and set DMWWAttackInitialise to 1 
+
+ONCE: Once the timer has expired, set DMWWVillageAttack=1
+
+ONCE: If party has the Monastery Key PLOT17A, set SaemonLeave=1
+
+ONCE: If Balthazar is *not* dead and the village is attacked, set DMWWMercStatus=2, and set a 12-second timer DW#VillageReinforce
+
+If the DW#VillageReinforce timer is expired 
+?? ++ and DW#ReinforceInitialise=2
+and Balth is alive and DMWWMercStatus<4, create a bunch of mercs and monks and set the timer back to 12
+(i.e. do that every 2 rounds)
+
+If DMWWVillageAttacked=1 and we've had <30 attackers type 1 attackers (DW#Attacker1cap) and if EXTRACOUNT6<5, and if Sendai is alive, increment the counts 1 and summon a drow or derro
+
+vice versa version for Abazigal
+
+Similarly for higher-power reinforcements [bug in number increment?]
+
+If DMWWVillageAttacked=1, and Balth, Sendai both live, and if we've gone over the two caps, and if mercstatus<4, and if the combat counter is 0, spawn dw#vime1 and two flunkies and set DMWWVillageAttacked=2
+
+Vice versa for Abazigal
+
+If Balth is dead, single block (??) to turn off attackers and set DMWWVillageAttacked=2 a la the above
+
+ONCE: Open the monastery door if either Balth is dead or he's joined the fight
+
+ONCE: If SaemonDisguise<2, and if either ammgrd01 or ammgrd04 is at <50% hp, spawn cutammag x2, cutamfig x2
+
+If Balth is dead, and it's daytime, and Enclave>=2, spawn random background NPCs
+
+ONCE: OnCreation, is Balth is dead, and Enclave=2, and either AmkMercCap or AmkMonkCap>0, set both to zero
+
+ONCE: Start chapter 9
+
+ONCE: If you've talked to Marlowe, add an appropriate map note for his house
+
+ONCE: If Enclave=2, spawn the guard with the key
+
+ONCE: If Enclave<2, and a timer has expired, spawn the Omar/Asana cs 
+
+ONCE: If Enclave<2, spawn the Monk/Priest. [will happen immediately upon entering for the first time.]
+
+ONCE: Spawn the Saemon CS
+
+If MONKSPAWNEDSMUGGLERPLOT=1, set it to 2
+
+ONCE: If door08 is open and door01 isn't, open door01.
+
+ONCE: If the guard on the gravecave is dead and party have taken Marlowe's quest, open the cave
+
+ONCE: If Enclave=2, open the gravecave
+
+If Enclave<2, and the village isn't under attack, and it's daytime, spawn random ambients
+
+Bunch of spawn scripts to spawn merc and the like if it's daytime, DMWWVillageAttacked isn't 1, and Enclave isn't 2.
+Plus one script to spawn monks that also checks AmMonkEnemy.
+
+If Enclave=2, and Balth isn't dead,and we haven't had a total of 25 mercs, and not too many are on screen, spawn one.
+Ditto monks.

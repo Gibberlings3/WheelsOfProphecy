@@ -1,0 +1,57 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		CreateCreature("cutspy",[776.558],0) // No such index
+		CreateCreature("balth",[758.514],14) // Balthazar
+		CreateCreature("dw#melis",[810.624],6) // Melissan
+		CreateCreature("balelit1",[861.479],14) // Monk
+		CreateCreature("balelit2",[625.558],14) // Monk
+		CreateCreature("balelit3",[704.759],8) // Monk
+		CreateCreature("balelit4",[1028.637],6) // Monk
+		MoveViewPoint([760.515],INSTANT)
+		Explore()
+		Wait(2)
+		ActionOverride("balth",DisplayStringHead(Myself,72056)) // So...Melissan, you have returned to my monastery.
+		Wait(3)
+		SmallWait(7)
+		ActionOverride("dw#melis",DisplayStringHead(Myself,72057)) // I have.  Balthazar, I have need of your --
+		Wait(2)
+		SmallWait(10)
+		ActionOverride("balth",DisplayStringHead(Myself,72058)) // Enough.  I know what happened at Saradush.  I know about the Bhaalspawn.
+		Wait(4)
+		SmallWait(7)
+		ActionOverride("dw#melis",DisplayStringHead(Myself,72059)) // It is unfortunate.  But I can explain, my old friend...
+		Wait(4)
+		ActionOverride("balth",DisplayStringHead(Myself,72060)) // No.  You force me to tip my hand, now.  It is time for you to die.
+		Wait(4)
+		ActionOverride("dw#melis",DisplayStringHead(Myself,72061)) // What?  What are you doing?!
+		Wait(2)
+		SmallWait(10)
+		ActionOverride("balth",DisplayStringHead(Myself,72063)) // You are no Child of Bhaal, Melissan.  Your part in this ends here...I shall see to that.  My brethren... take her!!
+		SmallWait(10)
+		ActionOverride("balelit1",MoveToPoint([850.580]))
+		ActionOverride("balelit2",MoveToPoint([770.580]))
+		ActionOverride("balelit3",MoveToPoint([770.640]))
+		ActionOverride("balelit4",MoveToPoint([850.640]))
+		SmallWait(3)
+		ActionOverride(Player2,JumpToPoint([479.768]))
+		ActionOverride(Player3,JumpToPoint([427.744]))
+		ActionOverride(Player4,JumpToPoint([579.801]))
+		ActionOverride(Player5,JumpToPoint([388.721]))
+		ActionOverride(Player6,JumpToPoint([637.812]))
+		JumpToPoint([540.794])
+		ActionOverride(Player2,Face(10))
+		ActionOverride(Player3,Face(10))
+		ActionOverride(Player4,Face(10))
+		ActionOverride(Player5,Face(10))
+		ActionOverride(Player6,Face(10))
+		Face(10)
+		Wait(2)
+		ActionOverride("cutspy",DestroySelf())
+		ActionOverride("balth",StartDialogueNoSet(Player1))
+		EndCutSceneMode()
+END
+
+

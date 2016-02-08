@@ -1,0 +1,13 @@
+*.7z
+*.rar
+*.zip
+*.tar.gz
+*.exe
+!iconv.exe
+!oggdec.exe
+!tisunpack.exe
+!TobExLoader.exe
+!ssl.exe
+!ssl_.exe
+setup-wheels
+setup-wheels.command

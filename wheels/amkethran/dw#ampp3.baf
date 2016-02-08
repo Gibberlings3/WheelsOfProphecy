@@ -1,0 +1,21 @@
+IF
+	!Range([PC],10)
+	OR(2)  
+              Global("DMWWBalthDeadPhase1","GLOBAL",1)
+              Detect([PC])
+THEN
+	RESPONSE #100
+		MoveToObject([PC])
+END
+
+IF
+	Range([PC],10)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@3082)
+		SetGlobal("DMWWAttackInitialise","GLOBAL",1)
+		SetGlobalTimer("DMWWAttackTimer","GLOBAL",5)
+		Wait(1)
+		EscapeArea()
+END
+

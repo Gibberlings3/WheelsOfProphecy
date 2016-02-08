@@ -1,0 +1,7 @@
+IF
+	WalkedToTrigger([ANYONE])
+	GlobalGT("DMWWBalthFirst","GLOBAL",0)
+THEN
+	RESPONSE #100
+		DisplayStringNoName(Myself,@3070)
+END

@@ -1,0 +1,277 @@
+// There are 5 states the cave can be in:
+//
+// S0: unvisited
+// S1: friendly smugglers
+// S2: smuggler/monk faceoff
+// S3: empty
+// S4: Saemon
+//
+// Upon entering AR5504, the variable DMWWSmugglerStatus gets set to 2n-1 if the current state is Sn.
+// Upon entering AR5500, it gets incremented by 1 (so that if it is set to 2n, that means the cave was last
+// in state Sn).
+
+// If we're at the endgame, and not at S3, go to S3
+
+IF
+	InMyArea(Player1)
+	Dead("abazigal")
+	Dead("sendai")
+	OR(2)
+		Dead("balth")
+		Global("BalthazarFights","GLOBAL",1)
+	OR(4)
+		Global("DMWWSmugglerStatus","GLOBAL",0)
+		Global("DMWWSmugglerStatus","GLOBAL",2)
+		Global("DMWWSmugglerStatus","GLOBAL",4)
+		Global("DMWWSmugglerStatus","GLOBAL",8)
+THEN
+	RESPONSE #100
+		FadeToColor([0.0],0)
+		ClearAllActions()
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",5)
+		Wait(3) // this gives any stray smugglers and monks time to leave
+		FadeFromColor([20.0],0)
+END
+
+// If A and S are dead, and B is hostile, and we're in S0-S2, go to S4 - i.e., spawn Saemon
+
+IF
+	InMyArea(Player1)
+	Dead("abazigal")
+	Dead("sendai")
+	!Dead("balth")
+	!Global("BalthazarFights","GLOBAL",1)
+	OR(3)
+		Global("DMWWSmugglerStatus","GLOBAL",0)
+		Global("DMWWSmugglerStatus","GLOBAL",2)
+		Global("DMWWSmugglerStatus","GLOBAL",4)
+THEN
+	RESPONSE #100
+		FadeToColor([0.0],0)
+		ClearAllActions()
+		CreateCreature("AMSAEMON",[861.942],2)  // ~Saemon Havarian~
+		CreateCreature("DEDSMUG",[527.817],0)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[900.724],12)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[882.1041],3)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[669.1002],0)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[802.450],6)  // ~Smuggler~
+		Wait(3)
+		FadeFromColor([20.0],0)
+		Wait(1)
+		SetGlobal("PlaceBodies","AR5504",1)
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",7)
+END
+
+// If at least one of A and S is dead, but B is still hostile, and we're at S1 or S2, and the confrontation with the monks has
+// happened, go to S4
+
+IF
+	InMyArea(Player1)
+	OR(2)
+		Dead("abazigal")
+		Dead("sendai")
+	OR(2)
+		Global("DMWWSmugglerStatus","GLOBAL",2)
+		Global("DMWWSmugglerStatus","GLOBAL",4)
+	OR(2)
+		GlobalTimerExpired("ThfMonksGone","GLOBAL")
+		Global("SmugglerPlot","GLOBAL",2)
+	!Dead("balth")
+	!Global("BalthazarFights","GLOBAL",1)
+THEN
+	RESPONSE #100
+		FadeToColor([0.0],0)
+		ClearAllActions()
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",7)
+		CreateCreature("AMSAEMON",[861.942],2)  // ~Saemon Havarian~
+		CreateCreature("DEDSMUG",[527.817],0)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[900.724],12)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[882.1041],3)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[669.1002],0)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[802.450],6)  // ~Smuggler~
+		Wait(3)
+		FadeFromColor([20.0],0)
+		Wait(1)
+		SetGlobal("PlaceBodies","AR5504",1)		
+END
+
+/// If we're at S0 (and, tacitly, the above conditions don't hold), go to S1
+
+IF
+	InMyArea(Player1)
+	Global("DMWWSmugglerStatus","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",1)
+END
+
+/// If the smugglers are hostile and we're in S1 or S2, go to S3
+
+IF
+	InMyArea(Player1)
+	Global("DMWWSmugglersHostile","GLOBAL",1)
+	OR(2)
+		Global("DMWWSmugglerStatus","GLOBAL",2)
+		Global("DMWWSmugglerStatus","GLOBAL",4)
+THEN
+	RESPONSE #100
+		FadeToColor([0.0],0)
+		ClearAllActions()
+		Wait(3) // this gives any stray smugglers and monks time to leave
+		FadeFromColor([20.0],0)
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",5)
+END
+
+/// If we're in S1 or at S2 and the Balthazar conflict is resolved, stay at S1
+
+IF
+	InMyArea(Player1)
+	OR(2)
+		Global("DMWWSmugglerStatus","GLOBAL",2)
+		Global("DMWWSmugglerStatus","GLOBAL",4)
+	OR(2)
+		Dead("balth")
+		Global("BalthazarFights","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",1)
+END
+
+//// If we're at S1 or S2, and a scoot timer is expired, go to S3
+
+IF	
+	InMyArea(Player1)
+	OR(2)
+		Global("DMWWSmugglerStatus","GLOBAL",2)
+		Global("DMWWSmugglerStatus","GLOBAL",4)
+	OR(2)
+		GlobalTimerExpired("ThievesScoot","AR5504")
+		GlobalTimerExpired("ThfMonksGone","GLOBAL")
+THEN
+	RESPONSE #100
+		FadeToColor([0.0],0)
+		ClearAllActions()
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",5)
+		Wait(3) // this gives any stray smugglers and monks time to leave
+		FadeFromColor([20.0],0)
+END
+
+//// If we're at S2, and the monks are chased off, stay at S1
+
+
+IF
+	InMyArea(Player1)
+	Global("DMWWSmugglerStatus","GLOBAL",2)
+	Global("SmugglerPlot","GLOBAL",2)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",1)
+END
+
+//// If we're at S2, and a scoot timer is running, stay at S1
+
+
+IF
+	InMyArea(Player1)
+	Global("DMWWSmugglerStatus","GLOBAL",2)
+	GlobalTimerNotExpired("ThfMonksGone","GLOBAL")
+	GlobalTimerNotExpired("ThievesScoot","AR5504")
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",1)
+END
+
+//// If we're at S1 or S2, and my "monk fight running" timer is running, stay at S1
+
+IF
+	InMyArea(Player1)
+	Global("DMWWSmugglerStatus","GLOBAL",2)
+	GlobalTimerNotExpired("DMWWMonkFightTimer","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",1)
+END
+
+//// If we're at S1 [and, tacitly, no other conditions hold] go to S2, i.e. trigger the monk confrontation
+
+
+IF
+	InMyArea(Player1)
+	Global("DMWWSmugglerStatus","GLOBAL",2)
+THEN
+	RESPONSE #100
+		FadeToColor([0.0],0)
+		ClearAllActions()
+		Wait(1)
+		CreateCreature("AMMONK02",[682.1034],0)  // ~Monk~
+    		CreateCreature("AMMONK04",[541.1021],0)  // ~Monk~
+    		CreateCreature("AMMONK05",[559.951],0)  // ~Monk~
+    		CreateCreature("AMMONK06",[659.931],0)  // ~Monk~
+    		ActionOverride("AMMONK02",FaceObject("AMCARRAS"))
+    		ActionOverride("AMMONK04",FaceObject("AMCARRAS"))
+    		ActionOverride("AMMONK05",FaceObject("AMCARRAS"))
+    		ActionOverride("AMMONK06",FaceObject("AMCARRAS"))
+		Wait(1)
+		FadeFromColor([20.0],0)
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",3)
+		SetGlobalTimer("DMWWMonkFightTimer","GLOBAL",18)
+		SetGlobal("SmugglerPlot","GLOBAL",1)
+END
+
+//// If we're at S3, and at least one of A and S is dead, and Balth is hostile, go to S4 - i.e. spawn Saemon
+
+
+IF
+	OR(2)
+		Dead("abazigal")
+		Dead("sendai")
+	!Dead("balth")
+	!Global("BalthazarFights","GLOBAL",1)
+	Global("DMWWSmugglerStatus","GLOBAL",6)
+THEN
+	RESPONSE #100
+		FadeToColor([0.0],0)
+		ClearAllActions()
+		CreateCreature("AMSAEMON",[861.942],2)  // ~Saemon Havarian~
+		CreateCreature("DEDSMUG",[527.817],0)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[900.724],12)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[882.1041],3)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[669.1002],0)  // ~Smuggler~
+		CreateCreature("DEDSMUG",[802.450],6)  // ~Smuggler~
+		Wait(3)
+		FadeFromColor([20.0],0)
+		Wait(1)
+		SetGlobal("PlaceBodies","AR5504",1)
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",7)
+END
+
+///// If we're at S4, and Balth is friendly or dead, go to S3
+
+IF
+	InMyArea(Player1)
+	Global("DMWWSmugglerStatus","GLOBAL",8)
+	OR(2)
+		Dead("balth")
+		Global("BalthazarFights","GLOBAL",1)
+THEN
+	RESPONSE #100
+		FadeToColor([0.0],0)
+		ClearAllActions()
+		Wait(3) // this gives any stray smugglers and monks time to leave
+		FadeFromColor([20.0],0)
+		SetGlobal("DMWWSmugglerStatus","GLOBAL",5)
+END
+
+////// Catch-all
+
+IF
+	InMyArea(Player1)
+	OR(4)
+		Global("DMWWSmugglerStatus","GLOBAL",2)
+		Global("DMWWSmugglerStatus","GLOBAL",4)
+		Global("DMWWSmugglerStatus","GLOBAL",6)
+		Global("DMWWSmugglerStatus","GLOBAL",8)
+THEN 	
+	RESPONSE #100
+		IncrementGlobal("DMWWSmugglerStatus","GLOBAL",-1)
+END

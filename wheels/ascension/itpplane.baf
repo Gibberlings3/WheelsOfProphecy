@@ -1,0 +1,13 @@
+IF
+  WalkedToTrigger([ANYONE])
+  Global("BalthazarFights","GLOBAL",1)
+  Global("LeavingPocketPlane","AR4500",1)
+  GlobalGT("GavePocketPlane","GLOBAL",0)
+  !GlobalTimerNotExpired("Triggered","MYAREA")
+THEN
+  RESPONSE #100
+    ClearAllActions()
+    SetGlobalTimer("Triggered","MYAREA",10)
+    CreateCreature("PPGuy01",[1993.1116],4)  // <Invalid Strref -1>
+END
+

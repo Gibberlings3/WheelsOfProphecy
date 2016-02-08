@@ -1,0 +1,153 @@
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+////   Balth's full (non-combat) script
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+/////  General combat management for Balth
+/////  Only in phase 1 is he unkillable when hostile.
+///////////////////////////////////////////////////////////////////////////////
+
+IF
+        Global("HadBhaal25Dream2","GLOBAL",1)
+	HasItem("minhp1",Myself)
+	Allegiance(Myself,ENEMY)
+THEN
+	RESPONSE #100
+		DestroyItem("minhp1")
+END
+
+///////////////////////////////////////////////////////////////////////////////
+/////  General combat management for Balth/Mel showdowns
+/////  Mel goes hostile only via her dialog block, which sets DMWWMelHostile=1
+///////////////////////////////////////////////////////////////////////////////
+
+IF
+	Global("DMWWMelHostile","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWMelHostile","GLOBAL",2)
+		ChangeEnemyAlly(Myself,GOODBUTBLUE)
+		ChangeAIScript("dw#balme",DEFAULT)
+END
+
+IF
+	Global("DMWWMelHostile","GLOBAL",2)
+    OR(6)
+      AttackedBy([GOODCUTOFF.0.0.0.0.SUMMONED],DEFAULT)
+      AttackedBy([PC],DEFAULT)
+      AttackedBy([FAMILIAR],DEFAULT)
+      AttackedBy([ALLY],DEFAULT)
+      AttackedBy([CONTROLLED],DEFAULT)
+      AttackedBy([CHARMED],DEFAULT)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWMelHostile","GLOBAL",3)
+		Enemy()
+		ChangeAIScript("balthft",DEFAULT)
+		StartDialogNoSet(Player1)
+END
+
+///////////////////////////////////////////////////////////////////////////////
+/////  Phase 1
+/////
+/////   Balth is destroyed and respawned if party leave and return, so 
+/////   NumTimesTalkedTo=0 catches all conversations
+///////////////////////////////////////////////////////////////////////////////
+
+IF
+      !Global("HadBhaal25Dream2","GLOBAL",1)
+      NumTimesTalkedTo(0)
+      Detect([PC])
+THEN
+      RESPONSE #100
+           StartDialogNoSet(Player1)
+END
+
+///////////////////////////////////////////////////////////////////////////////
+/////  Phase 2
+/////
+/////   Initial conversation comes from Balthazar but via a cutscene, and doesn't
+/////   need setting here.
+/////
+/////   After Melissan's death, dialog with Balth is triggered by 
+/////   Global("DMWWmeldeathdialog","GLOBAL",2), set by area script.
+/////
+/////   After the player returns from the dream, it's controlled by dream variables
+/////   and a local
+///////////////////////////////////////////////////////////////////////////////
+
+IF
+        Global("HadBhaal25Dream2","GLOBAL",1) //// this block covers both Phase 2 and Phase 3 post-Mel-death dialogs
+        Global("DMWWmeldeathdialog","GLOBAL",2)
+        CombatCounter(0)
+THEN
+    RESPONSE #100
+             SetGlobal("DMWWmeldeathdialog","GLOBAL",3)
+             StartDialogNoSet(Player1)
+END
+
+IF
+	Global("HadBhaal25Dream3","GLOBAL",1)
+	!Global("HadBhaal25Dream5","GLOBAL",1)
+	Dead("dw#melis") // otherwise this triggers if you confront Balth in phase 3
+	!Global("postdream","LOCALS",1)
+THEN
+	RESPONSE #100
+		SetGlobal("postdream","LOCALS",1)
+		StartDialogNoSet(Player1)
+END
+
+IF
+        Global("DMWWVillageAttacked","GLOBAL",1)
+        !GlobalTimerNotExpired("castspell","LOCALS")
+THEN
+        RESPONSE #100
+             SetGlobalTimer("castspell","LOCALS",6)
+             ForceSpell(Myself,DRYAD_TELEPORT)
+END
+
+///////////////////////////////////////////////////////////////////////////////
+/////  Phase 3
+/////
+/////   Initial conversation comes from Balthazar via a cutscene, and doesn't
+/////   need setting here. So is conversation after Balth summons Melissan (if he does).
+/////
+/////   Post-Mel-death Balthazar conversation is handled by the Phase 2 block
+/////
+/////   Balth's book is handled by area script.
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+/////  Phase 4
+/////
+/////  If you parley with Balth in phase 2 and then return after killing Ab/Sen in
+/////  phase 3, Balth is spawned by area script but will not initiate dialog.
+/////  We only need one dialog here, so use NumTimesTalkedTo. The same block should
+/////  deal with Balth in the Grove of Tethyr.
+///////////////////////////////////////////////////////////////////////////////
+
+IF
+       Global("HadBhaal25Dream3","GLOBAL",1)
+       Global("BalthazarFights","GLOBAL",1)
+       Dead("sendai")
+       Dead("abazigal")
+       NumTimesTalkedTo(0)
+       Detect([PC])
+THEN
+       RESPONSE #100
+             StartDialogNoSet(Player1)
+END
+
+
+
+
+
+
+
+
+
+
+

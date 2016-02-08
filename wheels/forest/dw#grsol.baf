@@ -1,0 +1,6 @@
+IF
+	!Detect([GOODCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END

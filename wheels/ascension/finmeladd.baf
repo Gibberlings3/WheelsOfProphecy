@@ -1,0 +1,29 @@
+IF
+	Global("MelissanSpeaksFirst","GLOBAL",0)
+	Global("BalthazarFights","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("MelissanSpeaksFirst","GLOBAL",1)
+		StartDialogueNoSet(Player1)
+END
+
+IF
+	Global("MelissanSpeaksFirst","GLOBAL",0)
+	Global("BalthazarFights","GLOBAL",1)
+	Global("SpawnBalthAlly","AR6200",1)
+THEN
+	RESPONSE #100
+		SetGlobal("MelissanSpeaksFirst","GLOBAL",1)
+		StartDialogueNoSet(Player1)
+END
+
+IF
+	Global("FinalFight","AR6200",7)
+	HPLT(Myself,20)
+	Global("BalthazarFights","GLOBAL",1)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		StartCutSceneMode()
+		StartCutScene("cut233ga")
+END

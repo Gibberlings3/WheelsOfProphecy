@@ -1,0 +1,17 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		ActionOverride("dw#melis",Kill(Myself))
+		ActionOverride("dw#wrmo1",DestroySelf())
+		ActionOverride("dw#wrmo2",DestroySelf())
+		ActionOverride("dw#wrmo3",DestroySelf())
+		ActionOverride("dw#wrmo4",DestroySelf())
+		Wait(1)
+		CreateVisualEffectObject("spfleshs","dw#melis")
+		Wait(1)
+		ActionOverride("dw#melis",DestroySelf())
+		Wait(1)
+		EndCutSceneMode()
+END

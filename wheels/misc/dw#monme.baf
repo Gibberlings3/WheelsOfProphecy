@@ -1,0 +1,22 @@
+IF
+        Global("DMWWVillageAttacked","GLOBAL",1)
+THEN
+        RESPONSE #100
+                 EscapeArea()
+END
+
+IF
+        !Global("DMWWVillageAttacked","GLOBAL",1)
+	!Detect(Player1)
+THEN
+	RESPONSE #100
+		MoveToObject(Player1)
+END
+
+IF 
+	Detect(Player1)
+	NumTimesTalkedTo(0)
+THEN
+	RESPONSE #100
+		StartDialogNoSet(Player1)
+END

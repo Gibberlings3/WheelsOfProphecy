@@ -1,0 +1,15 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		ActionOverride("dw#cutme",ForceSpell(Myself,DO_SOME_EFFECTS))
+		Wait(5)
+		CreateCreature("sengua02",[322.617],12) // Guard Captain
+		ActionOverride("sengua02",MoveToPointNoInterrupt([562.664]))
+		Wait(4)
+		ActionOverride("sengua02",StartDialogueNoSet(Player1))
+		EndCutSceneMode()
+END
+
+

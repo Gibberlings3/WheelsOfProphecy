@@ -1,0 +1,16 @@
+DEFINE_ACTION_FUNCTION wheels_misc BEGIN
+   
+     OUTER_SPRINT local_loc misc
+     
+     
+     
+     // Pocket Plane
+     LAF swap_text STR_VAR file=itpplane.bcs swaps=~Dead("balth")=>Global("DMWWGroveRevealed","GLOBAL",1)~ ~Global("BalthazarFights","GLOBAL",1)=>Global("DMWWGroveRevealed","GLOBAL",1)~ END
+     LAF install STR_VAR file=ppguy01.d END
+     
+     // Elminster's Return
+     
+     LAF extend STR_VAR script="ar6108 ar6005 ar6000 ar6100 ar5500" top=elminster END
+     LAF swap_text STR_VAR files="ar6000.bcs ar6100.bcs" swaps=~Global("Enclave","GLOBAL",2)=>Dead("sendai")Dead("abazigal")!Dead("balth")!Global("BalthazarFights","GLOBAL",1)~ END
+
+END

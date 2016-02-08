@@ -1,0 +1,111 @@
+Abazigal
+
+Ab1: HP>1
+
+Only exit: Enemy()
+
+Ab2: Death=1 (LOCALS)
+
+Ab2a: Is Melissan dead?
+Y: exit
+N: goto Ab2b
+
+Ab2b: who is dead?
+
+Sendai and Balth: exit
+Sendai only: enclave=2, exit
+Balth only: exit
+neither: enclave=1, exit
+
+Sendai
+
+Sen1: !SendaiCutScene1=1
+
+Only exit: triggers Sendai's usual status cutscene
+
+Sen2: Death=1 (LOCALS)
+
+Sen2a: is Mel dead?
+Y:exit
+N:goto Sen2b
+
+Sen2b: who is dead?
+
+Abaz and Balth: exit (with misfigured journal entry)
+Abaz only: enclave=2, exit
+Balth only: exit
+neither: enclave=1, exit
+
+
+Balthazar [script conditions inaccurate, see "balthazar conversation logic"
+
+Bal1: metbal=0
+Only exit: close-monastery cs
+
+Bal2: metbal=1, or enclave=2, or Mel dead, one of Abaz/Send alive, !HadBhaal25Dream3=1
+
+Bal2a: do you fail to fight Balth or not try to persuade him?
+Y: exit, alert, enemy
+N: goto Bal2b
+
+Bal2b: does Balth kill himself?
+Y: Bal dies, create dw#balbo on his body
+N: go to Bal2c
+
+Bal2c: who is alive?
+At least one of Abaz and Send: DMWWBalthMidAlliance=1 [??], HadBhaal25Dream3=1, TalkedToSolar=4, talk to solar
+Neither: DMWWBvMend=1, timer DMWWBalCallsMel=18, BalthazarFights=1, Escape, EXIT
+
+Bal2var:
+
+Bal3: Metbal=1, Dream2=0, DMWWBalthFirst=0, AmMonkEnemy=0
+
+Do you retreat from the throne room?
+Y: lose plot17b, set DMWWBalthFirst=1, wipe throneroom contents, dump party in Amkethran
+N: Alert, enemy, exit 
+
+Bal4: one of Abaz/Send alive, !enemy, BalthazarFights=1
+
+only exit: create dw#monme
+
+Bal5: MetBal=1, Dream2=0, hp=1, DMWWBalthFirst=2
+
+only exit: die
+
+Bal6: HadBhaal25Dream5=1
+
+Do you betray him?
+Y: BalthazarFights=0, exit, enemy
+N: remove Balth, enemy
+
+Bal7: DMWWMelHostile=3
+
+only exit: DMWWMelHostile=4
+
+Bal8: Had dream 2, not had dream3, mel alive
+
+Who do you fight?
+Balth: Alert, enemy, exit
+Mel: DMWWMelHostile=1, set up melissan fight
+
+Bal9: Mel/Abaz/Send all dead, !HadBhaal25Dream5=1
+
+Betray Balth?:
+Y: BalthazarFights=1, enemy, lose minhp
+N: GroveReveal=1, balth leaves
+
+Bal10: DMWWBvMEnd=2
+
+only exit: DMWWMelHostile=1, set up melissan fight, DMWWBvMEnd=3
+
+Bal11: metbal=1, Dream2=0, DMWWBalthFirst=1, AmMonkEnemy=0
+
+Alert, enemy, exit 
+
+Bal12: ammonkenemy=1, hp>1, Dream2=0
+
+Alert, enemy, exit 
+
+Monastery monk
+
+Mon1: only exit sets DMWWVillageAttacked=1, removes Balth

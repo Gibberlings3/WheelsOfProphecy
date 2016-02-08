@@ -1,0 +1,13 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		MoveViewPoint([850.580],INSTANT)
+		Wait(3)
+		CreateCreatureDoor("dw#melis",[850.580],14)
+		Wait(4)
+		ActionOverride("dw#melis",StartDialogNoSet(Player1))
+		EndCutSceneMode()
+END
+

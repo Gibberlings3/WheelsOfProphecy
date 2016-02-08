@@ -1,0 +1,19 @@
+IF
+	Dead("abazigal")
+	Dead("sendai")
+	Dead("balth")
+	Global("HadBhaal25Dream3","GLOBAL",1)
+	Global("AMReturnOfElminster","GLOBAL",0)
+	Global("DMWWGroveRevealed","GLOBAL",0)
+	!Global("DMWWBalthHasBook","GLOBAL",1)
+	CombatCounter(0)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		StartCutSceneMode()
+		CreateCreatureObjectEffect("AMELM01","SPFLESHS",Player1)
+		SetGlobal("AMReturnOfElminster","GLOBAL",1)
+		SetGlobal("DMWWGroveRevealed","GLOBAL",1)
+		Wait(2)
+		EndCutSceneMode()
+END

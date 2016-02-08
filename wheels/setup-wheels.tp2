@@ -1,0 +1,37 @@
+BACKUP ~stratagems_external/backup/wheels~
+AUTHOR ~For help troubleshooting installation problems, go to the Wheels of Prophecy forum at forums.gibberlings3.net.~
+VERSION ~v3~
+README ~wheels/readme-wheels.html~
+AUTO_EVAL_STRINGS
+AUTO_TRA ~%s~
+
+
+
+ALWAYS
+   OUTER_SET debug_variable=0
+   OUTER_SPRINT scsroot wheels
+   OUTER_SET read_resources=1
+   OUTER_SPRINT workspace ~stratagems_external/workspace~
+   INCLUDE ~%scsroot%/sfo/install_sfo.tpa~
+   APPEND state.ids "0x00000029 STATE_IMMOBILE" UNLESS " +STATE_IMMOBILE"
+   APPEND state.ids "0x8010202D STATE_DISABLED" UNLESS " +STATE_DISABLED"
+END
+
+////////////////////////////////////////////////////////////////////
+////	Language commands
+//////////////////////////////////////////////////////////////////////
+
+LANGUAGE 
+"English" 
+"wheels/tra/english"
+ ~wheels/tra/english/setup.tra~
+
+ ///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+BEGIN @1 // ~The Wheels of Prophecy~
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+REQUIRE_PREDICATE GAME_IS "tob bgt bg2ee" @2
+REQUIRE_PREDICATE !FILE_EXISTS "override/dw#setup.mrk" @3
+OUTER_SPRINT component_loc ""
+LAF run STR_VAR file="wheels" location=lib END

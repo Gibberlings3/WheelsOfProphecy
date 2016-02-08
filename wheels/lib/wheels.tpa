@@ -1,0 +1,16 @@
+DEFINE_ACTION_FUNCTION wheels BEGIN
+
+    ACTION_IF !FILE_EXISTS_IN_GAME "finbalth.cre" BEGIN
+       LAF run STR_VAR file="wheels_ascension" location=lib END
+    END
+
+    LAF HANDLE_AUDIO STR_VAR audio_path="%scsroot%/sounds" END
+
+    ACTION_FOR_EACH func IN dialog cutscenes throneroom forest heads misc amkethran BEGIN
+         LAF run STR_VAR file="wheels_%func%" location=lib END
+    END
+
+    ADD_JOURNAL EXISTING @1000 @1001 @1002 @1003 @1004 @1005 @1006 @1007 @1009 @1010 @1011 @1012 @1013 @1014 @1015 @1016 @1018 @1019 @1020 @1021
+
+END
+

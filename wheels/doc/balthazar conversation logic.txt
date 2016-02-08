@@ -1,0 +1,78 @@
+Bal1: metbal=0
+Bal2: HadBhaal25Dream3=1, HadBhaal25Dream5=0, Abaz/Send both dead, mel not dead, DMWWBvMEnd != 2
+(2var) Mel dead, !HadBhaal25Dream3=1,
+Bal3: Metbal=1,, DMWWBalthFirst=0, hp>1, HadBhaal25Dream2=0 AmMonkEnemy=0
+Bal4: one of Abaz/Send alive, !enemy, HadBhaal25Dream3=1
+Bal5: hp=1 HadBhaal25Dream2=0
+Bal6: HadBhaal25Dream5=1
+Bal7: DMWWMelHostile=3 <must have very low weight>
+Bal8: HadBhaal25Dream3=0, HadBhaal25Dream2=1,  mel not dead
+Bal9: Mel dead, !HadBhaal25Dream5=1, HadBhaal25Dream3=1, ++ abaz, send both dead
+Bal10:DMWWBvMEnd=2, !HadBhaal25Dream5=1 HadBhaal25Dream3=1, mel not dead
+Bal11:DMWWBalthFirst=1, Ammonkenemy=0, hp>1, HadBhaal25Dream2=0
+Bal12:AmMonkEnemy=1, hp>1, HadBhaal25Dream2=0
+
+
+
+Make this a logic tree. 1 and 7 are special and handled by weight.
+CONFIRMED THESE ARE MUTUALLY EXCLUSIVE EXCEPT 1/7
+1, 7 are self-killing: they anull their allowance variable & so fire once only
+
+both A/S alive, monks non-hostile, first time breaking in, bal hp>1?
+Y: 3
+both A/S alive, monks non-hostile, not first time breaking in, bal hp>1?
+Y: 11
+both A/S alive, monks hostile, bal hp>1?
+Y: 12
+both A/S alive, bal hp=1?
+Y: 5
+had dream2 but not dream3, mel alive?
+Y: 8
+had dream2 but not dream3, mel dead?
+Y: 2var
+had dream3, one of Abaz/Send alive, DMWWBvMEnd not 2?
+Y: 4
+had dream3, both Abaz and Sendai dead, mel alive, DMWWBvMEnd not 2?
+Y: 2
+DMWWBvEnd=2?
+Y: 10
+Abaz, Sendai, Mel all dead, not yet had dream 5, have had dream 3?
+Y: 9
+Had dream 5?
+Y: 6
+
+
+Break these down by dream status
+
+!dream2 [phase 1]
+
+3, 5, new
+
+dream2, !dream3 [phase 2]
+
+2var, 8
+
+dream3, !dream5 [phase 3]
+
+2, 4, 9, 10
+
+dream5 [finale]
+
+6
+
+Situations that might trigger Balthazar cs
+
+
+
+- initial meeting:1
+- breaking into throne room in phase 1: 3
+- breaking into throne room again in phase 1: 12
+- interjection before death in phase 1: 5
+- breaking into throne room in phase 2 (mel/balth confrontation):8
+- breaking into throne room in phase 3: ?2
+- balthazar interjection after Mel phase 2 defeat:2var
+- balthazar interjection after Mel phase 3 defeat:9
+- balthazar challenge to Mel in phase 3: 10
+- balthazar interjection after Solar cs post Melissan's defeat in phase 2:4
+- balthazar response to treachery in the fight with Melissan:7
+- balthazar conversation after the return to the grove: 6

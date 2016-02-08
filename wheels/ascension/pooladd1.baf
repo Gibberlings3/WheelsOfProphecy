@@ -1,0 +1,14 @@
+IF
+	WalkedToTrigger([ANYONE])
+	!GlobalTimerNotExpired("Pool1Timer","AR6200")
+	Global("Pool1Active","AR6200",0)
+	Dead("finsol02") // Yan-C-Bin
+	Global("BalthazarFights","GLOBAL",1)
+	!Dead("balth2")
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		StartCutSceneMode()
+		SetGlobalTimer("Pool1Timer","AR6200",10)
+		StartCutScene("cut233ba")
+END

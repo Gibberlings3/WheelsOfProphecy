@@ -1,0 +1,296 @@
+/////////////////////////////////////////////////////////////
+///
+///   Balthazar's powers
+///       - Solar Stance (balth01; sunfire+wingbuffet, 6 seconds immunity to fire) 1/3 rds
+///       - Lunar Stance (balth02; major protections, immunity to timestop, set LUNAR=1) 1/3 rds
+///       - Dragon Fist (balth03; destroys specific and spell (but not combat) protections; slows) 1/3 rds
+///       - Hand of Murder (balth05; boosts own attacks; critical strike; save or die) 1/3 rds
+///       - Tiger Strike (balth06; big increase in critical hit chance for self; applies wing buffet; stuns) 1/4 rds
+///       - Shadowless Kick (balth09; wing buffet, 4d8 damage, brief stun) 1/2 rds
+///       - Shadow Stance (balth10; II; big AC bonus) 1/3 rds
+///       - Flip Resistance (balth11; becomes almost immune to physical damage; no resistance to elemental damage; lasts 2 rds) 1 /3 rds
+///       - "Greater Malison" (also includes a slowing effect) autocast on entering Lunar Stance
+///       - "Glitterdust" (balth12; really is Glitterdust I think) autocast on entering Lunar Stance
+///       - "Faster than the Eye!" (balth08; scripted teleport)
+///       - "Second Wind" (just cleric Heal) once
+///       - potions of superior healing
+///
+///
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// actions
+
+BEGIN_ACTION_DEFINITION
+	Name(SpellTimer)
+	TRIGGER
+		!GlobalTimerNotExpired("castspell","LOCALS")
+                !GlobalTimerNotExpired("scsargument2","LOCALS")
+		!CheckStatGT(scstarget,0,SANCTUARY)
+		!StateCheck(Myself,STATE_DISABLED)
+	ACTION
+		RESPONSE #scsprob1
+		SetGlobalTimer("castspell","LOCALS",6)
+		SetGlobalTimer("scsargument2","LOCALS",scsargument3)
+		FaceObject(scstarget)
+		ForceSpell(scstarget,scsargument1)
+END
+
+BEGIN_ACTION_DEFINITION
+	Name(SpellTimerRES)
+	TRIGGER
+		!GlobalTimerNotExpired("castspell","LOCALS")
+		!GlobalTimerNotExpired("scsargument2","LOCALS")
+		!CheckStatGT(scstarget,0,SANCTUARY)
+		!StateCheck(Myself,STATE_DISABLED)
+	ACTION
+		RESPONSE #scsprob1
+		SetGlobalTimer("castspell","LOCALS",6)
+		SetGlobalTimer("scsargument2","LOCALS",scsargument3)
+		FaceObject(scstarget)
+		ForceSpellRES(scsargument1,scstarget)
+END
+
+BEGIN_ACTION_DEFINITION
+	Name(SpellTimerMyself)
+	TRIGGER
+		!GlobalTimerNotExpired("castspell","LOCALS")
+		!StateCheck(Myself,STATE_DISABLED)
+		!GlobalTimerNotExpired("scsargument2","LOCALS")
+	ACTION
+		RESPONSE #scsprob1
+		SetGlobalTimer("castspell","LOCALS",6)
+		SetGlobalTimer("scsargument2","LOCALS",scsargument3)
+		ForceSpell(Myself,scsargument1)
+END
+
+BEGIN_ACTION_DEFINITION
+	Name(SpellTimerMyselfRES)
+	TRIGGER
+		!GlobalTimerNotExpired("castspell","LOCALS")
+		!StateCheck(Myself,STATE_DISABLED)
+		!GlobalTimerNotExpired("scsargument2","LOCALS")
+	ACTION
+		RESPONSE #scsprob1
+		SetGlobalTimer("castspell","LOCALS",6)
+		SetGlobalTimer("scsargument2","LOCALS",scsargument3)
+		ForceSpellRES(scsargument1,Myself)
+END
+
+BEGIN_ACTION_DEFINITION
+	Name(Potion)
+	TRIGGER
+		HasItem(scsargument1,Myself)
+		!GlobalTimerNotExpired("castspell","LOCALS")
+	ACTION
+		RESPONSE #scsprob1
+		SetGlobalTimer("castspell","LOCALS",6)
+		UseItem(scsargument1,Myself)
+		DisplayStringHead(Myself,scsargument2)
+END
+
+/////////////////////////////////////////////////
+/// Autocasting of LunarStance stuff
+/////////////////////////////////////////////////
+
+IF TRIGGER
+   TargetBlock(EnemiesInOrder)
+   TriggerBlock(Helpless)
+   Global("lunar","GLOBAL",1)
+THEN DO
+   Action(Literal)
+   ReallyForceSpellRES("balth07",scstarget)
+   ReallyForceSpellRES("balth12",scstarget)
+   SetGlobal("lunar","GLOBAL",0)
+END
+
+/////////////////////////////////////////////////
+/// Defensive actions
+/////////////////////////////////////////////////
+
+// Initial Lunar Stance
+
+IF TRIGGER
+   TargetBlock(EnemiesInOrderShort)
+   TriggerBlock(Helpless)
+THEN DO
+		DisplayStringHead(Myself,72908) // Lunar Stance!
+     Action(SpellTimerMyselfRES,"balth02",lunarstanceinitial,1000)
+     SetGlobalTimer("lunarstance","LOCALS",18)
+END
+
+// Second wind has top priority
+
+IF TRIGGER
+   HPPercentLT(Myself,30)
+   HPGT(Myself,1)
+THEN DO
+   Action(SpellTimerMyself,CLERIC_HEAL,secondwind,1000)
+   DisplayStringHead(Myself,73944) // Second Wind!
+END
+
+// If possible, go invisible and get some distance
+
+IF TRIGGER
+   HPPercentLT(Myself,60)
+   StateCheck(Myself,STATE_INVISIBLE)
+THEN DO
+   Action(SpellTimerMyselfRES,"balth10",shadowstance,18|100|100)
+   DisplayStringHead(Myself,73943) // Shadow Stance!
+END
+
+// Drink healing potions if not in close combat
+
+IF TRIGGER
+    HPPercentLT(Myself,100)
+    !Range(NearestEnemyOf(Myself),8)
+THEN DO
+     Action(Potion,"potn55",@3160|100|100)
+END
+
+// flip resistances if being mobbed
+
+IF TRIGGER
+    Range(NearestEnemyOf(Myself),6)
+    Range(SecondNearestEnemyOf(Myself),6)
+    !StateCheck(Myself,STATE_INVISIBLE)
+THEN DO
+    Action(SpellTimerMyselfRES,"balth11",defensiveparry,18|100|100)
+END
+
+// flip resistances if under attack by anyone with supergood attacks
+
+IF TRIGGER
+   TargetBlock(EnemiesInOrderShort)
+   TriggerBlock(Helpless)
+   Range(scstarget,6)
+   !StateCheck(Myself,STATE_INVISIBLE)
+THEN DO
+    Action(SpellTimerMyselfRES,"balth11",defensiveparry,18|100|100)
+END
+
+// do Lunar Stance on spec
+
+IF TRIGGER
+   TargetBlock(EnemiesInOrderShort)
+   TriggerBlock(Helpless)
+THEN DO
+		DisplayStringHead(Myself,72908) // Lunar Stance!
+     Action(SpellTimerMyselfRES,"balth02",lunarstance,18)
+END
+
+/////////////////////////////////////////////////
+/// Attack actions
+/////////////////////////////////////////////////
+
+/// Any really close types? kick them away with Shadowless Kick
+
+IF TRIGGER
+   TargetBlock(EnemiesInOrderShort)
+   TriggerBlock(Helpless)
+   Range(scstarget,4)
+THEN DO
+     FaceObject(LastSeenBy(Myself))
+     SetSequence(SEQ_ATTACK_BACKSLASH)
+     DisplayStringHead(Myself,73942) // Shadowless Kick!
+     Action(SpellTimerRES,"balth09",shadowlesskick,12|100|100)
+END
+
+// Anyone magically protected? Blast their defences with Dragon Fist
+
+IF TRIGGER
+   TargetBlock(EnemiesInOrderShort)
+   TriggerBlock(Helpless)
+   OR(4)
+		HasImmunityEffects(scstarget)
+		CheckStatGT(scstarget,0,STONESKINS)
+		HasBounceEffects(scstarget)
+		CheckStatGT(scstarget,0,SCRIPTINGSTATE2)
+   Range(scstarget,4)
+THEN DO
+		FaceObject(LastSeenBy(Myself))
+		DisplayStringHead(Myself,72915) // Dragon Fist
+		SetSequence(SEQ_ATTACK_JAB)
+		PlaySound("HIT_02B")
+		SetGlobalTimer("locktarget","LOCALS",6)
+		Action(SpellTimerMyselfRES,"balth03",dragonfist,18|100|100)
+END
+
+// blat someone away, though not if they're nearly dead
+
+IF TRIGGER
+    TargetBlock(EnemiesInOrderShort)
+    TriggerBlock(Helpless)
+    Range(scstarget,4)
+    HPPercentGT(scstarget,25)
+THEN DO
+		Action(SpellTimerMyselfRES,"balth04",tigerstrike,24|100|100)
+		DisplayStringHead(Myself,72916) // Tiger Strike
+		SetGlobalTimer("locktarget","LOCALS",4)
+END
+
+// use hand of murder on spec
+
+IF TRIGGER
+    Range(NearestEnemyOf(Myself),4)
+THEN DO
+     DisplayStringHead(Myself,71989) // Hand of Murder
+     Action(SpellTimerMyselfRES,"balth05",handofmurder,18)
+END
+
+
+/////////////////////////////////////////////////
+/// Melee actions
+/////////////////////////////////////////////////
+
+// kill any pre-locked target
+
+IF 
+     GlobalTimerNotExpired("locktarget","LOCALS")
+     Range(LastSeenBy(Myself),15)
+THEN
+    RESPONSE #100
+        AttackReevaluate(LastSeenBy(Myself),30)
+END
+
+// kill anything else
+
+IF TRIGGER
+     TargetBlock(EnemiesInOrder)
+     !StateCheck(Myself,STATE_INVISIBLE)
+THEN DO
+       Action(Literal)
+       AttackOneRound(scstarget)
+END
+
+// if invisible
+
+IF
+   StateCheck(Myself,STATE_INVISIBLE)
+   Range(NearestEnemyOf(Myself),8)
+THEN
+    RESPONSE #100
+       RunAwayFrom(NearestEnemyOf(Myself),30)
+END
+
+IF
+   StateCheck(Myself,STATE_INVISIBLE)
+THEN
+    RESPONSE #100
+       RandomWalkContinuous()
+END
+
+// reset
+
+IF
+  !GlobalTimerNotExpired("castspell","LOCALS")
+  OR(2)
+     Allegiance(Myself,ALLY)
+     Allegiance(Myself,GOODBUTBLUE)
+  !Detect([PC])
+  CombatCounter(0)
+THEN 
+   RESPONSE #100
+       SetGlobalTimer("castspell","LOCALS",6)
+       ReallyForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+END
+

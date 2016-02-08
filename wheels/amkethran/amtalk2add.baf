@@ -1,0 +1,79 @@
+IF
+	!GlobalTimerNotExpired("amtalk2","LOCALS")
+	RandomNum(10,1)
+	!Global("notalk","LOCALS",1)
+	OnScreen(Myself)
+	Range([0.0.0.INNOCENT],10)
+	Global("DMWWVillageAttacked","GLOBAL",2)
+	OR(2)
+		!Dead("abazigal")
+		!Dead("sendai")
+	Dead("balth")
+THEN
+	RESPONSE #60
+		SetGlobalTimer("amtalk2","LOCALS",22)
+	RESPONSE #10
+		SetGlobalTimer("amtalk2","LOCALS",10)
+		Wait(1)
+		FaceObject([0.0.0.INNOCENT])
+		DisplayStringHead(Myself,@3123)
+	RESPONSE #10
+		SetGlobalTimer("amtalk2","LOCALS",10)
+		Wait(1)
+		FaceObject([0.0.0.INNOCENT])
+		DisplayStringHead(Myself,@3124) //
+	RESPONSE #10
+		SetGlobalTimer("amtalk2","LOCALS",10)
+		Wait(1)
+		FaceObject([0.0.0.INNOCENT])
+		DisplayStringHead(Myself,@3125) //
+	RESPONSE #10
+		SetGlobalTimer("amtalk2","LOCALS",10)
+		Wait(1)
+		FaceObject([0.0.0.INNOCENT])
+		DisplayStringHead(Myself,@3126) //
+	RESPONSE #10
+		SetGlobalTimer("amtalk2","LOCALS",10)
+		Wait(1)
+		FaceObject([0.0.0.INNOCENT])
+		DisplayStringHead(Myself,@3127) //
+END
+
+IF
+	!GlobalTimerNotExpired("amtalk2","LOCALS")
+	RandomNum(10,1)
+	!Global("notalk","LOCALS",1)
+	OnScreen(Myself)
+	Range([0.0.0.INNOCENT],10)
+	Global("DMWWVillageAttacked","GLOBAL",2)
+	!Dead("balth")
+THEN
+	RESPONSE #60
+		SetGlobalTimer("amtalk2","LOCALS",22)
+	RESPONSE #10
+		SetGlobalTimer("amtalk2","LOCALS",10)
+		Wait(1)
+		FaceObject([0.0.0.INNOCENT])
+		DisplayStringHead(Myself,@3128)
+	RESPONSE #10
+		SetGlobalTimer("amtalk2","LOCALS",10)
+		Wait(1)
+		FaceObject([0.0.0.INNOCENT])
+		DisplayStringHead(Myself,@3129) //
+	RESPONSE #10
+		SetGlobalTimer("amtalk2","LOCALS",10)
+		Wait(1)
+		FaceObject([0.0.0.INNOCENT])
+		DisplayStringHead(Myself,@3130) //
+	RESPONSE #10
+		SetGlobalTimer("amtalk2","LOCALS",10)
+		Wait(1)
+		FaceObject([0.0.0.INNOCENT])
+		DisplayStringHead(Myself,@3131) //
+	RESPONSE #10
+		SetGlobalTimer("amtalk2","LOCALS",10)
+		Wait(1)
+		FaceObject([0.0.0.INNOCENT])
+		DisplayStringHead(Myself,@3132) //
+END
+

@@ -1,0 +1,59 @@
+IF
+	Clicked([ANYONE])
+	Global("ClickedHeads","AR4000",0)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		SetGlobal("ClickedHeads","AR4000",1)
+		StartCutSceneMode()
+		StartCutScene("Cut204a")
+END
+
+IF
+	Clicked([ANYONE])
+	Global("ClickedHeads","AR4000",1)
+	Global("DW#Head3","AR4000",0)
+	Range(LastTrigger,20)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		SetGlobal("DW#Head3","AR4000",1)
+		ActionOverride("Head3",StartDialogueNoSet(Player1))
+END
+
+
+IF
+	Clicked([ANYONE])
+	Global("ClickedHeads","AR4000",1)
+	!Global("DMWWGrove","GLOBAL",1)
+	Global("DW#Head3","AR4000",0)
+	!Range(LastTrigger,20)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,14702) // You are too far away to use that.
+END
+
+
+IF
+	Clicked([ANYONE])
+	Global("ClickedHeads","AR4000",1)
+	Global("DW#Head3","AR4000",1)
+	OR(2)
+		Global("DMWWGrove","GLOBAL",0)
+		Global("DMWWGrove","GLOBAL",2)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,~This head is silent.~) 
+END
+
+IF
+	Clicked([ANYONE])
+	Global("DMWWGrove","GLOBAL",1)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		SetGlobal("DMWWGrove","GLOBAL",2)
+		StartCutSceneMode()
+		StartCutScene("dw#whd02")
+END
+

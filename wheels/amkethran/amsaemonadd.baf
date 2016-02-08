@@ -1,0 +1,12 @@
+IF
+	OR(2)
+		Dead("balth")
+		Global("BalthazarFights","GLOBAL",1)
+THEN
+	RESPONSE #100
+		ActionOverride("ammerc07",DestroySelf())
+		ActionOverride("ammerc08",DestroySelf())
+		DestroySelf()
+END
+
+

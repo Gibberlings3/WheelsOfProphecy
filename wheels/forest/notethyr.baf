@@ -1,0 +1,9 @@
+IF
+	!Global("DMWWBlockTethyrAccess","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWBlockTethyrAccess","GLOBAL",1)
+		HideAreaOnMap("AR4000")
+		RevealAreaOnMap("dw#teth")
+		Continue()
+END

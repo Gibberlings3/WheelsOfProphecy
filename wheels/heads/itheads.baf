@@ -1,0 +1,59 @@
+IF
+	Clicked([ANYONE])
+	!Range(LastTrigger,15)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,14702) // You are too far away to use that.
+END
+
+IF
+	Clicked([ANYONE])
+	Global("ClickedHeads","AR4000",0)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		SetGlobal("ClickedHeads","AR4000",1)
+		StartCutSceneMode()
+		StartCutScene("Cut204a")
+END
+
+IF
+	Clicked([ANYONE])
+	Global("DMWWGrove","GLOBAL",1)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		SetGlobal("DMWWGrove","GLOBAL",2)
+		StartCutSceneMode()
+		StartCutScene("dw#whd02")
+END
+
+IF
+	Clicked([ANYONE])
+	Global("ClickedHeads","AR4000",1)
+	OR(2)
+		Global("DMWWGrove","GLOBAL",0)
+		Global("DMWWGrove","GLOBAL",2)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,~This head is silent.~) 
+END
+
+IF
+	Clicked([ANYONE])
+	Global("Chapter","GLOBAL",9)
+	Global("DMWWGrove","GLOBAL",0)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,~Some enchantment seems to be keeping you from approaching the head. You cannot immediately discern its source, though you sense that it is somewhere close by.~)
+END
+
+IF
+	Clicked([ANYONE])
+	Global("Chapter","GLOBAL",9)
+	Global("DMWWGrove","GLOBAL",2)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,~This head is silent.~) 
+END
+

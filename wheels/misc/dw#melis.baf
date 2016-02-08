@@ -1,0 +1,26 @@
+
+IF
+	Allegiance("balth",ENEMY)
+	!Global("DMWWNoteMelFled","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("DMWWNoteMelFled","GLOBAL",1)
+		ForceSpell(Myself,SWOOSH_GONE)
+END
+
+IF
+	!Global("ChainContingencyFired","LOCALS",1)
+	Allegiance(Myself,ENEMY)
+THEN
+	RESPONSE #100
+			SetGlobal("ChainContingencyFired","LOCALS",1)
+			DisplayStringHead(Myself,26328)
+			ReallyForceSpell(Myself,WIZARD_SPELL_TURNING)
+			ReallyForceSpell(Myself,WIZARD_MISLEAD)
+			ReallyForceSpell(Myself,WIZARD_SPELL_IMMUNITY_DIVINATION)
+			SetGlobal("contingency","LOCALS",1)
+			DisplayString(Myself,25942)
+			ReallyForceSpell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+			SetGlobalTimer("redefend","LOCALS",3)
+			SetGlobal("inafight","LOCALS",1)
+END

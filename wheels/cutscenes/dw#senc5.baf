@@ -1,0 +1,32 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		Wait(2)
+		FadeToColor([30.0],0)
+		StorePartyLocations()
+		Wait(2)
+		LeaveAreaLUAPanic("AR6108","",[1249.1253],14)
+		LeaveAreaLUA("AR6108","",[1249.1253],14)
+		ActionOverride(Player2,LeaveAreaLUA("AR6108","",[1249.1253],14))
+		ActionOverride(Player3,LeaveAreaLUA("AR6108","",[1249.1253],14))
+		ActionOverride(Player4,LeaveAreaLUA("AR6108","",[1249.1253],14))
+		ActionOverride(Player5,LeaveAreaLUA("AR6108","",[1249.1253],14))
+		ActionOverride(Player6,LeaveAreaLUA("AR6108","",[1249.1253],14))
+		Wait(2)
+		MultiPlayerSync()
+		CreateCreature("cutspy",[628.576],10) // No such index
+		MoveViewPoint([628.576],INSTANT)
+		Explore()
+		Wait(1)
+		FadeFromColor([30.0],0)
+		Wait(2)	
+		CreateCreature("sengua02",[322.617],12) // Guard Captain
+		ActionOverride("sengua02",MoveToPointNoInterrupt([562.664]))
+		Wait(4)
+		ActionOverride("sengua02",StartDialogueNoSet(Player1))
+		EndCutSceneMode()
+END
+
+

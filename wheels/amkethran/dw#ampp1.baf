@@ -1,0 +1,28 @@
+IF
+	!Range([PC],10)
+	OR(2)  
+              Global("DMWWBalthDeadPhase1","GLOBAL",1)
+              Detect([PC])
+THEN
+	RESPONSE #100
+		MoveToObject([PC])
+END
+
+IF
+	Range([PC],10)
+	!Dead("sendai")
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@3080)
+		SmallWait(5)
+		EscapeArea()
+END
+
+IF
+	Range([PC],10)
+	Dead("sendai")
+THEN
+	RESPONSE #100
+		SmallWait(5)
+		EscapeArea()
+END

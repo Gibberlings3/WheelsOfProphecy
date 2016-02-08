@@ -1,0 +1,5 @@
+DEFINE_ACTION_FUNCTION wheels_dialog BEGIN
+    OUTER_SPRINT local_loc dialogues
+    OUTER_SPRINT solar_journal @1020
+    LAF install STR_VAR file="cutmel heads sarmeladd dw#melis balthadd0 balthadd balthadd2 sendaiadd0 sendaiadd abazadd0 abazadd elminadd solaradd0 solaradd" postfix=d END
+END

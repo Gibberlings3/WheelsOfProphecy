@@ -1,0 +1,32 @@
+DEFINE_ACTION_FUNCTION wheels_cutscenes BEGIN
+
+   OUTER_SPRINT local_loc cutscenes
+
+   // Melissan in cutscene mode - general requirement
+
+   LAF clone_creature STR_VAR creature="mel01=>dw#cutme" editstring="dv=>dw#cutme dialog=>dw#cutme strip_script=>sarmel01" END
+
+   // Sendai's enclave, with Melissan added
+
+   LAF install STR_VAR file="cut236b.baf dw#senc1.baf dw#senc2.baf dw#senc3.baf dw#senc4.baf dw#senc5.baf" END
+   LAF extend STR_VAR script=tp6109 top=tp6109add END
+
+   // Melissan's cutscene with Balthazar's body
+
+   LAF clone_creature STR_VAR creature="cutbalth=>dw#cutbd" editstring="dv=>dw#cutbd state_dead=>1" END
+   LAF install STR_VAR file="dw#melbd.baf" END
+   LAF install_spell STR_VAR spell=dw#melvi editstring="name1_string=>20875" END
+
+   // Player-involving scenes in Balthazar's throne room
+
+   LAF install STR_VAR postfix=baf files="dw#balc1 dw#balc2 dw#balc3 dw#balc4 dw#balc5 dw#balc6 dw#balc7 cut242a" END
+   
+
+   LAF extend STR_VAR script=ptbalth top=ptbalthadd END
+
+   // Abazigal's lair - pocket plane scene 4 needs to fire if Abazigal and Balthazar are dead
+
+   LAF swap_text STR_VAR files=ar6005.bcs swaps=~Dead("Sendai")=>OR(2)Dead("Sendai")Dead("Balth")~ END
+   LAF swap_text STR_VAR files=ar6108.bcs swaps=~Dead("Abazigal")=>OR(2)Dead("Abazigal")Dead("Balth")~ END
+
+END

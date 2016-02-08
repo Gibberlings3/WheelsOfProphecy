@@ -1,0 +1,10 @@
+
+IF
+	See(NearestEnemyOf(Myself))
+	!GlobalTimerNotExpired("timestop","LOCALS")
+	HaveSpell(WIZARD_TIME_STOP)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("timestop","LOCALS",24)
+		Spell(Myself,WIZARD_TIME_STOP)
+END

@@ -1,0 +1,43 @@
+DEFINE_ACTION_FUNCTION wheels_forest BEGIN
+
+   OUTER_SPRINT local_loc forest 
+
+   // the area
+
+   LAF install_area STR_VAR area=dw#teth editstring="area_script=>dw#teth" END
+   LAF install STR_VAR file=dw#teth.baf END
+
+   // demons
+   
+   LAF clone_creature STR_VAR creature="demosum1=>dw#grmar demosum2=>dw#grbal demosum3=>dw#grgla" editstring="insert_script_high=>dw#grsol" END
+   LAF clone_creature STR_VAR creature="finsol04=>dw#grsol" editstring="insert_script_high=>dw#grsol insert_script_high=>inp1ivsg dv=>dw#grsol dialog=>dw#grsol" END
+   LAF install STR_VAR file="dw#grsol.baf dw#grsol.d" END
+
+   // worldmap
+   
+   LAF extend_area_script STR_VAR area=ar4500 top=notethyr END
+
+   // legacy code: fake Tethyr
+
+			COPY_EXISTING ~worldm25.wmp~ ~override~
+				READ_LONG 0x30 ~area_num~
+				READ_LONG 0x34 ~area_off~
+				READ_LONG 0x38 ~link_off~
+				READ_LONG 0x3c ~link_num~
+				WRITE_LONG 0x30 ~%area_num%~+1
+				WRITE_LONG 0x38 ~%link_off%~+0xf0
+				INSERT_BYTES ~%area_off%~+0xf0*~%area_num%~ 0xf0 
+				WRITE_ASCII ~%area_off%~+0xf0*~%area_num%~ ~dw#teth~ #8
+				WRITE_ASCII ~%area_off%~+0xf0*~%area_num%~+0x8 ~ar4000~ #8
+				WRITE_ASCII ~%area_off%~+0xf0*~%area_num%~+0x10 ~ar4000~ #8
+				WRITE_LONG ~%area_off%~+0xf0*~%area_num%~+0x30 0x04
+				WRITE_LONG ~%area_off%~+0xf0*~%area_num%~+0x34 6
+				WRITE_LONG ~%area_off%~+0xf0*~%area_num%~+0x38 397
+				WRITE_LONG ~%area_off%~+0xf0*~%area_num%~+0x3c 56
+				WRITE_LONG ~%area_off%~+0xf0*~%area_num%~+0x40 61253
+				WRITE_LONG ~%area_off%~+0xf0*~%area_num%~+0x44 61253
+			BUT_ONLY_IF_IT_CHANGES
+
+
+END
+

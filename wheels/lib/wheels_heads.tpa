@@ -1,0 +1,13 @@
+DEFINE_ACTION_FUNCTION wheels_heads BEGIN
+      OUTER_SPRINT local_loc heads
+      MAKE_PATCH
+         trigger_script=>"trigger_name in [HeadInfo1->dw#head4 HeadInfo3->dw#head2 HeadInfo7->dw#head3 default->no_change]"
+      END
+      LAF edit_area STR_VAR area=ar4000 editstring="patch_trigger=>patch_data" END
+      LAF install STR_VAR postfix=baf files="dw#head2 dw#head3 dw#head4 itheads dw#whd01 dw#whd02 dw#whd03 dw#whd04 dw#whd05" END
+
+
+END
+
+
+

@@ -1,0 +1,35 @@
+IF
+	Global("SpawnBalthAlly","AR6200",0)
+	Global("BalthazarFights","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("SpawnBalthAlly","AR6200",1)
+		CreateCreatureObject("balth2",Player1,0,0,0) // Balthazar
+		ActionOverride("balth2",Ally())
+		ActionOverride("balth2",Face(8))
+		ReallyForceSpellRES("SPDETECT",Player1) // Detect magic
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	Global("BalthazarFights","GLOBAL",1)
+	Gender(Player1,FEMALE)
+	Global("BalthazarBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("BalthazarBio","GLOBAL",1)
+		TextScreen("BALTHFND")
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	Global("BalthazarFights","GLOBAL",1)
+	!Gender(Player1,FEMALE)
+	Global("BalthazarBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("BalthazarBio","GLOBAL",1)
+		TextScreen("BALTHAND")
+		SmallWait(1)
+		Continue()
+END

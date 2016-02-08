@@ -1,0 +1,106 @@
+DEFINE_ACTION_FUNCTION wheels_throneroom BEGIN
+     OUTER_SPRINT local_loc misc
+     // Undead monks
+     
+     MAKE_PATCH
+        add_items=>"lich(lring) telslav2(rring)"
+        remove_items=>potn55
+        script_override=>"dw#wrmon"
+        dv=>filename
+        hp_current=>"hp_current + 80"
+        hp_max=>"hp_max + 80"
+        allegiance=>ENEMY
+        general=>UNDEAD
+        color_metal =>50
+        color_minor =>51
+        color_major =>50
+        color_skin =>51
+        color_leather =>50
+        color_armor =>51
+        color_hair =>50
+        say_both_names=>3020
+        say_sounds=>"attack1=>3021 attack2=>3022 battle_cry1=>3021 battle_cry2=>3022 damage=>3023 dying=>3024"
+        immunity_to_opcode=>13
+        add_effect_inline=>"opcode=>297 parameter2=>1" // immune to turn
+     END
+     LAF clone_creature STR_VAR creature="balelit1=>dw#wrmo1 balelit2=>dw#wrmo2 balelit3=>dw#wrmo3 balelit4=>dw#wrmo4" edits=patch_data END
+     LAF install STR_VAR file="dw#wrmon.baf" END
+     
+     // Melissan
+
+    COPY_EXISTING ~cmage20a.bcs~ ~override~
+	REPLACE_BCS_BLOCK ~%scsroot%/%local_loc%/cmage_old.baf~ ~%scsroot%/%local_loc%/cmage_new.baf~
+
+    MAKE_PATCH
+        lore=>100
+        say_description=>3030
+        say_name=>3031
+
+    END
+    LAF install_item STR_VAR item=dw#melri edits=patch_data END
+    APPEND ~ITEMEXCL.2DA~ ~dw#melri 1~
+    
+    MAKE_PATCH 
+       script_override=>dw#melis
+       script_class=>cmage20a
+       dv=>dw#melis
+       dialog=>dw#melis
+       saves=>"1,1,1,1,1"
+       resist_magic=>50
+       add_effect_inline=>"opcode=>189 parameter1=>4" // casting speed
+       add_items=>"immune2(amulet) dw#melri(lring)"
+       replace_items=>"bhaalhp1(rring)"
+       remove_items=>"ring07"
+       remove_spells=>all
+       add_spells=>"MAGIC_MISSILE(5) HORROR(2) MELF_ACID_ARROW(2) MIRROR_IMAGE(3) DISPEL_MAGIC(2) FLAME_ARROW(2) LIGHTNING_BOLT SKULL_TRAP(2)
+                    STONE_SKIN(3) EMOTION_HOPELESSNESS(2) TELEPORT_FIELD(2) BREACH(3) SHADOW_DOOR CHAOS(2) PROTECTION_FROM_MAGIC_WEAPONS(2) TRUE_SIGHT
+                    RUBY_RAY_OF_REVERSAL MORDENKAINENS_SWORD(2) POWER_WORD_STUN(2) FINGER_OF_DEATH WARDING_WHIP ABI_DALZIMS_HORRID_WILTING(4) SUMMON_FIEND(2)
+                    SPELL_TRAP SPELL_STRIKE TIME_STOP(2) POWER_WORD_KILL"
+    END
+    LAF clone_creature STR_VAR creature="mel01=>dw#melis" edits=patch_data END
+    LAF install STR_VAR file="dw#melis.baf" END
+    
+    // Balthazar
+    
+    LAF edit_creature STR_VAR creature=balth editstring=~add_items=>"minhp1(amulet)"~ END
+    
+    // Balthazar's script
+    
+    //wipe existing script
+    LAF edit_script STR_VAR script=balth editstring="patch=>delete_trigger_if(NumberOfTimesTalkedTo)" END
+    LAF edit_script STR_VAR script=balth editstring="patch=>delete_trigger_if(NumTimesTalkedTo)" END
+
+    // install new script
+    LAF extend STR_VAR script=balth top=balthadd END
+    
+    // combat script
+    
+    LAF install STR_VAR file=dw#balme.ssl END
+    ACTION_IF !FILE_EXISTS_IN_GAME balthft2.bcs BEGIN
+       COPY_EXISTING dw#balme.bcs "override/balthft2.bcs"
+    END
+
+    // Balthazar's book
+    
+    MAKE_PATCH
+       say_both_names=>3040
+       say_both_descriptions=>3041
+    END
+    LAF clone_item STR_VAR item="book93=>dw#balbo" edits=patch_data END
+
+    // the messenger
+    
+    LAF clone_creature STR_VAR creature="cutgrd01=>dw#monme" editstring="script_override=>dw#monme dv=>dw#monmen dialog=>dw#monme" END
+    LAF install STR_VAR file="dw#monme.baf" END
+
+    // the area
+
+    // wipe existing area script (except for OH journal stuff, which is just pruned)
+    LAF edit_script STR_VAR script=ar5505 editstring="patch=>delete_trigger_if(HadBhaal25Dream5)" END
+    LAF swap_text STR_VAR file=ar5505.bcs swaps="AddJournalEntry([^)]*)=>null" END
+
+    // install new script
+    
+    LAF extend STR_VAR script=ar5505 top=ar5505add END
+
+END

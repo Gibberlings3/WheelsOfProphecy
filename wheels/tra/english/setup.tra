@@ -1,0 +1,239 @@
+// TP2 entries - starting at 1
+
+@1=~The Wheels of Prophecy~
+@2=~Wheels of Prophecy requires Throne of Bhaal, and you don't seem to have it installed.~
+@3=~You are trying to install Wheels of Prophecy after Sword Coast Stratagems. This is the wrong way round and will probably lead to bugs. Uninstall SCS, install WoP, then install SCS again.~
+
+
+// Journal entries - starting at 1000
+
+@1000=~An Inconclusive Encounter
+
+I found my way into the monastery and confronted this Balthazar, but I learned little. He was angry at my intrusion, but allowed me to depart... which I decided was the best course, for now. Interestingly, he seems as keen as Melissan that I should defeat Sendai and Abazigal.~
+
+@1001=~Confronting Balthazar
+
+I grew impatient with this Balthazar's air of mystery and confronted him. It turns out that he is a Bhaalspawn himself - one of the Five, no less. As I expected, our meeting ended in bloodshed, though he said one thing that surprised me: his goal was to destroy the taint of Bhaal, not to resurrect him.~
+
+@1002=~Abazigal's Claim
+
+Abazigal claims that Balthazar is a Bhaalspawn himself - and one of the Five, no less. His goal, the half-dragon told me, is to pit me against Sendai and Abazigal, and be the last Bhaalspawn left standing. Whether Abazigal can be believed, though, I do not know.~
+
+@1003=~Sendai's Claim
+
+Sendai claims that Balthazar is a Bhaalspawn himself - and one of the Five, no less. His goal, the drow Bhaalspawn told me, is to pit me against Sendai and Abazigal, and be the last Bhaalspawn left standing. Whether Sendai can be believed, though, I do not know.~
+
+@1004=~Melissan and Balthazar
+
+I broke into Balthazar's throne room, only to find him locked in confrontation with Melissan. It soon became clear that Melissan has been the leader of the Five all along! Balthazar and I joined forces to slay her, but our alliance was short-lived, and before long he and I came to blows. My confrontations with my siblings never seem to end peacefully. In any case, only one of the Five now remains.~
+
+@1005=~Melissan and Balthazar
+
+I broke into Balthazar's throne room, only to find him locked in confrontation with Melissan. It soon became clear that Melissan has been the leader of the Five all along! Balthazar and I joined forces to slay her, but our alliance was short-lived. I tried to persuade him to ally with me, but he chose to take his own life instead. In any case, only one of the Five now remains.~
+
+@1006=~Melissan and Balthazar
+
+I broke into Balthazar's throne room, only to find him locked in confrontation with Melissan. Despite his claim that Melissan has led the Five all along, I chose to do battle with him - he is, after all, Bhaalspawn himself, and one of the Five. During the battle, Melissan fled, and where she is now I cannot say. In any case, only one of the Five now remains.~
+
+@1007=~Melissan and Balthazar
+
+I broke into Balthazar's throne room, only to find him locked in confrontation with Melissan. It soon became clear that Melissan has been the leader of the Five all along! Balthazar and I joined forces to slay her, and we now have an uneasy alliance... whether it will last beyond the death of the last remaining one of the Five, I cannot say.~
+
+@1009=~Melissan unmasked
+
+I have slain Abazigal, but in his death he has shown me a disturbing vision - Melissan gloating over Balthazar's corpse. It seems clear that she has been working for the resurrection of Bhaal all along. Regardless, my only remaining option appears to be to confront Sendai - and I have a strong suspicion that I will find Melissan there, too.~
+
+@1010=~Melissan unmasked
+
+I have slain Sendai, but in her death she has shown me a disturbing vision - Melissan gloating over Balthazar's corpse. It seems clear that she has been working for the resurrection of Bhaal all along. Regardless, my only remaining option appears to be to confront Abazigal - and I have a strong suspicion that I will find Melissan there, too.~
+
+@1011=~The End is Near?
+
+Abazigal - Sendai - Balthazar - Yaga-Shura - Illasera. The greatest of the Bhaalspawn are now slain, and with them, their leader Melissan. I am unsure what more is to come - will Bhaal rise now? The wizard Elminster suggests that I return to the elven grove and seek more answers there. The Pocket Plane, I sense, will take me there, and this itself suggests that the old man's suggestion may have merit. But what I will find in the grove, I do not know.~
+
+@1012=~The End is Near?
+
+Abazigal - Sendai - Balthazar - Yaga-Shura - Illasera. The greatest of the Bhaalspawn are now slain, and only their leader Melissan remains. But I fear that she may now have what she seeks - the essence that will allow her to resurrect Bhaal himself.  The wizard Elminster suggests that I return to the elven grove and seek more answers there. The Pocket Plane, I sense, will take me there, and this itself suggests that the old man's suggestion may have merit. But what I will find in the grove, I do not know.~
+
+@1013=~Returning to Balthazar
+
+Abazigal and Sendai are dead. All that remains is to return to Balthazar's throne room and inform my strange ally of the news. Whether our alliance will last beyond my report remains to be seen.~
+
+@1014=~The End is Near?
+
+Abazigal - Sendai - Yaga-Shura - Illasera - and Melissan. The greatest of my enemies are now slain, and only Balthazar and I remain. But we sense that it is not yet over. Balthazar suggests that I use the Pocket Plane to return to the elven grove and seek more answers there. I see little choice. But what I will find in the grove, I do not know.~
+
+@1015=~The End is Near?
+
+Abazigal - Sendai - Yaga-Shura - Illasera - and the trusting fool, Balthazar. The greatest of the Bhaalspawn are now slain, and with them, their leader Melissan. I am unsure what more is to come - will Bhaal rise now? Balthazar's journal suggests that there may be more to learn from the elven grove. I sense that the Pocket Plane will indeed take me there, and this itself suggests that I have need to go. But what I will find in the grove, I do not know.~
+
+@1016=~The End is Near?
+
+Abazigal - Sendai - Balthazar - Yaga-Shura - Illasera. The greatest of the Bhaalspawn are now slain, and only their leader Melissan remains. But I fear that she may now have what she seeks - the essence that will allow her to resurrect Bhaal himself. Balthazar's journal suggests that there may be more to learn from the elven grove. I sense that the Pocket Plane will indeed take me there, and this itself suggests that I have need to go. But what I will find in the grove, I do not know.~
+
+@1018=~Alliance with Balthazar
+
+To my surprise, my uneasy alliance with the monk Bhaalspawn Balthazar has survived. He and I will confront Melissan together, at the Throne of Bhaal.~
+
+@1019=~So much for Balthazar
+
+I no longer had any need for Balthazar, so I cut him down. Now my final confrontation with Melissan will not be encumbered by his presence.~
+
+@1020=~Revelations of the Solar
+
+The powerful Bhaalspawn that I have been fighting, the ones that have been relentlessly hunting the others, call themselves 'the Five'.  Like myself, they are the most potent of our kind and possess a great deal of Bhaal's divine essence.
+
+It appears that they had gathered together for a single purpose...since they were too powerful to fight each other, they would combine their forces and hunt the remainder of the Bhaalspawn.  Then they would raise our sire and become his earthly generals.  They were largely successful, but four of them are now dead.
+
+The only trick is that they contained so much of Bhaal's essence that the god may be nearer to resurrection than ever.  Perhaps that is what the last of the Five plans even now, and I have no choice but to try to stop them.  Then, perhaps, this will finally all be over.
+
+The fourth challenge room is now open to me.  It seems odd, considering how close I am to the end, that there is still one more to go even after this.~
+
+@1021=~Meeting with Balthazar
+
+I have finally met with Balthazar, the head of the monastic order in Amkethran, and while he was not exactly welcoming he did allow me to remain in the town so long as I did not attempt to enter the monastery or otherwise interfere in his business...and passed on to me the maps to the Bhaalspawn enclaves that Melissan presumably gave him.
+
+Where Melissan is, now, appears to be a mystery.  I am not entirely certain that this Balthazar is to be trusted, but getting into his fortress-like monastery will not be easy. My other choice is to investigate the enclaves and confront the Bhaalspawn who are so intent on hunting me.~
+
+// Strings from Ascension, starting at 2000
+
+@2000 = ~Flip Resistances~
+@2001 = ~Upon returning to Amkethran, Balthazar began to implement changes for the better.  He had learned well from his friend and sibling the meaning of the word "Good".  He carried his guilt with him always; a reminder never to make the same mistakes again.  The remaining criminal elements were quickly driven from his outpost, which attracted new settlers and merchants.   Over the years, Amkethran grew into a thriving city and the cultural center of the entire region, renown for its peace and compassion.   Balthazar was also central in the creation of the Monastic Guard; an elite group of Paladins and Monks that were sworn to protect the common folk from tyranny in any form.  His deeds quickly earned him the respect and trust of his people.  In Balthazar's advanced years, his work finished, it was said he could be found most often gazing at the night sky and remembering <CHARNAME>.  Later, Balthazar would leave Amkethran forever on a pilgrimage to Candlekeep...... to give a final thanks for the peace he had found and to see for himself the humble beginnings of a legend.~
+@2002=@2001 // no change in american version
+
+// misc strings, starting at 3000
+
+@3000 = ~The Lady Melissan is within the monastery.  We had a... disagreement from which she hastily withdrew.  I shall deal with her once my business with you is finished.~
+
+// Melissan throne-room gloat cutscene
+
+@3001 = ~So, Balthazar, your pathetic attempt at salvation is at an end.~
+@3002 = ~But do not fear, "my old friend". Your Bhaalspawn essence will not be wasted.~
+@3003 = ~And then, there were two. Or three, counting the simpering brat.~
+@3004 = ~Balthazar?~
+@3005 = ~Lady Melissan, what have you done?~
+@3006 = ~Ah, Bhaal, my lord, my lord, how close you have come.~
+
+// Balthazar's scouts
+
+@3010 = ~The scouts have returned from Saradush, Balthazar.~
+@3011 = ~And what do they report, brother?~
+@3012 = ~The rumours are correct, Abbot. The city is completely destroyed.~
+@3013 = ~Yaga-Shura is dead; the Bhaalspawn of the city, too. Only <CHARNAME> survived.~
+@3014 = ~So be it. It is a heavy price to pay.~
+@3015 = ~And what of the army?~
+@3016 = ~Our forces continue to multiply. We will be ready for war within the week.~
+@3017 = ~But the cost to the people of Amkethran is great.~
+@3018 = ~In times like this, much must be sacrificed.~
+
+// Undead monks
+
+@3020 = "Bhaal-Touched"
+@3021 = ~Urrh...~ [skelw01]
+@3022 = ~Die...~  [skelw03]
+@3023 = ~~ [shadow06]
+@3024 = ~~ [shadow07]
+
+// Melissan's ring
+
+@3030=~Melissan's Ring of Wizardry
+This powerfully enchanted ring both protects the wearer and allows them to memorize more spells than normally possible.  No previous history is known: it appears to be Melissan's own creation.
+
+STATISTICS:
+
+Armor Class:  +3 bonus
+Saving Throws:  +3 bonus
+Spells:  Gives one extra ninth level spell
+
+Usable by:
+ Mage~
+@3031=~Melissan's Ring of Wizardry~
+
+// Balthazar's journal
+
+@3040=~Balthazar's Journal~
+@3041=~Balthazar's Journal
+
+Mostly, this journal contains a mixture of quasi-religious speculation and military logistics. One thing catches your eye, though: Balthazar notes that Melissan was extremely keen to keep you from the elven grove of the stone heads. There appears to be something that she did not wish you to learn from the forest spirits.~
+
+// Extra pocket plane travel options
+
+@3050=~I wish to go to Amkethran.~
+@3051=~Return me to the elven grove in the Forest of Tethyr.~
+
+// Bartender in Amkethran
+
+@3060=~Actually, I was wondering if you had a coil of rope that I could buy.~
+@3061=~<CHARNAME> the Bhaalspawn - <CHARNAME>, the slayer of Balthazar - enters my inn, and all <PRO_HESHE> wants is a coil of rope?~
+@3062=~Here is your rope, my good <PRO_MANWOMAN>. There is no charge - I'll be dining out on this story for weeks.~
+@3063=~Rope?!!~
+@3064=~<CHARNAME> the Bhaalspawn - <CHARNAME>, the saviour of the village - enters my inn, and all <PRO_HESHE> wants is a coil of rope?~
+@3065=~The mercenaries have withdrawn - by Balthazar's orders - and the monks have returned almost to their old selves. Rumor has it that it is your doing, stranger - you have freed our village! Can I provide you with anything, my <LADYLORD>? You only need ask!~
+@3066=~As you wish, my <LADYLORD>. You have freed our village... may the sand spirits walk with you always.~
+
+// Graveyard ward
+
+@3070=~Powerful wards have been placed around the doorway. An invisible wall completely blocks the tunnel.~
+
+// Panicked peasants
+
+@3080=~The army of Sendai is here!~
+@3081=~The army of Abazigal is here!~
+@3082=~Run for your lives!~
+
+// Merc leader
+
+@3090=~My thanks for your help. Your people fight well.~
+@3091=~Move out, men. This was only the first wave - we need to secure the village.~
+
+// Sarevok's comment
+
+@3100=~<CHARNAME>, this oaf has no clue of our true power. This fortress cannot withstand our might - if you wish for a direct assault, you need only say the word.~
+
+// Peasant backchat
+
+@3110=~Balthazar's soldiers have fled - thank the Gods!~
+@3111=~With the soldiers gone, we can finally get more supplies in.~
+@3112=~How will we survive without the monastery?~
+@3113=~With Balthazar gone, perhaps there's hope.~
+@3114=~Balthazar has doomed us - the coming attacks will kill us all.~
+@3115=~Our doom is upon us.~
+@3116=~Why did the monks forsake us? They protected us for so long.~
+@3117=~Balthazar's soldiers have withdrawn - thank the Gods!~
+@3118=~The monks seem to have come to their senses - perhaps there's hope for us.~
+@3119=~Balthazar has promised to protect us. Something seems to have changed him.~
+@3120=~War is surely coming. Only Balthazar can save us.~
+@3121=~Is there hope for us now?~
+@3122=~With the monks protecting Amkethran again, maybe we'll survive after all.~
+@3123=~When will the army return? We are doomed!~
+@3124=~Do you think it's true that Balthazar is dead?~
+@3125=~The monks have fled the monastery!~
+@3126=~Those monsters are bound to be back soon - it's time to flee the village!~
+@3127=~The mercenaries have scattered - I don't know whether to be relieved or frightened.~
+@3128=~Those monsters are bound to return!~
+@3129=~Did you see Balthazar's battle?~
+@3130=~The mercenaries fought to protect us - maybe they're not all bad.~
+@3131=~The monks are almost back to their old selves.~
+@3132=~I don't know what happened to mend Balthazar's ways, but I've never been more grateful.~
+
+// Faheed map note
+
+@3140="Faheed's home"
+
+// Heroic shouts by mercs/monks
+
+@3150="To arms!"
+@3151="Defend the village!"
+@3152="For Balthazar!"
+@3153="We are attacked!"
+
+// Balthazar battle
+
+@3160="Quaffs potion of superior healing"
+
+// Nice comments by monks
+
+@3170="By the Abbot's will, you are welcome in this village."
+@3171="Walk with Ilmater's blessing."
+@3172="May your path be righteous."
+@3173="As Balthazar sees you, so we see you also."

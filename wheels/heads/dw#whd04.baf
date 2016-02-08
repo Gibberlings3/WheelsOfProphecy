@@ -1,0 +1,20 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		ScreenShake([20.20],20)
+		PlaySound("EFF_M36B")
+		Wait(2)
+		MoveViewObject("Head4",INSTANT)
+		Explore()
+		SmallWait(5)
+		AmbientActivate("AMB_Head4L",TRUE)
+		AmbientActivate("AMB_Head4R",TRUE)
+		SmallWait(5)
+		StaticSequence("AMB_Head4L",1)
+		StaticSequence("AMB_Head4R",1)
+		ActionOverride("Head4",StartDialogueNoSet(Player1))
+END
+
+

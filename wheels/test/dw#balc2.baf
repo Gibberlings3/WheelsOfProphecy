@@ -1,0 +1,35 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		CreateCreature("cutspy",[776.558],S) // No such index
+		CreateCreature("balth",[758.514],SE) // Balthazar
+		CreateCreature("dw#melis",[810.624],NW) // Melissan
+		CreateCreature("balelit1",[861.479],SE) // Monk
+		CreateCreature("balelit2",[625.558],SE) // Monk
+		CreateCreature("balelit3",[704.759],N) // Monk
+		CreateCreature("balelit4",[1028.637],NW) // Monk
+		MoveViewPoint([760.515],INSTANT)
+		Explore()
+		ActionOverride("balelit1",JumpToPoint([850.580]))
+		ActionOverride("balelit2",JumpToPoint([770.580]))
+		ActionOverride("balelit3",JumpToPoint([770.640]))
+		ActionOverride("balelit4",JumpToPoint([850.640]))
+		SmallWait(3)
+		ActionOverride(Player2,JumpToPoint([479.768]))
+		ActionOverride(Player3,JumpToPoint([427.744]))
+		ActionOverride(Player4,JumpToPoint([579.801]))
+		ActionOverride(Player5,JumpToPoint([388.721]))
+		ActionOverride(Player6,JumpToPoint([637.812]))
+		JumpToPoint([540.794])
+		ActionOverride(Player2,Face(NE))
+		ActionOverride(Player3,Face(NE))
+		ActionOverride(Player4,Face(NE))
+		ActionOverride(Player5,Face(NE))
+		ActionOverride(Player6,Face(NE))
+		Face(NE)
+		ActionOverride("cutspy",DestroySelf())
+		ActionOverride("balth",StartDialogueNoSet(Player1))
+		EndCutSceneMode()
+END

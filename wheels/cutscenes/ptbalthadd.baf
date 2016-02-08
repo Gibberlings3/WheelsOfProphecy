@@ -1,0 +1,15 @@
+IF
+	Range([GOODCUTOFF],10)
+	Global("BalthazarEncounter","AR5505",0)
+	!Dead("sendai")
+	!Dead("abazigal")
+	Global("DMWWBalthFirst","GLOBAL",1)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		SetGlobal("BalthazarEncounter","AR5505",1)
+		StartCutSceneMode()
+		StartCutScene("cut242a")
+END
+
+
