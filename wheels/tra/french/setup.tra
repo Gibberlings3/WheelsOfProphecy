@@ -1,0 +1,333 @@
+// TP2 entries - starting at 1
+
+@1=~Les Roues de la Prophetie (The Wheels of Prophecy)~
+@2=~Les Roues de la Prophetie necessitent Throne of Bhaal, et il ne semble pas etre installe.~
+@3=~Vous essayez d'installer les Roues de la Prophetie apres Sword Coast Stratagems. C'est une mauvaise idee qui risque d'occasionner des bugs. Desinstallez SCS, installez WoP, puis reinstallez SCS.~
+
+
+// Journal entries - starting at 1000
+
+@1000=~Une rencontre peu concluante
+
+J'ai pu atteindre le monastère et rencontrer ce Balthazar, mais j'ai peu appris. Il était furieux de mon intrusion, mais m'a permis de partir... ce que j'ai estimé être le meilleur choix, pour l'instant. Curieusement, il semble tout aussi désireux que Mélissanne de me voir vaincre Sendai et Abazigal.~
+
+@1001=~La confrontation avec Balthazar
+
+L'aura de mystère qui entourait Balthazar m'agaçait, alors, je l'ai rencontré. Il en est ressorti qu'il est lui-même un enfant de Bhaal, l'un de la Main, pas moins. Comme je m'en doutais, la rencontre a fini dans le sang, bien qu'il ait dit une chose surprenante : son but était de détruire la souillure de Bhaal, pas de le ressusciter.~ 
+
+@1002=~L'affirmation d'Abazigal
+
+Abazigal affirme que Balthazar est lui-même un enfant de Bhaal, l'un de la Main, pas moins. Son but, m'a dit le demi-dragon, est de nous faire nous entretuer, Abazigal et Sendai contre moi, et de rester le dernier enfant de Bhaal en vie. Je ne sais pas si Abazigal est digne de confiance, cependant.~
+
+@1003=~L'affirmation de Sendai
+
+Sendai affirme que Balthazar est lui-même un enfant de Bhaal, l'un de la Main, pas moins. Son but, m'a dit la drow, est de nous faire nous entretuer, Abazigal et Sendai contre moi, et de rester le dernier enfant de Bhaal en vie. Je ne sais pas si Sendai est digne de confiance, cependant.~
+
+@1004=~Mélissanne et Balthazar
+
+J'ai pu rentrer dans la salle du trône de Balthazar, pour le découvrir en plein affrontement avec Mélissanne. Il s'est rapidement avéré clair que Mélissanne était le chef de la Main depuis le début ! Balthazar et moi nous sommes unis pour la tuer, mais notre alliance fut brève, et elle a éclaté. Mes confrontations avec mes semblables n'ont jamais l'air de s'achever en paix. En tout cas, il ne reste plus qu'un membre de la Main, maintenant.~
+
+@1005=~Mélissanne et Balthazar
+
+J'ai pu rentrer dans la salle du trône de Balthazar, pour le découvrir en plein affrontement avec Mélissanne. Il s'est rapidement avéré clair que Mélissanne était le chef de la Main depuis le début ! Balthazar et moi nous sommes unis pour la tuer, mais notre alliance fut brève. J'ai tenté de le persuader de s'allier à moi, mais il a choisi de sacrifier sa vie. En tout cas, il ne reste plus qu'un membre de la Main, maintenant.~
+
+@1006=~Mélissanne et Balthazar
+
+J'ai pu rentrer dans la salle du trône de Balthazar, pour le découvrir en plein affrontement avec Mélissanne. Malgré son affirmation comme quoi Mélissanne a mené la Main depuis le début, j'ai choisi de le combattre. Après tout, il est lui-même un enfant de Bhaal, et l'un de la Main. Durant le combat, Mélissanne a fui, et je ne sais pas où elle se trouve. En tout cas, il ne reste plus qu'un membre de la Main, maintenant.~
+
+@1007=~Mélissanne et Balthazar
+
+J'ai pu rentrer dans la salle du trône de Balthazar, pour le découvrir en plein affrontement avec Mélissanne. Il s'est rapidement avéré clair que Mélissanne était le chef de la Main depuis le début ! Balthazar et moi avons uni nos forces pour la tuer, et nous formons maintenant une alliance difficile... Impossible de dire si elle résistera à la mort de la dernière membre de la Main.~
+
+@1009=~Mélissanne démasquée
+
+J'ai tué Abazigal, mais en mourant, il m'a montré une vision dérangeante : Mélissanne jubilant près du corps de Balthazar. Il est clair qu'elle a travaillé à la résurrection de Bhaal depuis le début. De toute façon, ma seule option restante est d'affronter Sendai, et j'ai le fort sentiment que je trouverai aussi Mélissanne là-bas.~
+
+@1010=~Mélissanne démasquée
+
+J'ai tué Sendai, mais en mourant, elle m'a montré une vision dérangeante : Mélissanne jubilant près du corps de Balthazar. Il est clair qu'elle a travaillé à la résurrection de Bhaal depuis le début. De toute façon, ma seule option restante est d'affronter Abazigal, et j'ai le fort sentiment que je trouverai aussi Mélissanne là-bas.~
+
+@1011=~La fin est proche ?
+
+Abazigal - Sendai - Balthazar - Yaga-Shura - Illasera.  Les plus grands des enfants de Bhaal sont maintenant vaincus, et avec eux, leur chef Mélissanne. Je ne suis pas certain de ce qui va suivre ; Bhaal va-t-il s'élever maintenant ? Le mage Elminster suggère que je retourne au bosquet elfique pour y trouver davantage de réponses. L'Antichambre pourra m'y faire aller, et cela insinue que la suggestion du vieil homme est pertinente. Mais j'ignore ce que je vais trouver au bosquet.~
+
+@1012=~La fin est proche ?
+
+Abazigal - Sendai - Balthazar - Yaga-Shura - Illasera.  Les plus grands des enfants de Bhaal sont maintenant vaincus, seule reste leur chef Mélissanne.  Mais je crains qu'elle ait maintenant ce qu'elle recherche : l'essence qui lui permettra de ressusciter Bhaal lui-même. Le mage Elminster suggère que je retourne au bosquet elfique pour y trouver davantage de réponses. L'Antichambre pourra m'y faire aller, et cela insinue que la suggestion du vieil homme est pertinente. Mais j'ignore ce que je vais trouver au bosquet.~
+
+@1013=~Retour chez Balthazar
+
+Abazigal et Sendai sont morts. Tout ce qu'il me reste à faire est de retourner à la salle du trône de Balthazar et informer mon étrange allié de ces nouvelles. J'attends de voir si notre alliance va perdurer après mon rapport.~
+
+@1014=~La fin est proche ?
+
+Abazigal - Sendai - Yaga-Shura - Illasera - et Mélissanne. Mes plus grands adversaires sont morts, et seuls Balthazar et moi sommes en vie. Mais nous sentons que ce n'est pas encore terminé.  Balthazar suggère que j'utilise l'Antichambre pour retourner au bosquet elfique pour y trouver davantage de réponses. Je n'ai que peu le choix. Mais j'ignore ce que je vais trouver au bosquet.~
+
+@1015=~La fin est proche ?
+
+Abazigal - Sendai - Yaga-Shura - Illasera - et l'idiot confiant, Balthazar. Les plus grands des enfants de Bhaal sont maintenant morts, et avec eux, leur chef Mélissanne. Je ne suis pas certain de ce qui va suivre ; Bhaal va-t-il s'élever maintenant ? Le journal de Balthazar suggère qu'il pourrait y avoir davantage à apprendre au bosquet elfique. L'Antichambre pourra m'y faire aller, et cela suggère que je doive m'y rendre. Mais j'ignore ce que je vais trouver au bosquet.~
+
+@1016=~La fin est proche ?
+
+Abazigal - Sendai - Balthazar - Yaga-Shura - Illasera. Les plus grands des enfants de Bhaal sont maintenant vaincus, seule reste leur chef Mélissanne. Mais je crains qu'elle ait maintenant ce qu'elle recherche : l'essence qui lui permettra de ressusciter Bhaal lui-même. Le journal de Balthazar suggère qu'il pourrait y avoir davantage à apprendre au bosquet elfique. L'Antichambre pourra m'y faire aller, et cela insinue que je doive m'y rendre. Mais j'ignore ce que je vais trouver au bosquet.~
+
+@1018=~L'alliance avec Balthazar
+
+À ma surprise, notre alliance difficile avec le moine enfant de Bhaal, Balthazar, a résisté. Lui et moi allons affronter Mélissanne ensemble, au Trône de Bhaal.~
+
+@1019=~Tant pis pour Balthazar
+
+Je n'avais plus besoin de Balthazar, alors je l'ai tué. Maintenant, sa présence ne me gênera pas durant mon combat final contre Mélissanne.~ 
+
+@1020=~Les révélations du solaire
+
+Les puissants enfants de Bhaal que je combats, ceux qui ont traqué les autres sans relâche, se font appeler "la Main". Comme moi-même, ils sont les plus capables de notre espèce, et possèdent une grande part de l'essence divine de Bhaal.
+
+On dirait qu'ils s'étaient rassemblés dans un but unique... comme ils étaient trop puissants pour s'entretuer, ils ont combiné leurs forces et traqué les autres enfants de Bhaal. Ensuite, ils souhaitaient relever notre sire et devenir ses généraux principaux. Ils ont pratiquement réussi, mais quatre d'entre eux sont morts, désormais.
+
+L'astuce, c'est qu'ils possédaient tant de l'essence de Bhaal que le dieu est plus proche que jamais de la résurrection. Peut-être que c'est ce que la Main avait envisagé, même maintenant, et je n'ai d'autre choix que d'essayer de les arrêter. Ensuite, cela s'achèvera enfin.
+
+La porte s'est ouverte devant le quatrième défi. C'est bizarre, en sachant que je suis proche de la fin, qu'il en reste encore un malgré tout ceci.~
+
+@1021=~Rencontre avec Balthazar
+
+J'ai finalement rencontré Balthazar, le chef de l'ordre monastique à Amkethran, et malgré son mauvais accueil, il m'a permis de rester au village aussi longtemps que je ne tentais pas d'entrer dans le monastère ou d'interférer avec ses affaires... il m'a également donné les cartes des enclaves des enfants de Bhaal que Mélissanne lui a probablement données.
+
+Où se trouve Mélissanne, maintenant ? Mystère. Je ne suis pas tout à fait certain que ce Balthazar soit digne de confiance, mais entrer dans ce monastère qui ressemble davantage à une forteresse ne sera pas facile. Mon autre choix est de fouiller les enclaves et d'affronter les enfants de Bhaal qui sont si occupés à me traquer.~
+
+// Strings from Ascension, starting at 2000
+
+@2000 = ~Maigres résistances~
+@2001 = ~À son retour à Amkethran, Balthazar entama sa rédemption. Il apprit bien de son ami et semblable la signification du mot "Bien". Il porta à jamais sa culpabilité ; une façon de ne jamais commettre la même erreur. Les derniers éléments criminels du village furent rapidement écartés, ce qui attira de nouveaux colons et marchands. Avec les années, Amkethran devint une cité prospère, et le centre culturel de toute la région, renommé pour son calme et sa compassion. Balthazar fut également impliqué dans la formation de la Garde Monastique, un groupe d'élite de paladins et de moines qui jurèrent de défendre les gens du peuple contre la tyrannie sous toutes ses formes. Ses actes lui apportèrent rapidement le respect et la confiance de son peuple. Lorsqu'il devint plus âgé, et lorsque son travail fut achevé, on dit que Balthazar regardait souvent le ciel étoilé en se remémorant <CHARNAME>. Plus tard, Balthazar quitta définitivement Amkethran pour un pèlerinage vers Château-Suif... pour rendre un dernier merci pour la paix qu'il avait trouvée, et pour voir de lui-même les humbles origines d'une légende.~
+@2002=@2001 // no change in american version
+
+// misc strings, starting at 3000
+
+@3000 = ~Dame Mélissanne est dans le monastère. Nous nous sommes... disputés, et elle est rapidement partie. Je m'occuperai d'elle lorsque nous aurons terminé notre affaire.~
+
+// Mélissanne throne-room gloat cutscene
+
+@3001 = ~Ainsi, Balthazar, ta pathétique tentative de sauvetage s'arrête ici.~
+@3002 = ~Mais ne crains rien, "mon vieil ami". Ton essence d'enfant de Bhaal ne sera pas gaspillée.~
+@3003 = ~Ainsi, ils étaient deux. Ou trois, en comptant cette insupportable morveuse.~
+@3004 = ~Balthazar ?~
+@3005 = ~Dame Mélissanne, qu'as-tu fait ?~
+@3006 = ~Ah, Bhaal, mon seigneur, mon seigneur, comme tu es proche.~
+
+// Balthazar's scouts
+
+@3010 = ~Les espions sont revenus de Saradush, Balthazar.~
+@3011 = ~Qu'ont-ils révélé, frère ?~
+@3012 = ~Les rumeurs sont vraies, Père. La cité est entièrement détruite.~
+@3013 = ~Yaga-Shura est mort ; les enfants de Bhaal de la cité également. Seul <CHARNAME> a survécu.~ ~Yaga-Shura est mort ; les enfants de Bhaal de la cité également. Seule <CHARNAME> a survécu.~
+@3014 = ~Qu'il en soit ainsi. C'est un lourd tribut à payer.~
+@3015 = ~Et notre armée ?~
+@3016 = ~Nos forces continuent à croître. Nous serons prêts pour la guerre dans la semaine.~
+@3017 = ~Mais le prix pour le peuple d'Amkethran est élevé.~
+@3018 = ~Durant de tels temps, il faut beaucoup sacrifier.~
+
+// Undead monks
+
+@3020 = "Touché par Bhaal"
+@3021 = ~Urrh...~ [skelw01]
+@3022 = ~Meurs...~  [skelw03]
+@3023 = ~~ [shadow06]
+@3024 = ~~ [shadow07]
+
+// Mélissanne's ring
+
+@3030=~L'anneau de magie de Mélissanne
+Non seulement cet anneau puissamment enchanté protège son porteur, mais il lui permet en sus de mémoriser davantage de sorts qu'il en est normalement possible. Cet anneau n'a pas d'histoire connue ; il semble être une création propre de Mélissanne.
+
+PARAMÈTRES :
+
+Classe d'armure : bonus de +3
+Jets de sauvegarde : bonus de +3
+Sorts : un sort supplémentaire de niveau 9
+
+Utilisable par :
+ Mage~
+@3031=~L'anneau de magie de Mélissanne~
+
+// Balthazar's journal
+
+@3040=~Le journal de Balthazar~
+@3041=~Le journal de Balthazar
+
+Ce journal contient essentiellement un mélange de considérations quasiment religieuses et de logistique militaire. Une chose retient votre attention, cependant : Balthazar note que Mélissanne était très empressée de vous maintenir à l'écart du bosquet elfique des têtes de pierre. Elles ont quelque chose qu'elle ne souhaitait pas que vous appreniez de ces esprits de la forêt.~
+
+// Extra pocket plane travel options
+
+@3050=~Je veux aller à Amkethran.~
+@3051=~Renvoyez-moi au bosquet elfique, dans la forêt du Téthyr.~
+
+// Bartender in Amkethran
+
+@3060=~En fait, je me demandais si vous aviez un rouleau de corde que je pourrais vous acheter.~
+@3061=~<CHARNAME> l'enfant de Bhaal, <CHARNAME> l'assassin de Balthazar, entre dans ma taverne, et tout ce qu'il souhaite, c'est un rouleau de corde ?~ ~<CHARNAME> l'enfant de Bhaal, <CHARNAME> l'assassin de Balthazar, entre dans ma taverne, et tout ce qu'elle souhaite, c'est un rouleau de corde ?~
+@3062=~Voilà votre corde, mon bon monsieur. C'est gratuit, je ferai mes choux gras de cette histoire pendant des semaines.~ ~Voilà votre corde, ma bonne dame. C'est gratuit, je ferai mes choux gras de cette histoire pendant des semaines.~
+@3063=~Corde ?!!~
+@3064=~<CHARNAME> l'enfant de Bhaal, <CHARNAME> le sauveur de notre village, entre dans ma taverne, et tout ce qu'il souhaite, c'est un rouleau de corde ?~ ~<CHARNAME> l'enfant de Bhaal, <CHARNAME> la sauveuse de notre village, entre dans ma taverne, et tout ce qu'elle souhaite, c'est un rouleau de corde ?~
+@3065=~Les mercenaires ont levé le camp, sur ordre de Balthazar, et les moines sont pratiquement redevenus comme avant. La rumeur dit que c'est de votre fait, étranger... vous avez sauvé notre village ! Puis-je vous aider en quoi que ce soit, mon seigneur ? Vous n'avez qu'à demander !~ ~Les mercenaires ont levé le camp, sur ordre de Balthazar, et les moines sont pratiquement redevenus comme avant. La rumeur dit que c'est de votre fait, étrangère... vous avez sauvé notre village ! Puis-je vous aider en quoi que ce soit, ma dame ? Vous n'avez qu'à demander !~
+@3066=~Comme vous voulez, mon seigneur. Vous avez sauvé notre village... puissent les esprits du sable toujours marcher avec vous.~ ~Comme vous voulez, ma dame. Vous avez sauvé notre village... puissent les esprits du sable toujours marcher avec vous.~
+
+// Graveyard ward
+
+@3070=~De puissantes protections ont été disposées autour du passage. Un mur invisible obture entièrement le tunnel.~
+
+// Panicked peasants
+
+@3080=~L'armée de Sendai est là !~
+@3081=~L'armée d'Abazigal est là !~
+@3082=~Courez, si vous voulez rester en vie !~
+
+// Merc leader
+
+@3090=~Merci pour votre aide. Vos gens se battent bien.~
+@3091=~Du nerf, les gars. C'était seulement la première vague... nous devons sécuriser le village.~
+
+// Sarevok's comment
+
+@3100=~<CHARNAME>, ce lourdaud n'a aucune idée de notre véritable puissance. Cette forteresse ne résistera pas à notre force. Si tu veux un assaut direct, tu n'as qu'un mot à dire.~
+
+// Peasant backchat
+
+@3110=~Les soldats de Balthazar ont fui, grâce aux dieux !~
+@3111=~Maintenant que les soldats sont partis, nous pouvons enfin avoir plus de marchandises.~
+@3112=~Comment allons-nous survivre sans le monastère ?~
+@3113=~Maintenant que Balthazar est parti, il reste de l'espoir.~
+@3114=~Balthazar nous a condamnés... les prochaines attaques nous tueront tous.~
+@3115=~Nous sommes maudits.~
+@3116=~Pourquoi les moines nous ont-ils rejetés ? Ils nous protégeaient depuis si longtemps.~
+@3117=~Les soldats de Balthazar ont rangé leurs armes, grâce aux dieux !~
+@3118=~On dirait que les moines reprennent leurs esprits. Il reste de l'espoir.~
+@3119=~Balthazar nous a promis de nous protéger. Quelque chose a dû le changer.~
+@3120=~La guerre approche. Seul Balthazar peut nous sauver.~
+@3121=~Y a-t-il encore de l'espoir ?~
+@3122=~Avec les moines qui protègent à nouveau Amkethran, nous survivrons peut-être, après tout.~
+@3123=~Quand l'armée reviendra-t-elle ? Nous sommes condamnés !~
+@3124=~Pensez-vous que ce soit vrai que Balthazar est mort ?~
+@3125=~Les moines ont abandonné le monastère !~
+@3126=~Ces monstres reviendront bientôt. Il est temps de fuir le village !~
+@3127=~Les mercenaires se sont dispersés. Je ne sais pas si je dois m'en réjouir ou m'en effrayer.~
+@3128=~Ces monstres vont revenir !~
+@3129=~Avez-vous vu le combat de Balthazar ?~
+@3130=~Les mercenaires se sont battus pour nous protéger. Ils ne sont peut-être pas tous mauvais.~
+@3131=~Les moines ont pratiquement repris leurs esprits.~
+@3132=~Je ne sais pas ce qui a remis Balthazar sur le droit chemin, mais je n'ai jamais été aussi reconnaissant.~
+
+// Faheed map note
+
+@3140="Maison de Faheed"
+
+// Heroic shouts by mercs/monks
+
+@3150="Aux armes !"
+@3151="Défendez le village !"
+@3152="Pour Balthazar !"
+@3153="Nous sommes attaqués !"
+
+// Balthazar battle
+
+@3160="Boit une potion de soins supérieurs"
+
+// Nice comments by monks
+
+@3170="Selon les souhaits du Père, vous êtes les bienvenus dans ce village."
+@3171="Allez avec la bénédiction d'Ilmater."
+@3172="Que votre chemin soit vertueux."
+@3173="Nous vous voyons tel que Balthazar vous voit."
+
+// WeiDU prompts
+@-1000= "Le mod %TP2_FILE_NAME% contient"
+@-1001= "composants optionnels distincts.
+Pour gagner du temps, vous pouvez choisir ce que vous souhaitez faire d'eux
+au niveau general plutot que de repondre aux questions pour chacun.
+"
+@-1002= "Que faut-il faire de tous les composants qui NE sont PAS ENCORE installes ?
+Les [I]nstaller, les [S]auter, dem[A]nder pour chacun ? "
+@-1003= "Que faut-il faire de tous les composants qui sont DEJA installes ?
+Les [R]einstaller, les s[U]pprimer, les [S]auter, dem[A]nder pour chacun ? "
+
+@-1004= "S'IL VOUS PLAIT, envoyez par e-mail le fichier"
+@-1005= "a"
+
+@-1006= "Installer le composant ["
+@-1007= "] ?
+[R]einstaller, co[N]server, s[U]pprimer ou [Q]uitter ? "
+@-1008= "] ?
+[I]nstaller, [N]e pas installer ou [Q]uitter ? "
+
+@-1009= "Entrez une partie du nom du module : "
+
+@-1010= "Reinstallation du composant ["
+@-1011= "] "
+@-1012= "Reinstallation dans la langue"
+
+@-1013= "Suppression de l'ancienne installation de ["
+@-1014= "] au prealable..."
+@-1015= "SUPPRESSION REUSSIE DE L'ANCIEN"
+
+@-1016= "Installation en cours"
+@-1017= "ERREUR pendant l'installation de ["
+@-1018= "], retour a l'etat anterieur"
+@-1019= "INSTALLATION REUSSIE"
+@-1020= "Saute"
+@-1021= "Suppression de ["
+@-1022= "] (composant #"
+@-1023= ")"
+@-1024= "SUPPRESSION REUSSIE DE ["
+
+@-1025= "] ?
+[R]einstaller, co[N]server, s[U]pprimer, [Q]uitter ou choisir un parmi :"
+@-1026= "] ?
+[N]e pas installer, [Q]uitter ou choisir un parmi :"
+@-1027= " (installe actuellement)"
+
+@-1028= "Souhaitez-vous afficher les composants de ["
+@-1029= "] ?
+[Y]Oui, [N]on ? "
+
+@-1030= "] ?
+choisir un parmi :"
+@-1031= "] ?
+[R]einstaller, co[N]server, [Q]uitter ou choisir un parmi :"
+@-1032= "INSTALLATION ECHOUEE A CAUSE D'ERREURS"
+@-1033= "INSTALLATION AVEC DES ALERTES"
+@-1034= "Souhaitez-vous afficher les instructions (ReadMe) ? [Y]Oui [N]on"
+@-1035= "Dans la langue"
+
+@-1036= "Saute le GROUPE ["
+@-1037= "] pour cause d'absence des pre-requis."
+
+@-1038= "dem[A]nder pour chaque composant, tout [S]auter, ou choisir une selection pre-definie :"
+@-1039= "dem[A]nder pour chaque composant, [R]einstaller la configuration courante, tout s[U]pprimer, tout [S]auter, ou choisir une selection pre-definie :"
+
+@-1040= "
+Veuillez choisir la langue dans laquelle vous souhaitez jouer au jeu.
+Si par la suite vous desirez jouer au jeu dans une langue differente, il vous
+faudra editer le fichier weidu.conf et reinstaller vos mods.
+"
+@-1041= "Tcheque"
+@-1042= "Allemand"
+@-1043= "Anglais"
+@-1044= "Espagnol"
+@-1045= "Francais"
+@-1046= "Italien"
+@-1047= "Polonais"
+@-1048= "Portugais"
+@-1049= "Turc"
+@-1050= "Japonais"
+@-1051= "Coreen"
+@-1052= "Chinois simplifie"
+@-1053= "Russe"
+@-1054= "Ukrainien"
+
+@-1060= "
+Ce jeu est disponible en plusieurs langues mais WeiDU ne sait pas laquelle a ete choisie quand ce mod a ete installe.
+
+Veuillez indiquer quelle langue du jeu a ete utilisee quand vous avez installe ce mod. Votre choix servira jusqu'a ce que WeiDU s'arrete mais ne sera pas memorise.
+"
+@-1061= "
+Utilisation de"
+@-1062= " et "
