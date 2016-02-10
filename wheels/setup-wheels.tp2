@@ -3,11 +3,18 @@ AUTHOR ~For help troubleshooting installation problems, go to the Wheels of Prop
 VERSION ~v4~
 README ~wheels/readme-wheels.html~
 AUTO_EVAL_STRINGS
-AUTO_TRA ~%s~
+AUTO_TRA ~wheels/tra/%s~
 
 
 
 ALWAYS
+  // Convert charsets to utf-8 so that non-English EE games won't crash
+  ACTION_IF NOT VARIABLE_IS_SET cd_always THEN BEGIN
+    OUTER_SET cd_always = 1
+    ACTION_DEFINE_ARRAY cdnoconvert BEGIN setup END // List of tra files that contain ONLY strings for the WeiDU installer and NOT game content
+    LAF HANDLE_CHARSETS INT_VAR infer_charset = 1 STR_VAR tra_path = ~wheels/tra~ noconvert_array = cdnoconvert END
+  END
+
    OUTER_SET debug_variable=0
    OUTER_SPRINT scsroot wheels
    OUTER_SET read_resources=1
@@ -23,12 +30,12 @@ END
 
 LANGUAGE 
 "English" 
-"wheels/tra/english"
+"english"
  ~wheels/tra/english/setup.tra~
 
 LANGUAGE 
 "Francais (Mornagest)"
-"wheels/tra/french"
+"french"
  ~wheels/tra/english/setup.tra~
  ~wheels/tra/french/setup.tra~
 
