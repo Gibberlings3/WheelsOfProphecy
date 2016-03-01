@@ -41,7 +41,7 @@ END
 
 IF
 	Clicked([ANYONE])
-	Global("Chapter","GLOBAL",9)
+	Global("Chapter","GLOBAL",%bg2_chapter_9%)
 	Global("DMWWGrove","GLOBAL",0)
 THEN
 	RESPONSE #100
@@ -50,7 +50,7 @@ END
 
 IF
 	Clicked([ANYONE])
-	Global("Chapter","GLOBAL",9)
+	Global("Chapter","GLOBAL",%bg2_chapter_9%)
 	Global("DMWWGrove","GLOBAL",2)
 THEN
 	RESPONSE #100

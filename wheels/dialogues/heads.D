@@ -1,10 +1,10 @@
 BEGIN ~head1~ 
-  IF ~Global("Chapter","GLOBAL",9)~ Head1_ch9
+  IF ~Global("Chapter","GLOBAL",%bg2_chapter_9%)~ Head1_ch9
 SAY @0
 IF ~~ THEN DO ~StartCutSceneMode() StartCutScene("dw#whd03")~ EXIT
 END
 
-  IF WEIGHT #-2 ~!Global("Chapter","GLOBAL",9)~ Head1
+  IF WEIGHT #-2 ~!Global("Chapter","GLOBAL",%bg2_chapter_9%)~ Head1
     SAY @1
     IF ~~ THEN REPLY @2 GOTO Head1_1
     IF ~~ THEN REPLY @3 GOTO Head1_2
@@ -45,7 +45,7 @@ END
 
 BEGIN ~HEAD2~
 
-IF WEIGHT #-2 ~!Global("Chapter","GLOBAL",9)~ Head2
+IF WEIGHT #-2 ~!Global("Chapter","GLOBAL",%bg2_chapter_9%)~ Head2
     SAY @15
     = @16
     = @17
@@ -60,12 +60,12 @@ SAY @18
 
 BEGIN ~HEAD3~
 
-  IF ~Global("Chapter","GLOBAL",9)~ Head3_ch9
+  IF ~Global("Chapter","GLOBAL",%bg2_chapter_9%)~ Head3_ch9
 SAY @19 
 IF ~~ THEN DO ~StartCutSceneMode() StartCutScene("dw#whd04")~ EXIT
 END
 
-  IF WEIGHT #-2 ~!Global("Chapter","GLOBAL",9)~ Head3
+  IF WEIGHT #-2 ~!Global("Chapter","GLOBAL",%bg2_chapter_9%)~ Head3
     SAY @20
     = @21
     = @22
@@ -80,12 +80,12 @@ END
 
 BEGIN ~HEAD4~
   
-IF ~Global("Chapter","GLOBAL",9)~ Head4_ch9
+IF ~Global("Chapter","GLOBAL",%bg2_chapter_9%)~ Head4_ch9
 SAY @24
 IF ~~ THEN DO ~StartCutSceneMode() StartCutScene("dw#whd05")~ EXIT
 END
 
-  IF WEIGHT #-2 ~!Global("Chapter","GLOBAL",9)~ Head4
+  IF WEIGHT #-2 ~!Global("Chapter","GLOBAL",%bg2_chapter_9%)~ Head4
     SAY @25
     = @26
 IF ~OR(2) !Global("DW#Head2","AR4000",1) !Global("DW#Head3","AR4000",1)~ THEN GOTO head4_teaser
@@ -99,12 +99,12 @@ SAY @27
 
 BEGIN ~HEAD5~
 
-IF ~Global("Chapter","GLOBAL",9)~ Head5_ch9
+IF ~Global("Chapter","GLOBAL",%bg2_chapter_9%)~ Head5_ch9
 SAY @28
 IF ~~ THEN DO ~SetGlobal("HadBhaal25Dream5","GLOBAL",1)StartCutSceneMode() StartCutScene("cut243a")~ EXIT
 END
 
-  IF WEIGHT #-2 ~!Global("Chapter","GLOBAL",9)~ Head5
+  IF WEIGHT #-2 ~!Global("Chapter","GLOBAL",%bg2_chapter_9%)~ Head5
     SAY @29
     = @30
     = @31
