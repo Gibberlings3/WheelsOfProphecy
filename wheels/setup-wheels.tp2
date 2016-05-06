@@ -1,6 +1,6 @@
 BACKUP ~stratagems_external/backup/wheels~
 AUTHOR ~For help troubleshooting installation problems, go to the Wheels of Prophecy forum at forums.gibberlings3.net.~
-VERSION ~v4~
+VERSION ~v5~
 README ~wheels/readme-wheels.html~
 AUTO_EVAL_STRINGS
 AUTO_TRA ~wheels/tra/%s~
