@@ -630,7 +630,7 @@ BEGIN
             LPF idscode_to_spell INT_VAR idscode RET resref END
             SPRINT list "%list% %resref%.spl"
           END 
-       END
+      END
    BUT_ONLY
    COPY_EXISTING_REGEXP "\(clab\|lu\).*\.2da" "%workspace%"
        COUNT_2DA_COLS colcount

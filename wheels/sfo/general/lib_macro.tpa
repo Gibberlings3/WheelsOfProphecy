@@ -109,12 +109,14 @@ DEFINE_ACTION_MACRO ~read_in_spellcodes~ BEGIN
   LOCAL_SET level=0
   LOCAL_SPRINT spelltype ""
   ACTION_IF !VARIABLE_IS_SET ~macro_read_in_spellcodes~ BEGIN
-   OUTER_SPRINT ~macro_read_in_spellcodes~ ~~
+    OUTER_SPRINT ~macro_read_in_spellcodes~ ~~
+    
     ACTION_IF ENGINE_IS ~bgee bg2ee eet~ BEGIN
-       OUTER_SET ids_first_row = 1
+      OUTER_SET ids_first_row = 1
     END ELSE BEGIN
-       OUTER_SET ids_first_row = 0
+      OUTER_SET ids_first_row = 0
     END
+    
     COPY_EXISTING ~spell.ids~ ~override~
          READ_2DA_ENTRIES_NOW ~spell_array~ 2
          FOR (i=ids_first_row;i<~spell_array~;i=i+1) BEGIN
@@ -344,7 +346,6 @@ DEFINE_ACTION_MACRO ~read_in_clab_spelldata~ BEGIN
                   TO_UPPER resource
                   PATCH_IF !VARIABLE_IS_SET "RESREF_%resource%_KIT_EFFECTS_ADD" && FILE_EXISTS_IN_GAME "%resource%.spl" BEGIN
                       INNER_ACTION BEGIN
-                        ACTION_IF FILE_EXISTS_IN_GAME "%resource%.spl" BEGIN
                          COPY_EXISTING "%resource%.spl" "%workspace%"
                             SPRINT tempadd ""
                             SPRINT tempremove ""
@@ -362,9 +363,8 @@ DEFINE_ACTION_MACRO ~read_in_clab_spelldata~ BEGIN
                                        SPRINT tempremove "%tempremove% delete_effect=>~opcode=%opcode% and parameter2=%parameter2% and resource=%resource_here%~" // parameter1 intentionally left out
                                     END
                          BUT_ONLY
-                       END
-                       OUTER_SPRINT "RESREF_%resource%_KIT_EFFECTS_ADD" "%tempadd%"
-                       OUTER_SPRINT "RESREF_%resource%_KIT_EFFECTS_REMOVE" "%tempremove%"
+                         OUTER_SPRINT "RESREF_%resource%_KIT_EFFECTS_ADD" "%tempadd%"
+                         OUTER_SPRINT "RESREF_%resource%_KIT_EFFECTS_REMOVE" "%tempremove%"
                       END
                   END
               END
@@ -643,7 +643,7 @@ END
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 DEFINE_ACTION_MACRO read_in_proficiency_progression BEGIN
-   ACTION_IF !VARIABLE_IS_SET proficiency_progression_read_in BEGIN
+  ACTION_IF !VARIABLE_IS_SET proficiency_progression_read_in BEGIN
     OUTER_SET proficiency_progression_read_in=1
     COPY_EXISTING profs.2da ~%workspace%~
        READ_2DA_ENTRIES_NOW MACRO_prof_progression_data 3
@@ -655,20 +655,22 @@ DEFINE_ACTION_MACRO read_in_proficiency_progression BEGIN
             SET  ~PROFICIENCY_RATE_%MACRO_class%~=MACRO_rate
        END
     BUT_ONLY
-	ACTION_IF ENGINE_IS ~bgee bg2ee eet~ BEGIN
-       OUTER_SET 2da_first_row = 1
-	END ELSE BEGIN
-       OUTER_SET 2da_first_row = 0
-	END
-     COPY_EXISTING profsmax.2da "%workspace%"
-          READ_2DA_ENTRIES_NOW MACRO_prof_max_data 3
-          FOR (i=2da_first_row;i<MACRO_prof_max_data;i+=1) BEGIN
-            READ_2DA_ENTRY_FORMER MACRO_prof_max_data i 0 MACRO_class
-            READ_2DA_ENTRY_FORMER MACRO_prof_max_data i 1 MACRO_first_level
-            READ_2DA_ENTRY_FORMER MACRO_prof_max_data i 2 MACRO_other_level
-            SET "PROFICIENCY_FIRST_LEVEL_MAX_%MACRO_class%"=MACRO_first_level
-            SET "PROFICIENCY_OTHER_LEVEL_MAX_%MACRO_class%"=MACRO_other_level
-          END
+    
+    ACTION_IF ENGINE_IS ~bgee bg2ee eet~ BEGIN
+      OUTER_SET 2da_first_row = 1
+    END ELSE BEGIN
+      OUTER_SET 2da_first_row = 0
+    END
+    
+    COPY_EXISTING profsmax.2da "%workspace%"
+         READ_2DA_ENTRIES_NOW MACRO_prof_max_data 3
+         FOR (i=2da_first_row;i<MACRO_prof_max_data;i+=1) BEGIN
+           READ_2DA_ENTRY_FORMER MACRO_prof_max_data i 0 MACRO_class
+           READ_2DA_ENTRY_FORMER MACRO_prof_max_data i 1 MACRO_first_level
+           READ_2DA_ENTRY_FORMER MACRO_prof_max_data i 2 MACRO_other_level
+           SET "PROFICIENCY_FIRST_LEVEL_MAX_%MACRO_class%"=MACRO_first_level
+           SET "PROFICIENCY_OTHER_LEVEL_MAX_%MACRO_class%"=MACRO_other_level
+         END
     BUT_ONLY
    END
 END
