@@ -214,6 +214,7 @@ IF
 		!Dead("abazigal")
 	!Global("DMWWSpawnAttackPeasants","GLOBAL",1)
         !Global("DMWWBalthDeadPhase1","GLOBAL",1)
+	Global("HadBhaal25Dream3","GLOBAL",1)
 THEN
         RESPONSE #100
 		SetGlobal("DMWWSpawnAttackPeasants","GLOBAL",1)
