@@ -23,7 +23,7 @@ END
 
 IF ~~ THEN BEGIN learnedsecrets
 SAY @5
-IF ~~ THEN REPLY @6 GOTO nobhaalback
+IF ~~ THEN REPLY @6 DO ~SetGlobal("TalkedToSolar","GLOBAL",6)~ GOTO nobhaalback
 IF ~!Dead("dw#melis")~ THEN REPLY @7 DO ~SetGlobal("TalkedToSolar","GLOBAL",6)~ GOTO 60
 IF ~Dead("dw#melis")~ THEN REPLY @8 DO ~SetGlobal("TalkedToSolar","GLOBAL",6)~ GOTO 60
 IF ~~ THEN REPLY #67568  DO ~SetGlobal("TalkedToSolar","GLOBAL",6)~ GOTO nobhaalback
