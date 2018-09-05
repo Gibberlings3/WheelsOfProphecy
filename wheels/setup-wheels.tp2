@@ -22,8 +22,9 @@ ALWAYS
   // Convert charsets to utf-8 so that non-English EE games won't crash
   ACTION_IF NOT VARIABLE_IS_SET cd_always THEN BEGIN
     OUTER_SET cd_always = 1
-    ACTION_DEFINE_ARRAY cdnoconvert BEGIN setup END // List of tra files that contain ONLY strings for the WeiDU installer and NOT game content
-    LAF HANDLE_CHARSETS INT_VAR infer_charsets = 1 STR_VAR tra_path = ~wheels/tra~ noconvert_array = cdnoconvert END
+    ACTION_DEFINE_ARRAY cdnoconvert BEGIN END // List of tra files that contain ONLY strings for the WeiDU installer and NOT game content
+    ACTION_DEFINE_ARRAY cdreload BEGIN setup END // After conversion, setup.tra must be reloaded for immediate use
+    LAF HANDLE_CHARSETS INT_VAR infer_charsets = 1 STR_VAR tra_path = ~wheels/tra~ noconvert_array = cdnoconvert reload_array = cdreload default_language = ~english~ END
   END
 
    OUTER_SET debug_variable=0
