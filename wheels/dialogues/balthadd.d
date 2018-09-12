@@ -865,7 +865,7 @@ IF ~~ THEN balth army_abaz
 =
 @187
 END
-IF ~~ THEN DO ~SetGlobal("DMWWMercStatus","GLOBAL",2)SetGlobal("DMWWBalthMidAlliance","GLOBAL",1)~
+IF ~~ THEN DO ~SetGlobal("DMWWVillageAttacked","GLOBAL",1)SetGlobal("DMWWMercStatus","GLOBAL",2)SetGlobal("DMWWBalthMidAlliance","GLOBAL",1)~
 EXIT 
 
 CHAIN 
@@ -883,7 +883,7 @@ IF ~~ THEN balth army_send
 =
 @187
 END
-IF ~~ THEN DO ~SetGlobal("DMWWMercStatus","GLOBAL",2)SetGlobal("DMWWBalthMidAlliance","GLOBAL",1)~
+IF ~~ THEN DO ~SetGlobal("DMWWVillageAttacked","GLOBAL",1)SetGlobal("DMWWMercStatus","GLOBAL",2)SetGlobal("DMWWBalthMidAlliance","GLOBAL",1)~
 EXIT 
 
 
