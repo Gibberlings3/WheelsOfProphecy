@@ -28,10 +28,10 @@ set mod_readme=http://www.gibberlings3.net/readmes/readme-%mod_folder%.html
 REM /* MODIFY: if you don't need to build a specific package, you can disable it by setting the appropriate variable below to 0 */
 set build_windows=1
 set build_osx=1
-set build_linux=0
+set build_linux=1
 
 REM /* MODIFY: if you want to avoid making filenames lowercase, you can disable that by setting the variable below to 0 */
-set lowercase_filenames=0
+set lowercase_filenames=1
 
 REM /* this performs the actual packaging */
 call "%~dp0..\ModPackaging\utilities\complete_packaging.bat"
