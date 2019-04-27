@@ -1,10 +1,19 @@
 DEFINE_ACTION_FUNCTION wheels BEGIN
+    OUTER_SPRINT component_loc "" // hack around SCS changes
 
     ACTION_IF !FILE_EXISTS_IN_GAME "finbalth.cre" BEGIN
-       LAF run STR_VAR file="wheels_ascension" location=lib END
+       LAF run STR_VAR file="wheels_ascension" END
     END
 
-    LAF HANDLE_AUDIO STR_VAR audio_path="%scsroot%/sounds" END
+    COMPILE "%scsroot%/misc/balth_vanilla.d" // overwrite balth.d with pristine vAsc version, pending WoP update more systematically
+    COMPILE "%scsroot%/ascension/balth.d"
+
+    MKDIR "%workspace%/sounds"
+    ACTION_BASH_FOR "%scsroot%/sounds" ".*" BEGIN
+       COPY "%BASH_FOR_FILESPEC%" "%workspace%/sounds"
+    END
+    LAF HANDLE_AUDIO STR_VAR audio_path="%workspace%/sounds" END
+
 
     ACTION_FOR_EACH func IN dialog cutscenes throneroom forest heads misc amkethran BEGIN
          LAF run STR_VAR file="wheels_%func%" location=lib END

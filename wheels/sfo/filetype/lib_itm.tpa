@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                                         
 /////////////               overarching clone
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 DEFINE_ACTION_FUNCTION clone_item
     INT_VAR allow_missing=0
@@ -39,12 +39,13 @@ DEFINE_ACTION_FUNCTION edit_item
            editstring=""
            location=""
            locbase=""
+           locabs=""
     BEGIN
          LAUNCH_ACTION_FUNCTION edit_template
                   STR_VAR file_list= ~%item%~
                           file_ext=~ITM~
                           edits editstring allow_missing
-                          tv silent location locbase
+                          tv silent location locbase locabs
 
          END
 END
@@ -190,7 +191,6 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY item_ability_fields BEGIN
    number_charges => ~0x22,SHORT~
    when_drained => ~0x24,BYTE~
    strength_bonus=>~0x26,BYTE~
-   when_recharges => ~0x27,SHORT~
    projectile => ~0x2a,SHORT~
    overhand=>~0x2c,SHORT~
    backhand=>~0x2e,SHORT~
@@ -221,6 +221,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY eff_fields BEGIN
    dicenum=> ~0x1c,LONG~
    dicesize=> ~0x20,LONG~
    save_bonus=>~0x28,LONG~
+   mode=>~0x2c,LONG~
 END
 
 LAUNCH_ACTION_FUNCTION build_simple_data_field_editors STR_VAR lookup_table=eff_fields offset_base=~offset_base~ function_prefix=ITM secondary="yes" END
@@ -244,6 +245,12 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY itm_bit_fields BEGIN
       unusable_GEneutral => ~0x1e,3~
       unusable_lawful => ~0x1e,4~
       unusable_LCneutral => ~0x1e,5~
+      unusable_chaotic_priest => ~0x1e,0~
+      unusable_evil_priest => ~0x1e,1~
+      unusable_good_priest => ~0x1e,2~
+      unusable_GEneutral_priest => ~0x1e,3~
+      unusable_lawful_priest => ~0x1e,4~
+      unusable_LCneutral_priest => ~0x1e,5~
       unusable_bard => ~0x1e,6~
       unusable_cleric => ~0x1e,7~
       unusable_cleric_mage => ~0x1f,0~
@@ -306,6 +313,12 @@ END
 
 LAF build_flag_data_field_editors STR_VAR lookup_table=itm_bit_fields function_prefix=ITM END
 
+ACTION_DEFINE_ASSOCIATIVE_ARRAY abil_bit_fields BEGIN
+      recharges_on_rest=>~0x27,3~
+END
+LAF build_flag_data_field_editors STR_VAR lookup_table=abil_bit_fields offset_base=~offset_base~ function_prefix=ITM END
+
+
 ACTION_DEFINE_ASSOCIATIVE_ARRAY eff_bit_fields BEGIN
       save_vs_spell => ~0x24,0~
       save_vs_breath => ~0x24,1~
@@ -363,24 +376,63 @@ BEGIN
 END
 OUTER_SPRINT $SFO_do_not_parse_arguments("ITM_delete_opcodes") ""
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////              add an effect (via a patch)
+/////////////               give immunity to opcodes
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-DEFINE_PATCH_FUNCTION ITM_spell_immunity
-          STR_VAR arguments=""
+DEFINE_PATCH_FUNCTION ITM_immunity_to_opcode
+       STR_VAR arguments=""
 BEGIN
-          PATCH_IF ~%arguments%~ STRING_COMPARE_CASE ~~ BEGIN
-             LPF return_first_entry STR_VAR list= ~%arguments%~ RET entry=entry arguments=list END
-             LPF add_effect_inline STR_VAR arguments= ~target=>1 timing=>2 opcode=>206 resource=>%entry% parameter2=>"-1"~ equipped=yes file_ext=ITM END
-             LPF ITM_spell_immunity STR_VAR arguments END
-          END
+       PATCH_IF ~%arguments%~ STRING_COMPARE_CASE ~~ BEGIN
+          LPF return_first_entry STR_VAR list=~%arguments%~ RET entry=entry arguments=list END
+         LPF delete_entry STR_VAR type=effect_global arguments=~opcode=101 and parameter2=%entry%~ file_ext=ITM END
+         LPF add_entry_inline STR_VAR arguments =~opcode=>101 parameter2=>%entry%~ type=effect_global file_ext=ITM END
+          LPF ITM_immunity_to_opcode STR_VAR arguments END
+       END
 END
-LAF log_this STR_VAR file=auto_function_list.txt input= ~ITM_spell_immunity - -~ END
+OUTER_SPRINT $SFO_do_not_parse_arguments("ITM_immunity_to_opcode") ""
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////              give immunity to a spell (opcode 206)
+/////////////
+/////////////              if we use "arguments" assume it's a string of entries
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION ITM_immunity_to_spell
+       STR_VAR spellname=""
+               spellcode=""
+               arguments=""
+BEGIN
+       PATCH_IF ~%spellname%~ STRING_COMPARE_CASE ~~ BEGIN
+              LPF deabbreviate_spellname STR_VAR input=  ~%spellname%~ RET spellname END
+              PATCH_IF VARIABLE_IS_SET "%spellname%" BEGIN
+                  SPRINT spellcode EVALUATE_BUFFER ~%%spellname%%~
+              END ELSE BEGIN
+                 SPRINT spellcode "%spellname%"
+                 LPF warning STR_VAR warning="Spell %spellname% does not appear to exist" END
+              END
+       END
+       PATCH_IF ~%spellcode%~ STRING_COMPARE_CASE ~~ BEGIN
+         LPF add_entry_inline STR_VAR arguments =~opcode=>206 resource=>%spellcode%~ type=effect_global file_ext=ITM END
+       END
+       PATCH_IF ~%arguments%~ STRING_COMPARE_CASE ~~ BEGIN
+          LPF return_first_entry STR_VAR list= ~%arguments%~ RET spell=entry arguments=list END
+          INNER_ACTION BEGIN
+                  ACTION_IF FILE_EXISTS_IN_GAME ~%spell%.spl~ BEGIN
+                     OUTER_SPRINT spellcode ~%spell%~
+                     OUTER_SPRINT spellname ~~
+                  END ELSE BEGIN
+                     OUTER_SPRINT spellname ~%spell%~
+                     OUTER_SPRINT spellcode ~~
+                  END
+          END
+          LPF ITM_immunity_to_spell STR_VAR arguments spellname spellcode END
+       END
+END
+OUTER_SPRINT $SFO_do_not_parse_arguments("ITM_immunity_to_spell") ""
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -434,6 +486,51 @@ END
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////              externalise an item's global effects to a spell (so the spell applies, permanently, all the item's effects) leaving the item itself unchanged
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION copy_item_effects_to_spell
+    STR_VAR item=""
+            spell=""
+BEGIN
+         // make a new spell
+         LAF make_spell STR_VAR spell END
+         COPY_EXISTING "%item%.itm" "%workspace%"
+             READ_SHORT 0x70 num_eff
+             READ_ASCII (LONG_AT 0x6a + (SHORT_AT 0x6e)*0x30) eff_array (num_eff*0x30) // read in whole effect block
+         BUT_ONLY
+         COPY_EXISTING "%spell%.spl" override
+                 INNER_PATCH_SAVE ability "" BEGIN
+                    INSERT_BYTES 0x0 0x28
+                    WRITE_SHORT 0x0 1 // type: melee
+                    WRITE_SHORT 0x2 4 // slot:innate
+                    WRITE_ASCII 0x4 "noicon"
+                    WRITE_BYTE 0xc 5 // target:caster
+                    WRITE_SHORT 0xe 1 // range
+                    WRITE_SHORT 0x10 1 // min level
+                    WRITE_SHORT 0x16 6 // dice size - just in case
+                    WRITE_SHORT 0x1c 1 // piercing type - just in case
+                    WRITE_SHORT 0x1e "%num_eff%"
+                    WRITE_SHORT 0x22 1 // num charges
+                    WRITE_SHORT 0x24 1 // unknown
+                    WRITE_SHORT 0x26 1 // projectile NONE
+
+                 END
+                 WRITE_SHORT 0x68 1
+                 INSERT_BYTES 0x72 0x28
+                 WRITE_ASCII 0x72 "%ability%"
+                 WRITE_LONG 0x6a 0x72+0x28
+                 INSERT_BYTES (0x72+0x28) (0x30*num_eff)
+                 WRITE_ASCII (0x72+0x28) "%eff_array%"
+         BUT_ONLY
+         LAF edit_spell STR_VAR spell editstring="patch_effect_inline=>~timing=>9~" END
+
+END
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////              externalise an item's ability to a spell (so all the ability does is cast the spell)
 /////////////              The item has the same name as the spell unless you specify another explicitly
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -463,6 +560,8 @@ BEGIN
    END
    LAF edit_item STR_VAR item edits=patch_data END
 END
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -506,6 +605,7 @@ OUTER_SPRINT $SFO_do_not_parse_arguments("ITM_set_description") ""
 DEFINE_PATCH_FUNCTION ITM_set_unidentified_description
    STR_VAR arguments=""
 BEGIN
+   SAY 0x50 (AT "%arguments%")
    LPF patch_text_entry STR_VAR function=set_string loc=0x50 arguments END
 END
 OUTER_SPRINT $SFO_do_not_parse_arguments("ITM_set_unidentified_description") ""
@@ -540,6 +640,18 @@ BEGIN
    LPF ITM_say_unidentified_description STR_VAR arguments END
 END
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////             get the name
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION ITM_identified_name
+       RET value
+BEGIN
+       READ_STRREF 0xc value
+END
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -553,6 +665,12 @@ BEGIN
    LPF patch_text_entry STR_VAR function=set_string loc=0xc arguments= ~%arguments%~ END
 END
 OUTER_SPRINT $SFO_do_not_parse_arguments("ITM_set_name") ""
+
+DEFINE_PATCH_FUNCTION ITM_set_name_evaluate
+   STR_VAR arguments=""
+BEGIN
+   LPF patch_text_entry STR_VAR function=set_string loc=0xc arguments= ~%arguments%~ END
+END
 
 DEFINE_PATCH_FUNCTION ITM_set_unidentified_name
    STR_VAR arguments=""
@@ -720,7 +838,7 @@ END
 
 
 DEFINE_PATCH_FUNCTION ITM_log_me STR_VAR filename="" arguments="" BEGIN
-   LPF patch_log_this STR_VAR file= ~%arguments%~ input= ~%filename%~ repeat=no END
+   LPF log_this STR_VAR file= ~%arguments%~ input= ~%filename%~ repeat=no END
 END
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -753,4 +871,158 @@ BEGIN
        END
    END
 END
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+/// Armor-type-finding function
+///
+/// use example: LAF armor_type STR_VAR item=chan01 RET success type END
+///
+/// success=1 if we find the armor type, 0 if we don't
+/// type is one of:   file_does_not_exist, not_armor, robes, leather, studded_leather, hide, chain, splint, plate, full_plate, scale, unknown
+///
+/// if we can't work it out, but it is armor, we try to guess (but still set success=0)
+////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION armor_type
+    STR_VAR item=""
+    RET type success
+BEGIN
+   OUTER_SET success=0
+   ACTION_IF FILE_EXISTS_IN_GAME "%item%.cre" BEGIN
+      COPY_EXISTING "%item%.itm" override
+         // start by looking at the category, to confirm it's actually armor
+         PATCH_IF !((SHORT_AT 0x1c)=2) BEGIN
+              SET success=1
+              SPRINT type not_armor
+         END
+         PATCH_IF !success BEGIN
+            // look at the animation type
+            READ_SHORT 0x22 anim_type
+            PATCH_MATCH "%anim_type%" WITH
+                2W 3W 4W BEGIN // robes
+                   SET success=1
+                   SPRINT type robes
+                END
+                // end of 2W 3W 4W section
+                2A BEGIN // leather armor - could be ordinary,studded,hide
+                   LPF read_armor_bonus_by_type RET slashing piercing crushing missile END
+                   PATCH_IF (piercing="-2" && missile="-2") BEGIN  // either leather or hide
+                         PATCH_IF (SHORT_AT 0x26)=6 BEGIN // if you need strength 6 (rather than 4), it's hide
+                            SET success=1
+                            SPRINT type hide
+                         END ELSE BEGIN
+                            SET success=1
+                            SPRINT type leather
+                         END
+                   END ELSE
+                   PATCH_IF (slashing=2 && piercing=1 && missile=1) BEGIN // studded leather
+                      SET success=1
+                      SPRINT type studded_leather
+                   END ELSE BEGIN
+                      SET success=0
+                      SPRINT type leather // guess leather
+                   END
+                END
+                // end of 2A section
+                3A BEGIN // chain or splint
+                   LPF read_armor_bonus_by_type RET slashing piercing crushing missile END
+                   PATCH_IF (slashing=2 && crushing="-2") BEGIN // chain mail
+                      SET success=1
+                      SPRINT type chain
+                   END ELSE
+                   PATCH_IF (piercing=1 && missile=1 && crushing=2) BEGIN
+                      SET success=1
+                      SPRINT type splint
+                   END ELSE BEGIN
+                      SET success=0
+                      SPRINT type chain // guess chain
+                   END
+                END
+                // end of 3A section
+                4A BEGIN // plate or full plate
+                   LPF read_armor_bonus_by_type RET slashing piercing crushing missile END
+                   PATCH_IF (slashing=3 && missile=0 && piercing=0) BEGIN // plate mail
+                        SET success=1
+                        SPRINT type plate
+                   END ELSE
+                   PATCH_IF (piercing=3 && missile=3 && slashing=4) BEGIN
+                        SET success=1
+                        SPRINT type full_plate
+                   END ELSE
+                   PATCH_IF (slashing=3 && missile=1 && piercing=1) BEGIN // scale male - just a couple of dragon armors
+                        SET success=1
+                        SPRINT type scale
+                   END ELSE BEGIN
+                        SET success=0
+                        SPRINT type plate // guess plate
+                   END
+                END
+                // end of 4A section
+                DEFAULT
+                        SET success=0
+                        SPRINT type robes // guess robes
+            END
+         END
+       BUT_ONLY
+   END ELSE BEGIN
+        OUTER_SET success=0
+        OUTER_SPRINT type file_does_not_exist
+   END
+END
+
+////////////////////////////////////////////////////////////////////////////////////////
+/// Helper function. Returns the vs-type bonuses for armor
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+DEFINE_PATCH_FUNCTION read_armor_bonus_vs_type
+    RET slashing piercing crushing missile
+BEGIN
+   DEFINE_ASSOCIATIVE_ARRAY type_map BEGIN
+      1=>crushing
+      2=>missile
+      4=>piercing
+      8=>slashing
+   END
+   PHP_EACH type_map AS discard=>value BEGIN
+      SET "%value%"=0
+   END
+   GET_OFFSET_ARRAY offsets ITM_V10_GEN_EFFECTS
+   PHP_EACH offsets AS discard=>offset BEGIN
+        PATCH_IF (SHORT_AT offset)=0 BEGIN // is an AC modification
+           READ_LONG (0x8 + offset) type
+           PHP_EACH type_map AS key=>value BEGIN
+              PATCH_IF type=key BEGIN
+                 READ_LONG (0x4 + offset) modifier
+                 SET "%value%"=modifier
+              END
+           END
+        END
+   END
+END
+
+////////////////////////////////////////////////////////////////////////////////////////
+/// Return 1 if the item is stackable
+////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION ITM_is_stackable
+   RET value
+BEGIN
+   SET value=0
+   PATCH_IF (SHORT_AT 0x38>1) BEGIN
+      SET value=1
+   END 
+   PATCH_IF value=0 BEGIN
+      GET_OFFSET_ARRAY ab_arr ITM_V10_HEADERS
+      PHP_EACH ab_arr AS ind=>ab_off BEGIN
+         PATCH_IF (SHORT_AT (0x22 + ab_off) )>1 BEGIN
+            SET value=1
+         END
+      END
+   END
+END
+
+
+
 

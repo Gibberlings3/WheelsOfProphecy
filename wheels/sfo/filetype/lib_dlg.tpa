@@ -34,6 +34,7 @@ trans_trigger   0x20            4                   0x24          4             
 action          0x2c            4                   0x2c          4                 0x8
 >>>>>>>>
 
+
 OUTER_SPRINT ~offset_readin_lookup_2da~ ~dlg_offsets~
 OUTER_SPRINT ~offset_readin_file_ext~ ~DLG~
 LAUNCH_ACTION_MACRO read_in_offsets
@@ -49,7 +50,6 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY dlg_trans_fields BEGIN
       journal_text => ~0x08,LONG~
 END
 
-
 LAUNCH_ACTION_FUNCTION build_simple_data_field_editors STR_VAR lookup_table=dlg_trans_fields offset_base=~offset_base~ function_prefix=DLG secondary="yes" END
 
 
@@ -63,4 +63,19 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY dlg_bit_fields BEGIN
       add_solved_quest  => ~0x01,0~
 END
 LAF build_flag_data_field_editors STR_VAR offset_base=offset_base lookup_table=dlg_bit_fields function_prefix=DLG secondary="yes" END
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////           Bulk compile
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION compile_all 
+    STR_VAR location=""
+            locbase=""
+            locabs=""
+BEGIN
+   LAF list_files STR_VAR location locbase locabs postfix=d RET list END
+   LAF reinclude_this STR_VAR input = "COMPILE EVALUATE_BUFFER %list%" END
+END
 

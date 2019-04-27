@@ -1,6 +1,6 @@
-BACKUP ~stratagems_external/backup/wheels~
+BACKUP ~weidu_external/backup/wheels~
 SUPPORT ~http://gibberlings3.net/forums/index.php?showforum=156~
-VERSION ~v7~
+VERSION ~v8~
 README ~wheels/readme-wheels.html~
 AUTO_EVAL_STRINGS
 AUTO_TRA ~wheels/tra/%s~
@@ -19,21 +19,28 @@ ALWAYS
     OUTER_SET EVAL ~%name_source%~ = bg2_chapter
   END
 
-  // Convert charsets to utf-8 so that non-English EE games won't crash
-  ACTION_IF NOT VARIABLE_IS_SET cd_always THEN BEGIN
-    OUTER_SET cd_always = 1
-    ACTION_DEFINE_ARRAY cdnoconvert BEGIN END // List of tra files that contain ONLY strings for the WeiDU installer and NOT game content
-    ACTION_DEFINE_ARRAY cdreload BEGIN setup END // After conversion, setup.tra must be reloaded for immediate use
-    LAF HANDLE_CHARSETS INT_VAR infer_charsets = 1 STR_VAR tra_path = ~wheels/tra~ noconvert_array = cdnoconvert reload_array = cdreload default_language = ~english~ END
-  END
+  OUTER_SPRINT MOD_VERSION "v8"
+  OUTER_SPRINT scsroot "wheels"
+  OUTER_SET initialise=1
 
-   OUTER_SET debug_variable=0
-   OUTER_SPRINT scsroot wheels
-   OUTER_SET read_resources=1
-   OUTER_SPRINT workspace ~stratagems_external/workspace~
-   INCLUDE ~%scsroot%/sfo/install_sfo.tpa~
-   APPEND state.ids "0x00000029 STATE_IMMOBILE" UNLESS " +STATE_IMMOBILE"
-   APPEND state.ids "0x8010202D STATE_DISABLED" UNLESS " +STATE_DISABLED"
+  OUTER_SET debug_variable=0
+  INCLUDE ~%scsroot%/sfo/install_sfo.tpa~
+
+  // Convert charsets to utf-8 so that non-English EE games won't crash
+  LAF handle_charsets_immutably STR_VAR tra_base=tra RET scs_tra_loc END
+
+  LOAD_TRA "%scs_tra_loc%/english/setup.tra" "%scs_tra_loc%/%LANGUAGE%/setup.tra"
+
+  ACTION_FOR_EACH macro IN spellcodes saving_throws hit_point_levels stats PCs thac0 BEGIN
+     PRINT ~Reading in data: %macro%~
+     SILENT
+     LAUNCH_ACTION_MACRO ~read_in_%macro%~
+  END
+  OUTER_SPRINT ssllibrary "%scsroot%/ssl/library"
+  OUTER_SET debug_variable=0
+  OUTER_SET read_resources=1
+  APPEND state.ids "0x00000029 STATE_IMMOBILE" UNLESS " +STATE_IMMOBILE"
+  APPEND state.ids "0x8010202D STATE_DISABLED" UNLESS " +STATE_DISABLED"
 END
 
 ////////////////////////////////////////////////////////////////////
