@@ -64,6 +64,6 @@ BEGIN @1 // ~The Wheels of Prophecy~
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 REQUIRE_PREDICATE GAME_IS "tob bgt bg2ee eet" @2
-REQUIRE_PREDICATE !FILE_EXISTS "override/dw#setup.mrk" @3
+FORBID_COMPONENT "setup-stratagems.tp2" 5900 @3
 OUTER_SPRINT component_loc ""
 LAF run STR_VAR file="wheels" location=lib END
