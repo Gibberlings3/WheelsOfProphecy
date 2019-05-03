@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/wheels~
 SUPPORT ~http://gibberlings3.net/forums/index.php?showforum=156~
-VERSION ~v8~
+VERSION ~v8.2~
 README ~wheels/readme-wheels.html~
 AUTO_EVAL_STRINGS
 AUTO_TRA ~wheels/tra/%s~
@@ -8,18 +8,14 @@ AUTO_TRA ~wheels/tra/%s~
 
 
 ALWAYS
-  ACTION_IF GAME_IS ~eet~ BEGIN
-    OUTER_SET bg2_chapter = 12
-  END ELSE BEGIN
-    OUTER_SET bg2_chapter = 0
-  END
-  OUTER_FOR (i=1; i<=10; i=i+1) BEGIN
-    OUTER_SET bg2_chapter = bg2_chapter + 1
-    OUTER_SPRINT name_source ~bg2_chapter_%i%~
-    OUTER_SET EVAL ~%name_source%~ = bg2_chapter
+
+
+  OUTER_SET chapter_increment = (GAME_IS eet)? 12 : 0
+  OUTER_FOR (i=1;i<=10;i+=1) BEGIN
+     OUTER_SET $bg2_chapter("%i%")=i+chapter_increment
   END
 
-  OUTER_SPRINT MOD_VERSION "v8"
+  OUTER_SPRINT MOD_VERSION "v8.2"
   OUTER_SPRINT scsroot "wheels"
   OUTER_SET initialise=1
 

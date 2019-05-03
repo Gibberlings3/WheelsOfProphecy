@@ -2,7 +2,7 @@ DEFINE_ACTION_FUNCTION wheels BEGIN
     OUTER_SPRINT component_loc "" // hack around SCS changes
 
     ACTION_IF !FILE_EXISTS_IN_GAME "finbalth.cre" BEGIN
-       LAF run STR_VAR file="wheels_ascension" END
+       LAF run STR_VAR file="wheels_ascension" location=lib END
     END
 
     COMPILE "%scsroot%/misc/balth_vanilla.d" // overwrite balth.d with pristine vAsc version, pending WoP update more systematically

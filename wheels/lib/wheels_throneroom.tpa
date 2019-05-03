@@ -1,7 +1,16 @@
 DEFINE_ACTION_FUNCTION wheels_throneroom BEGIN
+
+
      OUTER_SPRINT local_loc misc
      // Undead monks
-     
+    
+     ACTION_FOR_EACH monk IN balelit1 balelit2 balelit3 balelit4 BEGIN  // allow for Ascension 2.0 installed w/o Tougher Balth
+        ACTION_IF !FILE_EXISTS_IN_GAME "%monk%.cre" BEGIN
+           COPY_EXISTING "balelite.cre" "override/%monk%.cre"
+        END
+     END
+
+
      MAKE_PATCH
         add_items=>"lich(lring) telslav2(rring)"
         remove_items=>potn55
