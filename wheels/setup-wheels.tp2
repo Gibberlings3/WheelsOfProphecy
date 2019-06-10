@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/wheels~
 SUPPORT ~http://gibberlings3.net/forums/index.php?showforum=156~
-VERSION ~v8.2~
+VERSION ~v8.3~
 README ~wheels/readme-wheels.html~
 AUTO_EVAL_STRINGS
 AUTO_TRA ~wheels/tra/%s~
