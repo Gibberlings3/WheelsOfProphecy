@@ -1,5 +1,5 @@
 REPLACE ~abazigal~
-IF ~!Dead("balth")HPGT(Myself,1)~
+IF WEIGHT #1 ~!Dead("balth")HPGT(Myself,1)~
 THEN BEGIN 0
 SAY #67682 /* ~Welcome.  I have watched your progress with great interest.  For a lesser creature you are quite amusing.~ [ABAZIG08] */
 IF ~~ THEN REPLY #67684 /* ~Vile Bhaalspawn!  I shall wipe your taint from the earth!~ */ GOTO taint

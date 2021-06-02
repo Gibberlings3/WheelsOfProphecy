@@ -5,25 +5,22 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 DEFINE_ACTION_FUNCTION clone_pro  // beware-this only works for one projectile at a time
-    STR_VAR
+    INT_VAR allow_missing=0
+	STR_VAR
            pro=""
            edits=""
            editstring=""
-           allow_missing="no"
-           location="override"
     RET pro_num
     BEGIN
          LAUNCH_ACTION_FUNCTION clone_template
-                  STR_VAR file_list= ~%pro%~
+                  INT_VAR allow_missing
+				  STR_VAR file_list= ~%pro%~
                           file_ext=~PRO~
-                          location
                           edits
                           editstring
-                          allow_missing
-                          location
          END
          LAF return_first_pair STR_VAR list= ~%pro%~ RET new=value END
-         OUTER_SPRINT input ~ADD_PROJECTILE "%location%/%new%.pro"~
+         OUTER_SPRINT input ~ADD_PROJECTILE "override/%new%.pro"~
          LAM action_reinclude_this
          OUTER_SET pro_num= ~%%new%%~
 END
@@ -36,20 +33,24 @@ END
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 DEFINE_ACTION_FUNCTION edit_pro
-    STR_VAR
+    INT_VAR allow_missing=0
+	STR_VAR
            pro=""
            edits=""
            editstring=""
-           allow_missing="no"
            location=""
+		   locabs=""
+		   locbase=""
     BEGIN
          LAUNCH_ACTION_FUNCTION edit_template
-                  STR_VAR file_list= ~%pro%~
+                  INT_VAR allow_missing
+				  STR_VAR file_list= ~%pro%~
                           file_ext=~PRO~
                           edits
                           editstring
-                          allow_missing
                           location
+						  locabs
+						  locbase
          END
 END
 
@@ -65,7 +66,6 @@ DEFINE_ACTION_FUNCTION make_pro
            pro=""
            edits=""
            editstring=""
-           location="override"
     RET pro_num
     BEGIN
          OUTER_SET is_area=0
@@ -85,7 +85,6 @@ DEFINE_ACTION_FUNCTION make_pro
                           file_ext=~PRO~
                           edits
                           editstring
-                          location
                           build_before
                           build_after = PRO_postbuild
          END
@@ -283,7 +282,7 @@ END
 
 DEFINE_PATCH_FUNCTION PRO_postbuild BEGIN END
 
-DEFINE_PATCH_FUNCTION PRO_add_aoe STR_VAR filename="" BEGIN
+DEFINE_PATCH_FUNCTION PRO_add_aoe BEGIN
     INSERT_BYTES 0x200 0x100
 END
 
@@ -297,5 +296,34 @@ DEFINE_PATCH_FUNCTION PRO_build_area  BEGIN
     LPF PRO_explosion_frequency STR_VAR arguments=100 END
 END
 
-DEFINE_PATCH_FUNCTION PRO_build_after BEGIN END
+DEFINE_ACTION_FUNCTION resolve_projectile 
+        STR_VAR projectile=""
+        RET value
+BEGIN
+    COPY_EXISTING "projectl.ids" override
+        ind="-1"
+        COUNT_2DA_ROWS 2 rowcount
+        FOR (i=0;i<rowcount;i+=1) BEGIN
+           READ_2DA_ENTRY i 0 2 ind
+           READ_2DA_ENTRY i 1 2 file
+           PATCH_IF "%file%" STRING_EQUAL_CASE "%projectile%" BEGIN
+              value=ind
+           END
+
+        END
+    BUT_ONLY
+    ACTION_IF ind<0 BEGIN
+       OUTER_SET value=rowcount
+       APPEND "projectl.ids" "%value% %projectile%"
+    END
+
+
+
+
+
+
+
+
+END
+
 

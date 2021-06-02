@@ -2,7 +2,7 @@ DEFINE_ACTION_FUNCTION wheels_dialog BEGIN
     OUTER_SPRINT solar_journal @1020
     ACTION_FOR_EACH dialog IN cutmel heads sarmeladd dw#melis balthadd0 balthadd balthadd2 sendaiadd0 sendaiadd abazadd0 abazadd elminadd solaradd0 solaradd BEGIN
        WITH_TRA "%scs_tra_loc%/%dialog%.tra" BEGIN
-            COMPILE "%scsroot%/dialogues/%dialog%.d" EVALUATE_BUFFER
+            COMPILE "%MOD_FOLDER%/dialogues/%dialog%.d" EVALUATE_BUFFER
        END
     END
 END

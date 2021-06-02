@@ -8,13 +8,13 @@ DEFINE_ACTION_FUNCTION wheels_amkethran BEGIN
     //////////////////////////////////////////////////
 
     // delete "killmonk" block
-    LAF edit_script STR_VAR script=ar5500 editstring="patch=>delete_trigger_if(SpawnKillMonks)" END
+    LAF ALTER_SCRIPT_BLOCK STR_VAR script=ar5500 editstring="patch=>delete_trigger_if(SpawnKillMonks)" END
 
     // delete "Saemon leaves" block
-    LAF edit_script STR_VAR script=ar5500 editstring="patch=>delete_trigger_if(SaemonLeave)" END
+    LAF ALTER_SCRIPT_BLOCK STR_VAR script=ar5500 editstring="patch=>delete_trigger_if(SaemonLeave)" END
 
     // delete redundant reference to "AMMONKENEMY"
-    LAF edit_script STR_VAR script=ar5500 editstring="patch=>delete_trigger_if(AmMonkEnemy)" END
+    LAF ALTER_SCRIPT_BLOCK STR_VAR script=ar5500 editstring="patch=>delete_trigger_if(AmMonkEnemy)" END
 
     // shift spawn-hostile-monks block onto merc status variable
     
@@ -36,7 +36,7 @@ DEFINE_ACTION_FUNCTION wheels_amkethran BEGIN
     // Begin by wiping the entire old script
 
     ACTION_FOR_EACH wipe IN MONKSPAWNEDSMUGGLERPLOT CaveEnter PlaceBodies BEGIN
-      LAF edit_script STR_VAR script=ar5504 editstring="patch=>delete_trigger_if(%wipe%)" END
+      LAF ALTER_SCRIPT_BLOCK STR_VAR script=ar5504 editstring="patch=>delete_trigger_if(%wipe%)" END
     END
     
     // add the new script over the top
@@ -47,7 +47,7 @@ DEFINE_ACTION_FUNCTION wheels_amkethran BEGIN
     LAF swap_text STR_VAR file=ammonk02.dlg swaps=~Global("MONKSPAWNEDSMUGGLERPLOT","GLOBAL",1)=>NumTimesTalkedTo(0) Global("CaveEnter","AR5504",2)=>null~ END
     LAF swap_text STR_VAR file=smugplot.bcs swaps=~Global("MONKSPAWNEDSMUGGLERPLOT","GLOBAL",2)=>Global("MONKSPAWNEDSMUGGLERPLOT","GLOBAL",2)Class(Myself,MONK)~ END
     OUTER_SPRINT temp ~Global("Enclave","GLOBAL",2)~
-    LAF edit_script STR_VAR script=smugplot editstring="patch=>delete_trigger_if(%temp%)" END
+    LAF ALTER_SCRIPT_BLOCK STR_VAR script=smugplot editstring="patch=>delete_trigger_if(%temp%)" END
 
     LAF extend STR_VAR script="smugplot amwander" top=smugplotadd END
     LAF install STR_VAR files="baradd baradd1 carrasadd0 carrasadd" postfix=d END
@@ -65,7 +65,7 @@ DEFINE_ACTION_FUNCTION wheels_amkethran BEGIN
     LAF extend STR_VAR script=amsaemon top=amsaemonadd END
 
         OUTER_SPRINT temp ~Global("SpawnKillMonks","LOCALS",0)~
-    LAF edit_script STR_VAR script=smugplot editstring="patch=>delete_trigger_if(%temp%)" END
+    LAF ALTER_SCRIPT_BLOCK STR_VAR script=smugplot editstring="patch=>delete_trigger_if(%temp%)" END
 
     // the label which the priest of Waukeen uses to say "smugglers are dead" needs a slight alteration
 
@@ -113,9 +113,9 @@ DEFINE_ACTION_FUNCTION wheels_amkethran BEGIN
     // and editing the reinforcement-summoning) and then appending a new block, 'baltharmy'
 
     OUTER_SPRINT temp ~Global("AmMercEnemy","GLOBAL",0)~
-    LAF edit_script STR_VAR script=ammerc editstring="patch=>delete_trigger_if(%temp%)" END
+    LAF ALTER_SCRIPT_BLOCK STR_VAR script=ammerc editstring="patch=>delete_trigger_if(%temp%)" END
     OUTER_SPRINT temp ~Global("AmMonkEnemy","GLOBAL",0)~
-    LAF edit_script STR_VAR script=ammgrd editstring="patch=>delete_trigger_if(%temp%)|delete_action_if(killmonk)|delete_trigger_if(spottedp1)" END
+    LAF ALTER_SCRIPT_BLOCK STR_VAR script=ammgrd editstring="patch=>delete_trigger_if(%temp%)|delete_action_if(killmonk)|delete_trigger_if(spottedp1)" END
     LAF swap_text STR_VAR files="ammerc.bcs ammgrd.bcs" swaps=~Global("reinforcement","LOCALS",0)=>Global("reinforcement","LOCALS",0)Global("DMWWMercStatus","GLOBAL",4)~ END
     LAF extend STR_VAR script="ammerc ammgrd" top=baltharmy END
 
@@ -145,7 +145,7 @@ DEFINE_ACTION_FUNCTION wheels_amkethran BEGIN
     // Balth's death shouldn't cause peasants to flee
 
     COPY_EXISTING ~ampeas.bcs~ ~override~
-	REPLACE_BCS_BLOCK ~%scsroot%/%local_loc%/ampeas_old.baf~ ~%scsroot%/%local_loc%/ampeas_new.baf~
+	REPLACE_BCS_BLOCK ~%MOD_FOLDER%/%local_loc%/ampeas_old.baf~ ~%MOD_FOLDER%/%local_loc%/ampeas_new.baf~
 
     LAF swap_text STR_VAR files="amwander.bcs amwand2.bcs" swaps=~GlobalGT("Enclave","GLOBAL",1)=>GlobalGT("Enclave","GLOBAL",1)!Dead("balth")!Global("BalthazarFights","GLOBAL",1)~ END
 

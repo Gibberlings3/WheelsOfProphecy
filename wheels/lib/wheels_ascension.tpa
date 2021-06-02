@@ -9,7 +9,7 @@ DEFINE_ACTION_FUNCTION wheels_ascension BEGIN
 
    // these dialogues need to be compiled together
    
-   COMPILE "%scsroot%/%local_loc%/balth.d" "%scsroot%/%local_loc%/balth2.d" "%scsroot%/%local_loc%/finsol01.d" "%scsroot%/%local_loc%/finmeladd.d"
+   COMPILE "%MOD_FOLDER%/%local_loc%/balth.d" "%MOD_FOLDER%/%local_loc%/balth2.d" "%MOD_FOLDER%/%local_loc%/finsol01.d" "%MOD_FOLDER%/%local_loc%/finmeladd.d"
 
    //script extension (we rebuild the throneroom area dialog from scratch, so no need to do it here)
    
@@ -19,7 +19,7 @@ DEFINE_ACTION_FUNCTION wheels_ascension BEGIN
    LAF extend STR_VAR script=itfpool1 top=pooladd1 END
    LAF extend STR_VAR script=itfpool2 top=pooladd2 END
    LAF extend STR_VAR script=itfpool3 top=pooladd3 END
-   LAF edit_script STR_VAR script=finmel01 editstring="patch=>delete_trigger_if(EnteredArea)" END
+   LAF ALTER_SCRIPT_BLOCK STR_VAR script=finmel01 editstring="patch=>delete_trigger_if(EnteredArea)" END
    LAF extend STR_VAR script=finmel01 top=finmeladd END
 
    // installs with patching
@@ -46,7 +46,7 @@ DEFINE_ACTION_FUNCTION wheels_ascension BEGIN
 
    // Epilogues
 
-   COPY ~%scsroot%/%local_loc%/balthand.2da~ ~override~ REPLACE 82760 @2001
-   COPY ~%scsroot%/%local_loc%/balthfnd.2da~ ~override~ REPLACE 82734 @2002
+   COPY ~%MOD_FOLDER%/%local_loc%/balthand.2da~ ~override~ REPLACE 82760 @2001
+   COPY ~%MOD_FOLDER%/%local_loc%/balthfnd.2da~ ~override~ REPLACE 82734 @2002
 
 END
