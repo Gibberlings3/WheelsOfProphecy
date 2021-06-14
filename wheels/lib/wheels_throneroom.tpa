@@ -76,8 +76,8 @@ DEFINE_ACTION_FUNCTION wheels_throneroom BEGIN
     // Balthazar's script
     
     //wipe existing script
-    LAF ALTER_SCRIPT_BLOCK STR_VAR script=balth editstring="patch=>delete_trigger_if(NumberOfTimesTalkedTo)" END
-    LAF ALTER_SCRIPT_BLOCK STR_VAR script=balth editstring="patch=>delete_trigger_if(NumTimesTalkedTo)" END
+    LAF DELETE_SCRIPT_BLOCK STR_VAR script=balth match=NumberOfTimesTalkedTo END
+    LAF DELETE_SCRIPT_BLOCK STR_VAR script=balth match=NumTimesTalkedTo END
 
     // install new script
     LAF extend STR_VAR script=balth top=balthadd END
@@ -105,7 +105,7 @@ DEFINE_ACTION_FUNCTION wheels_throneroom BEGIN
     // the area
 
     // wipe existing area script (except for OH journal stuff, which is just pruned)
-    LAF ALTER_SCRIPT_BLOCK STR_VAR script=ar5505 editstring="patch=>delete_trigger_if(HadBhaal25Dream5)" END
+    LAF DELETE_SCRIPT_BLOCK STR_VAR script=ar5505 match=HadBhaal25Dream5 END
     LAF swap_text STR_VAR file=ar5505.bcs swaps="AddJournalEntry([^)]*)=>null" END
 
     // install new script

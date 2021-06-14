@@ -19,7 +19,7 @@ DEFINE_ACTION_FUNCTION wheels_ascension BEGIN
    LAF extend STR_VAR script=itfpool1 top=pooladd1 END
    LAF extend STR_VAR script=itfpool2 top=pooladd2 END
    LAF extend STR_VAR script=itfpool3 top=pooladd3 END
-   LAF ALTER_SCRIPT_BLOCK STR_VAR script=finmel01 editstring="patch=>delete_trigger_if(EnteredArea)" END
+   LAF DELETE_SCRIPT_BLOCK STR_VAR script=finmel01 match=EnteredArea END
    LAF extend STR_VAR script=finmel01 top=finmeladd END
 
    // installs with patching
