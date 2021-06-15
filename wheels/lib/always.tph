@@ -26,6 +26,7 @@ ACTION_IF !VARIABLE_IS_SET ~initialise~ BEGIN
 
   INCLUDE ~%MOD_FOLDER%/sfo/install_sfo.tpa~
   INCLUDE ~%MOD_FOLDER%/lib/alter_script.tpa~
+  INCLUDE ~%MOD_FOLDER%/lib/crossplatform.tpa~
 
 
 ////////////////////////////////////////////////////////

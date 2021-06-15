@@ -9,35 +9,6 @@ AUTO_TRA ~wheels/lang/%s~
 
 ALWAYS
   INCLUDE "wheels/lib/always.tph"
-
-  /*
-  OUTER_SET chapter_increment = (GAME_IS eet)? 12 : 0
-  OUTER_FOR (i=1;i<=10;i+=1) BEGIN
-     OUTER_SET $bg2_chapter("%i%")=i+chapter_increment
-  END
-
-  OUTER_SPRINT MOD_VERSION "v8.3"
-  OUTER_SET initialise=1
-
-  OUTER_SET debug_variable=0
-  INCLUDE ~%MOD_FOLDER%/sfo/install_sfo.tpa~
-
-  // Convert charsets to utf-8 so that non-English EE games won't crash
-  LAF handle_charsets_immutably STR_VAR tra_base=tra RET scs_tra_loc END
-
-  LOAD_TRA "%scs_tra_loc%/english/setup.tra" "%scs_tra_loc%/%LANGUAGE%/setup.tra"
-
-  ACTION_FOR_EACH macro IN spellcodes saving_throws hit_point_levels stats PCs thac0 BEGIN
-     PRINT ~Reading in data: %macro%~
-     SILENT
-     LAUNCH_ACTION_MACRO ~read_in_%macro%~
-  END
-  OUTER_SPRINT ssllibrary "%MOD_FOLDER%/ssl/library"
-  OUTER_SET debug_variable=0
-  OUTER_SET read_resources=1
-  APPEND state.ids "0x00000029 STATE_IMMOBILE" UNLESS " +STATE_IMMOBILE"
-  APPEND state.ids "0x8010202D STATE_DISABLED" UNLESS " +STATE_DISABLED"
-  */
 END
 
 ////////////////////////////////////////////////////////////////////

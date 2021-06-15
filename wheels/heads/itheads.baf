@@ -8,11 +8,11 @@ END
 
 IF
 	Clicked([ANYONE])
-	Global("ClickedHeads","AR4000",0)
+	Global("ClickedHeads","MYAREA",0)
 THEN
 	RESPONSE #100
 		ClearAllActions()
-		SetGlobal("ClickedHeads","AR4000",1)
+		SetGlobal("ClickedHeads","MYAREA",1)
 		StartCutSceneMode()
 		StartCutScene("Cut204a")
 END
@@ -30,7 +30,7 @@ END
 
 IF
 	Clicked([ANYONE])
-	Global("ClickedHeads","AR4000",1)
+	Global("ClickedHeads","MYAREA",1)
 	OR(2)
 		Global("DMWWGrove","GLOBAL",0)
 		Global("DMWWGrove","GLOBAL",2)
