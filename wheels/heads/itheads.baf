@@ -8,6 +8,7 @@ END
 
 IF
 	Clicked([ANYONE])
+	GlobalLT("Chapter","GLOBAL",%bg2_chapter_9%)
 	Global("ClickedHeads","MYAREA",0)
 THEN
 	RESPONSE #100
