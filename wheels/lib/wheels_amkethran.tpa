@@ -36,7 +36,7 @@ DEFINE_ACTION_FUNCTION wheels_amkethran BEGIN
     // Begin by wiping the entire old script
 
     ACTION_FOR_EACH wipe IN MONKSPAWNEDSMUGGLERPLOT CaveEnter PlaceBodies BEGIN
-      LAF DELETE_SCRIPT_BLOCK STR_VAR script=ar5504 match=%wipe% END
+      LAF DELETE_SCRIPT_BLOCK STR_VAR script=ar5504 match="%wipe%" END
     END
     
     // add the new script over the top
@@ -47,7 +47,7 @@ DEFINE_ACTION_FUNCTION wheels_amkethran BEGIN
     LAF swap_text STR_VAR file=ammonk02.dlg swaps=~Global("MONKSPAWNEDSMUGGLERPLOT","GLOBAL",1)=>NumTimesTalkedTo(0) Global("CaveEnter","AR5504",2)=>null~ END
     LAF swap_text STR_VAR file=smugplot.bcs swaps=~Global("MONKSPAWNEDSMUGGLERPLOT","GLOBAL",2)=>Global("MONKSPAWNEDSMUGGLERPLOT","GLOBAL",2)Class(Myself,MONK)~ END
     OUTER_SPRINT temp ~Global("Enclave","GLOBAL",2)~
-    LAF DELETE_SCRIPT_BLOCK STR_VAR script=smugplot match=%temp% END
+    LAF DELETE_SCRIPT_BLOCK STR_VAR script=smugplot match="%temp%" END
 
     LAF extend STR_VAR script="smugplot amwander" top=smugplotadd END
     LAF install STR_VAR files="baradd baradd1 carrasadd0 carrasadd" postfix=d END
@@ -65,7 +65,7 @@ DEFINE_ACTION_FUNCTION wheels_amkethran BEGIN
     LAF extend STR_VAR script=amsaemon top=amsaemonadd END
 
         OUTER_SPRINT temp ~Global("SpawnKillMonks","LOCALS",0)~
-    LAF DELETE_SCRIPT_BLOCK STR_VAR script=smugplot match=%temp% END
+    LAF DELETE_SCRIPT_BLOCK STR_VAR script=smugplot match="%temp%" END
 
     // the label which the priest of Waukeen uses to say "smugglers are dead" needs a slight alteration
 
