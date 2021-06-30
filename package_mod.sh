@@ -5,7 +5,7 @@ source "../ModPackaging/utilities/ie_games.sh"
 
 # /* MODIFY: set the values of the 3 variables below to reflect the current mod version */
 export mod_name="Wheels of Prophesy"
-export mod_version="v8.4"
+export mod_version="v8.5"
 export mod_folder="wheels"
 
 # /* MODIFY: these variables have sensible default values but they may need to be tweaked to match your particular mod */
