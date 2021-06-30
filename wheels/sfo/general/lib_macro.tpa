@@ -52,28 +52,47 @@ BEGIN
  LOCAL_SPRINT post ""
  LOCAL_SPRINT join ""
  ACTION_IF !VARIABLE_IS_SET ~macro_read_in_dialog_data~ BEGIN
- OUTER_SPRINT ~macro_read_in_dialog_data~ ~~
-   ACTION_IF is_bg2 BEGIN
-      OUTER_SET rownum=7
-   END ELSE BEGIN
-      OUTER_SET rownum=4
+   ACTION_CLEAR_ARRAY npc_dialog_temp_array
+   OUTER_SPRINT ~macro_read_in_dialog_data~ ~~
+   OUTER_SPRINT $npc_dialog_temp_array("PDIALOG") ""
+   ACTION_IF FILE_EXISTS_IN_GAME "campaign.2da" BEGIN
+      COPY_EXISTING "campaign.2da" override
+          COUNT_2DA_COLS colcount
+          FOR (j=0;j<colcount - 1; j+=1) BEGIN
+             READ_2DA_ENTRY 0 j (colcount - 1) colname
+             PATCH_IF "%colname%" STRING_EQUAL_CASE "PDIALOG" BEGIN
+                SET pdialog_row=j + 1
+                SET j=colcount
+             END
+          END
+          COUNT_2DA_ROWS colcount rowcount
+          FOR (i=0;i<rowcount;i+=1) BEGIN
+              READ_2DA_ENTRY i pdialog_row colcount dialog_file
+              TO_UPPER dialog_file
+              SPRINT $npc_dialog_temp_array("%dialog_file%") ""
+          END
+      BUT_ONLY
    END
-   COPY_EXISTING ~pdialog.2da~ ~override~
-         READ_2DA_ENTRIES_NOW pdialog_contents rownum
-         FOR (i=0;i<pdialog_contents;i=i+1) BEGIN
-            READ_2DA_ENTRY_FORMER pdialog_contents i 0 npc
-            TO_UPPER npc
-            PATCH_MATCH ~%npc%~ WITH
-                 ~POST_DIALOG_FILE~ BEGIN END
-                 DEFAULT
-                   SPRINT $npc_name_list(~%npc%~) ~~
-                   READ_2DA_ENTRY_FORMER pdialog_contents i 1 post
-                   READ_2DA_ENTRY_FORMER pdialog_contents i 2 join
-                   TO_UPPER post
-                   TO_UPPER join
-                   SPRINT ~%npc%_POSTJOIN~ ~%post%~
-                   SPRINT ~%npc%_JOINED~ ~%join%~
-                   PATCH_IF is_bg2 BEGIN
+   ACTION_PHP_EACH npc_dialog_temp_array AS file=>discard BEGIN
+     ACTION_IF FILE_EXISTS_IN_GAME "%file%.2da" BEGIN
+        COPY_EXISTING "%file%.2da" override
+             COUNT_2DA_COLS colcount
+             READ_2DA_ENTRIES_NOW pdialog_contents colcount
+             FOR (i=0;i<pdialog_contents;i+=1) BEGIN 
+                READ_2DA_ENTRY_FORMER pdialog_contents i 0 npc
+                TO_UPPER npc
+                SPRINT $npc_name_list(~%npc%~) ~~
+                READ_2DA_ENTRY_FORMER pdialog_contents i 1 post
+                READ_2DA_ENTRY_FORMER pdialog_contents i 2 join
+                TO_UPPER post
+                TO_UPPER join
+                SPRINT ~%npc%_POSTJOIN~ ~%post%~
+                SPRINT ~%npc%_JOINED~ ~%join%~
+                PATCH_IF GAME_IS eet BEGIN
+                       SPRINT ~%npc%_25POSTJOIN~ ~%post%~
+                       SPRINT ~%npc%_25JOINED~ ~%join%~
+                END ELSE BEGIN
+                   PATCH_IF colcount>=6 BEGIN
                        READ_2DA_ENTRY_FORMER pdialog_contents i 4 25post
                        READ_2DA_ENTRY_FORMER pdialog_contents i 5 25join
                        TO_UPPER 25post
@@ -81,27 +100,16 @@ BEGIN
                        SPRINT ~%npc%_25POSTJOIN~ ~%25post%~
                        SPRINT ~%npc%_25JOINED~ ~%25join%~
                    END
-            END
-         END
-   BUT_ONLY
-   COPY_EXISTING ~interdia.2da~ ~override~
-         READ_2DA_ENTRIES_NOW interdia_contents 2
-         FOR (i=0;i<interdia_contents;i=i+1) BEGIN
-            READ_2DA_ENTRY_FORMER interdia_contents i 0 npc
-            READ_2DA_ENTRY_FORMER interdia_contents i 1 banter
-            TO_UPPER npc
-            PATCH_MATCH ~%npc%~ WITH
-                ~2DA~ ~FILE~ BEGIN END
-                DEFAULT
-                    SPRINT  ~%npc%_BANTER~ ~%banter%~
-            END
-         END
-   BUT_ONLY
-   
- END
+                END
+             END
+        BUT_ONLY
 
 
-END
+     END 
+   END  // end of loop through all pdialogs
+
+ END // end of 'do this once' loop
+END // end of macro
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////               read in spellslots in use
@@ -151,8 +159,6 @@ DEFINE_ACTION_MACRO ~read_in_spellcodes~ BEGIN
        SILENT
     END
     
-    // correct the spelling mistake in IMPROVED_ALUCRITY
-
     COPY_EXISTING ~spell.ids~ ~override~
          READ_2DA_ENTRIES_NOW ~unique_macro_spell_array~ 2
          FOR (i=0;i<~unique_macro_spell_array~;i=i+1) BEGIN
@@ -281,7 +287,8 @@ DEFINE_ACTION_MACRO ~read_in_spellcodes~ BEGIN
        OUTER_SPRINT "WIZARD_DISPEL_MAGIC_SCROLL" "%WIZARD_REMOVE_MAGIC_SCROLL%"
     END
     END // end of scrolls
-    // now get HLAs
+
+    // now get HLAs - HLA data supersedes what is inferred from spells
 
     ACTION_IF FILE_EXISTS "%data_loc_root%/dw_shared/dw#hla_feat.2da" BEGIN
        COPY "%data_loc_root%/dw_shared/dw#hla_feat.2da" "%workspace%"
@@ -297,8 +304,11 @@ DEFINE_ACTION_MACRO ~read_in_spellcodes~ BEGIN
               INNER_ACTION BEGIN
                     ACTION_IF FILE_EXISTS_IN_GAME "%resref%.spl" BEGIN
                       COPY_EXISTING "%resref%.spl" override
-                         READ_SHORT 0x1c category
-                         SET $hla_spelltype("%ids%")=(SHORT_AT 0x1c)
+                         LPF SPL_read_spell_type RET type=value END
+                         LPF SPL_read_spell_type_num RET type_num=value END
+                         SET $hla_spelltype("%ids%")=type_num
+                         SPRINT "%ids%_TYPE" "%type%"
+                         SPRINT "RESREF_%resref%_TYPE" "%type%"
                       BUT_ONLY
                     END ELSE BEGIN
                       OUTER_SET $hla_spelltype("%ids%")="-1"
@@ -488,11 +498,8 @@ END
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 DEFINE_PATCH_FUNCTION log_scroll
-   INT_VAR offset_secondary=0
-   STR_VAR offset_base=""
-           filename=""
 BEGIN
-   LPF ITM_read_resource INT_VAR offset_secondary STR_VAR offset_base RET spell=value END
+   LPF ITM_read_resource RET spell=value END
    LPF log_this STR_VAR file=scroll_map.txt input= ~%spell% %filename%~ END
 END
 
@@ -1119,6 +1126,7 @@ DEFINE_ACTION_MACRO read_in_hidespl BEGIN
     END
 END
 
+/* DEPRECATED - we do it through functions now 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///// Read an ini file "ini_to_read.ini" into SFO_reserved_ini_hash (mostly borrowed from Kjeron)
@@ -1143,3 +1151,5 @@ BEGIN
                      ~~
     END
 END
+
+*/

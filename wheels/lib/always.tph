@@ -1,0 +1,73 @@
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+//// 	Things to do only once
+////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////
+
+ACTION_IF !VARIABLE_IS_SET ~initialise~ BEGIN
+
+  ACTION_IF ((FILE_EXISTS ~dlc/sod-dlc.zip~) OR (FILE_EXISTS ~sod-dlc.zip~)) THEN BEGIN FAIL @27 END // Modmerge check
+
+  CLEAR_EVERYTHING            // occasionally, e.g. after installing IWD spells, we call this again. Make sure we get a fresh start.
+  SILENT
+  OUTER_SET initialise=1
+
+////////////////////////////////////////////////////////
+//// Set up ini system
+////////////////////////////////////////////////////////
+
+  INCLUDE ~%MOD_FOLDER%/lib/lib_ini.tpa~
+  OUTER_SPRINT ini_to_read "%MOD_FOLDER%/%MOD_FOLDER%.ini"
+  LAF SFO_read_ini_file RET_ARRAY SFO_reserved_ini_hash END
+
+////////////////////////////////////////////////////////
+//// general variables, macros and functions
+////////////////////////////////////////////////////////
+
+  INCLUDE ~%MOD_FOLDER%/sfo/install_sfo.tpa~
+  INCLUDE ~%MOD_FOLDER%/lib/alter_script.tpa~
+
+
+////////////////////////////////////////////////////////
+//// cross-platform variables
+////////////////////////////////////////////////////////
+
+  OUTER_TEXT_SPRINT component_loc "lib"
+  INCLUDE ~%MOD_FOLDER%/lib/crossplatform.tpa~
+
+
+////////////////////////////////////////////////////////
+//// Make sure basic marker file exists
+////////////////////////////////////////////////////////
+
+  SILENT
+  ACTION_IF !FILE_EXISTS "override/dw#marker_file.itm" BEGIN
+     COPY "%MOD_FOLDER%/lib/resource/misc02.itm" "override/dw#marker_file.itm"
+  END
+
+
+////////////////////////////////////////////////////////
+//// sort out languages (doing it a slightly nonstandard way to keep 
+//// the main mod directory immutable)
+////////////////////////////////////////////////////////
+
+  ACTION_IF debug_variable=3 BEGIN
+     PRINT "Beginning charset handling: press a key to continue"
+     ACTION_READLN blook
+     SILENT
+  END
+
+  LAF check_ini STR_VAR ini=force_tra_rebuild RET force_tra_rebuild=value END
+  LAF handle_charsets_immutably INT_VAR force_tra_rebuild RET scs_tra_loc END
+  LOAD_TRA "%scs_tra_loc%/english/setup.tra" "%scs_tra_loc%/english/shared.tra" "%scs_tra_loc%/%LANGUAGE%/setup.tra" "%scs_tra_loc%/%LANGUAGE%/shared.tra"
+
+  OUTER_SPRINT ssllibrary "%MOD_FOLDER%/ssl/library"
+
+  ACTION_FOR_EACH macro IN spellcodes saving_throws hit_point_levels stats PCs thac0 BEGIN
+     PRINT ~Reading in data: %macro%~
+     SILENT
+     LAUNCH_ACTION_MACRO ~read_in_%macro%~
+  END
+END
+
+

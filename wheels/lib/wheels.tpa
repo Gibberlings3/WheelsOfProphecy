@@ -5,11 +5,11 @@ DEFINE_ACTION_FUNCTION wheels BEGIN
        LAF run STR_VAR file="wheels_ascension" location=lib END
     END
 
-    COMPILE "%scsroot%/misc/balth_vanilla.d" // overwrite balth.d with pristine vAsc version, pending WoP update more systematically
-    COMPILE "%scsroot%/ascension/balth.d"
+    COMPILE "%MOD_FOLDER%/misc/balth_vanilla.d" // overwrite balth.d with pristine vAsc version, pending WoP update more systematically
+    COMPILE "%MOD_FOLDER%/ascension/balth.d"
 
     MKDIR "%workspace%/sounds"
-    ACTION_BASH_FOR "%scsroot%/sounds" ".*" BEGIN
+    ACTION_BASH_FOR "%MOD_FOLDER%/sounds" ".*" BEGIN
        COPY "%BASH_FOR_FILESPEC%" "%workspace%/sounds"
     END
     LAF HANDLE_AUDIO STR_VAR audio_path="%workspace%/sounds" END

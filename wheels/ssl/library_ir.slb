@@ -1,0 +1,4 @@
+TRIGGER=SINecromancy
+	!HasItemEquiped("plat16",scstarget)
+TRIGGER=Maze
+	!HasItemEquiped("boot11",scstarget)

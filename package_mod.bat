@@ -6,7 +6,7 @@ call "%~dp0..\ModPackaging\utilities\ie_games.bat"
 
 REM /* MODIFY: set the values of the 3 variables below to reflect the current mod version */
 set "mod_name=Wheels of Prophecy"
-set mod_version=v7
+set mod_version=v8.4
 set mod_folder=wheels
 
 REM /* MODIFY: list here which IE games the mod is compatible with, from this list of possibilities: */
