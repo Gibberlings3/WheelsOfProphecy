@@ -3,7 +3,7 @@ SUPPORT ~http://gibberlings3.net/forums/index.php?showforum=156~
 VERSION ~v8.5~
 README ~wheels/readme-wheels.html~
 AUTO_EVAL_STRINGS
-AUTO_TRA ~wheels/lang/%s~
+AUTO_TRA ~weidu_external/lang/WHEELS/%s~
 
 
 
@@ -31,6 +31,12 @@ LANGUAGE
 "schinese"
  ~wheels/tra/english/setup.tra~
  ~wheels/tra/schinese/setup.tra~
+
+LANGUAGE 
+"Russian (paladin84)"
+"russian"
+ ~wheels/lang/english/setup.tra~
+ ~wheels/lang/russian/setup.tra~
 
  ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
