@@ -1,0 +1,25 @@
+COPY - "%MOD_FOLDER%/lib/ids_entries.2da" "override"
+  COUNT_2DA_COLS cols
+  COUNT_2DA_ROWS cols rows
+
+  READ_2DA_ENTRIES_NOW __ids_entries cols
+
+  FOR (SET i = 0; i < rows; ++i)
+  BEGIN
+    READ_2DA_ENTRY_FORMER __ids_entries i 0 ids_file
+    READ_2DA_ENTRY_FORMER __ids_entries i 1 symbol
+    READ_2DA_ENTRY_FORMER __ids_entries i 2 value
+
+    PATCH_IF FILE_EXISTS_IN_GAME "%ids_file%.ids"
+          AND IDS_OF_SYMBOL("%ids_file%" "%symbol%") == "-1"
+    BEGIN
+      INNER_ACTION
+      BEGIN
+        APPEND "%ids_file%.ids" "%value% %symbol%"
+      END
+    END
+  END
+
+CLEAR_IDS_MAP
+
+

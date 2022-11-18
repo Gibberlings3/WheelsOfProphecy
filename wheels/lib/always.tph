@@ -24,6 +24,7 @@ ACTION_IF !VARIABLE_IS_SET ~initialise~ BEGIN
 //// general variables, macros and functions
 ////////////////////////////////////////////////////////
 
+  INCLUDE ~%MOD_FOLDER%/lib/lib_ids.tpa~
   INCLUDE ~%MOD_FOLDER%/sfo/install_sfo.tpa~
   INCLUDE ~%MOD_FOLDER%/lib/alter_script.tpa~
 
